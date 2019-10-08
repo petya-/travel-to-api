@@ -54,7 +54,10 @@
     "@loopback/repository": "^1.15.1",
     "@loopback/rest": "^1.20.1",
     "@loopback/rest-explorer": "^1.4.1",
-    "@loopback/service-proxy": "^1.3.8"
+    "@loopback/service-proxy": "^1.3.8",
+    "@types/dotenv": "^6.1.1",
+    "dotenv": "^8.1.0",
+    "loopback-connector-postgresql": "^3.8.0"
   },
   "devDependencies": {
     "@loopback/build": "^2.0.13",

@@ -9,12 +9,16 @@ import {RestApplication} from '@loopback/rest';
 import {ServiceMixin} from '@loopback/service-proxy';
 import * as path from 'path';
 import {MySequence} from './sequence';
+import * as dotenv from 'dotenv';
 
 export class SharedTravellingApiApplication extends BootMixin(
   ServiceMixin(RepositoryMixin(RestApplication)),
 ) {
   constructor(options: ApplicationConfig = {}) {
     super(options);
+
+    // Set up dotenv
+    dotenv.config({path: '.env'});
 
     // Set up the custom sequence
     this.sequence(MySequence);
