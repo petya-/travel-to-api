@@ -45,7 +45,6 @@ export class User extends Entity {
   })
   status?: string;
 
-
   constructor(data?: Partial<User>) {
     super(data);
   }
