@@ -51,7 +51,7 @@ npm test
 
 ## Deployment
 
-Coming soon
+The app is deployed to Heroku after all the checks(CI build and test jobs) on the master branch have passed. 
 
 ## Built With
 
