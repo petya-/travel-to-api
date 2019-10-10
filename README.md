@@ -14,6 +14,9 @@ Make sure you have PostgreSQL and Node.js installed.
 
 Here's how to get this project up and running:
 
+> Setup env file
+> Create a .env file from .env.example and add your postgres user and password
+
 > Install dependencies
 
 ```
