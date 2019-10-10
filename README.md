@@ -1,6 +1,6 @@
-# Shared Travelling API
+# TravelTo API
 
-This is the Backend API of the Shared Travelling APP. Lame name, until we find a real one.
+RESTful API for TravelTo app.
 
 ## Getting Started
 
