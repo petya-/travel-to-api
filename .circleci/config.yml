@@ -25,10 +25,6 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
 
       - run:
-          name: Create .env file
-          command: touch .env
-
-      - run:
           name: Run tests
           command: npm test
 
