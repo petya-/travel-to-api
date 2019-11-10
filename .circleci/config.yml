@@ -25,12 +25,15 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
 
       - run:
-        name: copy env file
-        command: cp .env.example .env
+          name: copy env file
+          command: cp .env.example .env
 
       - run:
           name: Run tests
           command: npm test
+      - store_artifacts:
+          path: test-results.xml
+          prefix: tests
 
 ################### Workflow ###################
 workflows:
