@@ -6,7 +6,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node server.js",
-    "test": "node ace test"
+    "test": "node ace test",
+    "dev": "nodemon --watch app server.js"
   },
   "keywords": [
     "adonisjs",
@@ -16,8 +17,7 @@
   "license": "UNLICENSED",
   "private": true,
   "dependencies": {
-    "@adonisjs/ace": "^5.0.8",
-    "@adonisjs/auth": "^3.0.7",
+    "@adonisjs/auth": "^3.1.0",
     "@adonisjs/bodyparser": "^2.0.5",
     "@adonisjs/cors": "^1.0.7",
     "@adonisjs/fold": "^4.0.9",
@@ -29,7 +29,9 @@
     "@adonisjs/vow": "^1.0.17",
     "pg": "^7.12.1"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@adonisjs/ace": "^5.0.8"
+  },
   "autoload": {
     "App": "./app"
   }

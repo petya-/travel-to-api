@@ -15,12 +15,22 @@
 
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use('Route')
-
 Route.on('/').render('welcome')
+/*
+|--------------------------------------------------------------------------
+| User Routes
+|--------------------------------------------------------------------------
+*/
+Route.group(() => {
+  Route.post('register', 'AuthController.register')
+  Route.post('login', 'AuthController.login')
+}).prefix('api/auth/').middleware('guest')
 
 /*
 |--------------------------------------------------------------------------
 | User Routes
 |--------------------------------------------------------------------------
 */
-Route.get('/users', 'UserController.index')
+Route.group(() => {
+  Route.get('', 'UserController.index')
+}).prefix('api/users').middleware('auth')
