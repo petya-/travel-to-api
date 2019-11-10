@@ -19,22 +19,21 @@ class AuthController {
     auth,
     response
   }) {
-    const username = request.input("username")
-    const email = request.input("email")
-    const password = request.input("password")
 
-    let user = new User()
-    user.username = username
-    user.email = email
-    user.password = password
-
-    user = await user.save()
-    const accessToken = await auth.generate(user)
-
-    response.json({
-      "user": user,
-      "access_token": accessToken
+    let user = await User.findBy('email', request.input("email"))
+    if (user) return response.json({
+      message: 'The email address is already in use by another account'
     })
+
+    try {
+      user = await User.create(request.all())
+      const token = await auth.generate(user)
+      Object.assign(user, token)
+      return response.json(user)
+
+    } catch (err) {
+      throw err;
+    }
   }
 
   async login({
@@ -42,21 +41,22 @@ class AuthController {
     auth,
     response
   }) {
-    const email = request.input("email")
-    const password = request.input("password");
+    let {
+      email,
+      password
+    } = request.all();
     try {
       if (await auth.attempt(email, password)) {
         let user = await User.findBy('email', email)
-        let accessToken = await auth.generate(user)
-        response.json({
-          "user": user,
-          "access_token": accessToken
-        })
-      }
+        let token = await auth.generate(user)
 
+        Object.assign(user, token)
+        return response.json(user)
+      }
     } catch (e) {
-      response.json({
-        message: 'You first need to register!'
+      console.log(e)
+      return response.json({
+        message: 'You are not registered!'
       })
     }
   }
