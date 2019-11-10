@@ -31,7 +31,7 @@ adonis migration:run
 
 ### Seeders
 
-Run the following command to run startup migrations.
+Run the following command to seed the database
 
 ```js
 adonis seed
