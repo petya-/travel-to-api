@@ -1,13 +1,8 @@
 'use strict';
 const User = use('App/Models/User');
 const Mail = use('Mail');
-
 class AuthController {
-  async register({
-    request,
-    auth,
-    response
-  }) {
+  async register({ request, auth, response }) {
     let user = await User.findBy('email', request.input('email'));
     if (user)
       return response.json({
@@ -16,23 +11,39 @@ class AuthController {
 
     try {
       user = await User.create(request.all());
-      const token = await auth.generate(user);
-      Object.assign(user, token);
+      await generateJWTToken(auth, user);
+
+      await Mail.send('emails.welcome', user.toJSON(), message => {
+        message
+          .to(user.email)
+          .from('<from-email>')
+          .subject('Welcome to TravelTo app!');
+      });
+
       return response.json(user);
     } catch (err) {
       throw err;
     }
   }
 
-  async login({
-    request,
-    auth,
-    response
-  }) {
-    let {
-      email,
-      password
-    } = request.all();
+  async verify({ params, auth, response }) {
+    let user = await auth.getUser();
+
+    if (user) {
+      user.emailVerified = true;
+      user.save();
+      auth.revokeTokens();
+      await generateJWTToken(auth, user);
+      return response.json(user);
+    }
+
+    return response.json({
+      message: 'You do not exist in the system. Please register.'
+    });
+  }
+
+  async login({ request, auth, response }) {
+    let { email, password } = request.all();
     try {
       if (await auth.attempt(email, password)) {
         let user = await User.findBy('email', email);
@@ -48,8 +59,7 @@ class AuthController {
           });
         }
 
-        const token = await auth.generate(user);
-        Object.assign(user, token);
+        await generateJWTToken(auth, user);
         return response.json(user);
       }
     } catch (e) {
@@ -59,6 +69,11 @@ class AuthController {
       });
     }
   }
+}
+
+async function generateJWTToken(auth, user) {
+  const token = await auth.generate(user);
+  Object.assign(user, token);
 }
 
 module.exports = AuthController;
