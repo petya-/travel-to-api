@@ -26,5 +26,17 @@ or manually clone the repo and then run `npm install`.
 Run the following command to run startup migrations and seeders.
 
 ```js
+<<<<<<< HEAD
 npm run migration:seed
+=======
+adonis migration:run
+```
+
+### Seeders
+
+Run the following command to seed the database
+
+```js
+adonis seed
+>>>>>>> c9ac7fe07789429efdebfb53b469da50e87f4f49
 ```
