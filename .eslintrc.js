@@ -13,6 +13,7 @@ module.exports = {
     "prettier/prettier": "error",
     "function-paren-newline": 0,
     "function-call-argument-newline": 0,
-    "object-curly-newline": 0
+    "object-curly-newline": 0,
+    "object-property-newline": 0
   }
 }
