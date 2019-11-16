@@ -20,8 +20,8 @@ const providers = [
   '@adonisjs/session/providers/SessionProvider',
   '@adonisjs/auth/providers/AuthProvider',
   '@adonisjs/vow/providers/VowProvider',
-  '@adonisjs/mail/providers/MailProvider'
-
+  '@adonisjs/mail/providers/MailProvider',
+  'adonis-swagger/providers/SwaggerProvider'
 ]
 
 /*
