@@ -13,11 +13,15 @@
 
 /** @type {import('@adonisjs/lucid/src/Factory')} */
 const Factory = use('Factory')
+
+// User blueprint
 Factory.blueprint('App/Models/User', (faker) => {
   return {
     email: faker.email(),
     password: faker.string({
       length: 8
-    })
+    }),
+    name: faker.name(),
+    emailVerified: true
   }
 })
