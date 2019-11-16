@@ -2,11 +2,7 @@
 const User = use('App/Models/User');
 const Mail = use('Mail');
 class AuthController {
-  async register({
-    request,
-    auth,
-    response
-  }) {
+  async register({ request, auth, response }) {
     let user = await User.findBy('email', request.input('email'));
     if (user)
       return response.json({
@@ -30,17 +26,13 @@ class AuthController {
     }
   }
 
-  async verify({
-    params,
-    auth,
-    response
-  }) {
+  async verify({ params, auth, response }) {
     let user = await auth.getUser();
 
     if (user) {
       user.emailVerified = true;
       user.save();
-      user.revokeTokens();
+      auth.revokeTokens();
       await generateJWTToken(auth, user);
       return response.json(user);
     }
@@ -50,15 +42,8 @@ class AuthController {
     });
   }
 
-  async login({
-    request,
-    auth,
-    response
-  }) {
-    let {
-      email,
-      password
-    } = request.all();
+  async login({ request, auth, response }) {
+    let { email, password } = request.all();
     try {
       if (await auth.attempt(email, password)) {
         let user = await User.findBy('email', email);
