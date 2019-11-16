@@ -14,10 +14,10 @@ module.exports = {
     'object-curly-newline': [
       'error',
       {
-        "ObjectExpression": 'never',
-        "ObjectPattern": 'never',
-        "ImportDeclaration": 'never',
-        "ExportDeclaration": 'never'
+        ObjectExpression: 'never',
+        ObjectPattern: 'never',
+        ImportDeclaration: 'never',
+        ExportDeclaration: 'never'
       }
     ],
     'object-property-newline': 0

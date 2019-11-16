@@ -3,6 +3,7 @@
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
+
 const User = use('App/Models/User');
 const Hash = use('Hash');
 
@@ -14,12 +15,11 @@ class UserController {
    * Get a list of all users.
    * GET users
    *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
+   * @param {Object} response
    */
-  async index({ request, response, view }) {
+  async index({
+    response
+  }) {
     const users = await User.all();
     response.status(200).json({
       message: 'All Users',
@@ -36,7 +36,10 @@ class UserController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async show({ auth, response }) {
+  async show({
+    auth,
+    response
+  }) {
     const user = await User.query()
       .where('id', auth.current.user.id)
       .firstOrFail();
@@ -56,7 +59,11 @@ class UserController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async update({ auth, request, response }) {
+  async update({
+    auth,
+    request,
+    response
+  }) {
     try {
       // get currently authenticated user
       const user = auth.current.user;
@@ -82,7 +89,11 @@ class UserController {
     }
   }
 
-  async changePassword({ request, auth, response }) {
+  async changePassword({
+    request,
+    auth,
+    response
+  }) {
     // get currently authenticated user
     const user = auth.current.user;
 
@@ -115,7 +126,11 @@ class UserController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async destroy({ params, request, response }) {}
+  async destroy({
+    params,
+    request,
+    response
+  }) {}
 }
 
 module.exports = UserController;

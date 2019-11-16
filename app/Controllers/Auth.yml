@@ -1,0 +1,57 @@
+paths:
+  /auth/register:
+    post:
+      description: Register user with email
+      tags:
+        - Auth
+      produces:
+        - application/json
+      parameters:
+        - name: email
+          description: Username to use for login.
+          in: formData
+          required: true
+          type: string
+        - name: password
+          description: User's password.
+          in: formData
+          required: true
+          type: string
+        - name: name
+          description: User's name.
+          in: formData
+          required: true
+          type: string
+        - name: phoneNumber
+          description: User's phone number.
+          in: formData
+          required: true
+          type: string
+      responses:
+        200:
+          description: login
+          schema:
+            $ref: '#/definitions/User'
+  /auth/login:
+    post:
+      description: Login to the application
+      tags:
+        - Auth
+      produces:
+        - application/json
+      parameters:
+        - name: email
+          description: Email to use for login.
+          in: formData
+          required: true
+          type: string
+        - name: password
+          description: User's password.
+          in: formData
+          required: true
+          type: string
+      responses:
+        200:
+          description: login
+          schema:
+            $ref: '#/definitions/User'
