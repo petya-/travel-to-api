@@ -26,6 +26,10 @@ Route.group(() => {
   Route.post('login', 'AuthController.login')
 }).prefix('api/auth/').middleware('guest')
 
+Route.group(() => {
+  Route.post('verify', 'AuthController.verify')
+}).prefix('api/auth/').middleware('auth')
+
 /*
 |--------------------------------------------------------------------------
 | User Routes

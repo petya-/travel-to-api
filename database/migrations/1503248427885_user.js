@@ -10,6 +10,7 @@ class UserSchema extends Schema {
       table.string('email', 254).notNullable().unique()
       table.string('password', 60).notNullable()
       table.string('name').notNullable();
+      table.string('phoneNumber', 20).notNullable()
       table.string('profileImg').nullable();
       table.string('description').nullable();
       table.boolean('emailVerified').notNullable().defaultTo(false);
