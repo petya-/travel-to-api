@@ -21,18 +21,10 @@ adonis new yardstick
 
 or manually clone the repo and then run `npm install`.
 
-### Migrations
+### Migrations and Seeders
 
-Run the following command to run startup migrations.
-
-```js
-adonis migration:run
-```
-
-### Seeders
-
-Run the following command to seed the database
+Run the following command to run startup migrations and seeders.
 
 ```js
-adonis seed
+npm run migration:seed
 ```
