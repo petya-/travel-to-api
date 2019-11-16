@@ -1,17 +1,17 @@
-'use strict'
+'use strict';
 
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
-const User = use('App/Models/User')
-
+const User = use('App/Models/User');
+const Hash = use('Hash');
 
 /**
  * Resourceful controller for interacting with users
  */
 class UserController {
   /**
-   * Show a list of all users.
+   * Get a list of all users.
    * GET users
    *
    * @param {object} ctx
@@ -19,91 +19,93 @@ class UserController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async index({
-    request,
-    response,
-    view
-  }) {
+  async index({ request, response, view }) {
     const users = await User.all();
     response.status(200).json({
       message: 'All Users',
       data: users
-    })
+    });
   }
 
   /**
-   * Render a form to be used for creating a new user.
-   * GET users/create
+   * Get a single user.
+   * GET account
    *
    * @param {object} ctx
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async create({
-    request,
-    response,
-    view
-  }) {}
+  async show({ auth, response }) {
+    const user = await User.query()
+      .where('id', auth.current.user.id)
+      .firstOrFail();
+
+    return response.json({
+      status: 'success',
+      data: user
+    });
+  }
 
   /**
-   * Create/save a new user.
-   * POST users
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async store({
-    request,
-    response
-  }) {}
-
-  /**
-   * Display a single user.
-   * GET users/:id
+   * Update an existing user.
+   * PUT account/
    *
    * @param {object} ctx
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async show({
-    params,
-    request,
-    response,
-    view
-  }) {}
+  async update({ auth, request, response }) {
+    try {
+      // get currently authenticated user
+      const user = auth.current.user;
 
-  /**
-   * Render a form to update an existing user.
-   * GET users/:id/edit
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async edit({
-    params,
-    request,
-    response,
-    view
-  }) {}
+      // update with new data entered
+      user.name = request.input('name');
+      user.email = request.input('email');
+      user.location = request.input('phoneNumber');
+      user.bio = request.input('profileImg');
+      user.website_url = request.input('description');
 
-  /**
-   * Update user details.
-   * PUT or PATCH users/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async update({
-    params,
-    request,
-    response
-  }) {}
+      await user.save();
+      return response.json({
+        status: 'success',
+        message: 'Profile updated!',
+        data: user
+      });
+    } catch (error) {
+      return response.status(400).json({
+        status: 'error',
+        message: 'There was a problem updating profile, please try again later.'
+      });
+    }
+  }
+
+  async changePassword({ request, auth, response }) {
+    // get currently authenticated user
+    const user = auth.current.user;
+
+    // verify if current password matches
+    const verifyPassword = await Hash.verify(request.input('password'), user.password);
+
+    // display appropriate message
+    if (!verifyPassword) {
+      return response.status(400).json({
+        status: 'error',
+        message: 'Current password could not be verified! Please try again.'
+      });
+    }
+
+    // hash and save new password
+    user.password = request.input('newPassword');
+    await user.save();
+
+    return response.json({
+      status: 'success',
+      message: 'Password updated!'
+    });
+  }
 
   /**
    * Delete a user with id.
@@ -113,11 +115,7 @@ class UserController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async destroy({
-    params,
-    request,
-    response
-  }) {}
+  async destroy({ params, request, response }) {}
 }
 
-module.exports = UserController
+module.exports = UserController;
