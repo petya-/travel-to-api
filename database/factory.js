@@ -21,9 +21,7 @@ Factory.blueprint('App/Models/User', (faker) => {
     password: faker.string({
       length: 8
     }),
-    phoneNumber: faker.phone({
-      country: "dk"
-    }),
+    phoneNumber: faker.phone(),
     name: faker.name(),
     emailVerified: true
   }

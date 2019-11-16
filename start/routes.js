@@ -28,7 +28,7 @@ Route.group(() => {
 
 Route.group(() => {
   Route.post('verify', 'AuthController.verify')
-}).prefix('api/auth/').middleware('auth')
+}).prefix('api/auth/').middleware('auth:jwt')
 
 /*
 |--------------------------------------------------------------------------
@@ -37,4 +37,12 @@ Route.group(() => {
 */
 Route.group(() => {
   Route.get('', 'UserController.index')
-}).prefix('api/users').middleware('auth')
+}).prefix('api/users').middleware('auth:jwt')
+
+Route.group(() => {
+    Route.get('/', 'UserController.show')
+    Route.put('/', 'UserController.update')
+    Route.put('/changePassword', 'UserController.changePassword');
+  })
+  .prefix('api/account')
+  .middleware(['auth:jwt'])

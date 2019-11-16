@@ -1,38 +1,39 @@
 'use strict';
 const User = use('App/Models/User');
-const Mail = use('Mail');
+const Event = use('Event');
 class AuthController {
   async register({ request, auth, response }) {
-    let user = await User.findBy('email', request.input('email'));
-    if (user)
-      return response.json({
-        message: 'The email address is already in use by another account'
-      });
+    // get user data from signup form
+    const userData = request.only(['name', 'email', 'password', 'phoneNumber']);
 
     try {
-      user = await User.create(request.all());
-      await generateJWTToken(auth, user);
+      // save user to database
+      const user = await User.create(userData);
+      // generate JWT token for user
+      const token = await auth.generate(user);
 
-      await Mail.send('emails.welcome', user.toJSON(), message => {
-        message
-          .to(user.email)
-          .from('<from-email>')
-          .subject('Welcome to TravelTo app!');
+      // fire user created event
+      Event.fire('new::user', user);
+
+      return response.json({
+        status: 'success',
+        data: token
       });
-
-      return response.json(user);
     } catch (err) {
-      throw err;
+      return response.status(400).json({
+        status: 'error',
+        message: 'There was a problem creating the user, please try again later.'
+      });
     }
   }
 
-  async verify({ params, auth, response }) {
+  async verify({ auth, response }) {
     let user = await auth.getUser();
 
     if (user) {
       user.emailVerified = true;
       user.save();
-      auth.revokeTokens();
+      user.revokeTokens();
       await generateJWTToken(auth, user);
       return response.json(user);
     }
@@ -43,32 +44,25 @@ class AuthController {
   }
 
   async login({ request, auth, response }) {
-    let { email, password } = request.all();
     try {
-      if (await auth.attempt(email, password)) {
-        let user = await User.findBy('email', email);
+      const { email, password } = request.all();
 
-        if (!user.emailVerified) {
-          return response.json({
-            message: 'Your email address is not confirmed!'
-          });
-        }
-        if (!user.enabled) {
-          return response.json({
-            message: "You've been banned from the system!"
-          });
-        }
+      // validate the user credentials and generate a JWT token
+      const token = await auth.attempt(email, password);
 
-        await generateJWTToken(auth, user);
-        return response.json(user);
-      }
-    } catch (e) {
-      console.log(e);
       return response.json({
-        message: 'You are not registered!'
+        status: 'success',
+        data: token
+      });
+    } catch (err) {
+      response.status(400).json({
+        status: 'error',
+        message: err.message
       });
     }
   }
+
+
 }
 
 async function generateJWTToken(auth, user) {
