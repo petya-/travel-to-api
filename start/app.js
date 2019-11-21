@@ -21,6 +21,7 @@ const providers = [
   '@adonisjs/auth/providers/AuthProvider',
   '@adonisjs/vow/providers/VowProvider',
   '@adonisjs/mail/providers/MailProvider',
+  '@adonisjs/cors/providers/CorsProvider',
   'adonis-swagger/providers/SwaggerProvider',
   'adonis-acl/providers/AclProvider'
 ];
