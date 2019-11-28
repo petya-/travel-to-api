@@ -9,8 +9,9 @@ class RolesTableSchema extends Schema {
       table.string('slug').notNullable().unique()
       table.string('name').notNullable().unique()
       table.text('description').nullable()
-      table.timestamps()
-    })
+      table.timestamp('created_at').defaultTo(this.fn.now())
+      table.timestamp('updated_at').defaultTo(this.fn.now())
+      })
   }
 
   down () {
