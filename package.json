@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node server.js",
     "test": "node ace test",
-    "dev": "nodemon --watch app server.js",
+    "dev": "nodemon --watch app --harmony server.js",
     "migrate": "adonis migration:run",
     "migrate:seed": "adonis migration:run --seed",
     "migrate:refresh": "adonis migration:refresh"

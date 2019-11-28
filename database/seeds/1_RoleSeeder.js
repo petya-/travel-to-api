@@ -4,8 +4,8 @@ const Role = use('Role');
 class RoleSeeder {
   async run() {
     const adminRole = new Role();
-    adminRole.name = 'Administrator';
-    adminRole.slug = 'administrator';
+    adminRole.name = 'Admin';
+    adminRole.slug = 'admin';
     adminRole.description = 'manage administration privileges';
     await adminRole.save();
 

@@ -15,10 +15,10 @@
 const Factory = use('Factory')
 
 // User blueprint
-Factory.blueprint('App/Models/User', (faker) => {
+Factory.blueprint('App/Models/User', (faker, i, data) => {
   return {
-    email: faker.email(),
-    password: faker.string({
+    email: data && data.email ? data.email : faker.email(),
+    password: data && data.password ? data.password : faker.string({
       length: 8
     }),
     phoneNumber: faker.phone(),

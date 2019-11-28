@@ -62,9 +62,9 @@ class UserController {
       // update with new data entered
       user.name = request.input('name');
       user.email = request.input('email');
-      user.location = request.input('phoneNumber');
-      user.bio = request.input('profileImg');
-      user.website_url = request.input('description');
+      user.phoneNumber = request.input('phoneNumber');
+      user.profileImg = request.input('profileImg');
+      user.description = request.input('description');
 
       await user.save();
       return response.json({

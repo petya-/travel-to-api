@@ -10,7 +10,7 @@ class AuthController {
   }) {
     // get user data from signup form
     const userData = request.only(['name', 'email', 'password', 'phoneNumber']);
-    const role = request.input('role')
+    const role = request.input('role');
 
     try {
       // save user to database
@@ -83,8 +83,6 @@ class AuthController {
       });
     }
   }
-
-
 }
 
 async function generateJWTToken(auth, user) {

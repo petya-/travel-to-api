@@ -1,5 +1,5 @@
-'use strict'
-const Env = use('Env')
+'use strict';
+const Env = use('Env');
 
 module.exports = {
   /*
@@ -18,19 +18,26 @@ module.exports = {
       info: {
         title: 'travel-to-api',
         description: 'API description in Markdown.',
-        version: '1.0.0',
+        version: '1.0.0'
       },
       host: Env.get('APP_HOST'),
       basePath: '/api',
 
-      // Example security definitions.
       securityDefinitions: {
-        // OAuth2 configuration
-        OAuth2: {
-          authorizationUrl: 'https://example.com/oauth/authorize',
-          tokenUrl: 'https://example.com/oauth/token',
+        // Bearer Authentication
+        bearerAuth: {
+          type: 'apiKey',
+          in: 'header',
+          name: 'Authorization'
         },
-      }
+      },
+      securitySchemes: {
+        bearerAuth: {
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'JWT'
+        }
+      },
     },
 
     // Path to the API docs
@@ -39,10 +46,6 @@ module.exports = {
     //    'docs/**/*.yml',    // load recursive all .yml file in docs directory
     //    'docs/**/*.js',     // load recursive all .js file in docs directory
     // ]
-    apis: [
-      'app/**/*.js',
-      'app/**/*.yml',
-      'start/routes.js',
-    ]
+    apis: ['app/**/*.js', 'app/**/*.yml', 'start/routes.js']
   }
-}
+};

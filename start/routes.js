@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 /*
 |--------------------------------------------------------------------------
@@ -14,21 +14,25 @@
 */
 
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
-const Route = use('Route')
-Route.on('/').render('welcome')
+const Route = use('Route');
+Route.on('/').render('welcome');
 /*
 |--------------------------------------------------------------------------
 | Auth Routes
 |--------------------------------------------------------------------------
 */
 Route.group(() => {
-  Route.post('register', 'AuthController.register')
-  Route.post('login', 'AuthController.login')
-}).prefix('api/auth/').middleware('guest')
+    Route.post('/register', 'AuthController.register');
+    Route.post('/login', 'AuthController.login');
+  })
+  .prefix('api/auth')
+  .middleware('guest');
 
 Route.group(() => {
-  Route.post('verify', 'AuthController.verify')
-}).prefix('api/auth/').middleware('auth:jwt')
+    Route.post('/verify', 'AuthController.verify');
+  })
+  .prefix('api/auth')
+  .middleware('auth:jwt');
 
 /*
 |--------------------------------------------------------------------------
@@ -36,13 +40,15 @@ Route.group(() => {
 |--------------------------------------------------------------------------
 */
 Route.group(() => {
-  Route.get('', 'UserController.index')
-}).prefix('api/users').middleware('auth:jwt')
+    Route.get('/', 'UserController.index');
+  })
+  .prefix('api/users')
+  .middleware('auth:jwt', 'can:read_users');
 
 Route.group(() => {
-    Route.get('/', 'UserController.show')
-    Route.put('/', 'UserController.update')
+    Route.get('/', 'UserController.show');
+    Route.put('/', 'UserController.update');
     Route.put('/changePassword', 'UserController.changePassword');
   })
-  .prefix('api/account')
-  .middleware(['auth:jwt'])
+  .prefix('api/user')
+  .middleware(['auth:jwt', 'can:read_user_profile', 'can:update_user_profile']);
