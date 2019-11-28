@@ -10,8 +10,9 @@ class PermissionRoleTableSchema extends Schema {
       table.foreign('permission_id').references('id').on('permissions').onDelete('cascade')
       table.integer('role_id').unsigned().index()
       table.foreign('role_id').references('id').on('roles').onDelete('cascade')
-      table.timestamps()
-    })
+      table.timestamp('created_at').defaultTo(this.fn.now())
+      table.timestamp('updated_at').defaultTo(this.fn.now())
+      })
   }
 
   down () {
