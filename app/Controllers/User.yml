@@ -1,0 +1,96 @@
+paths:
+  /users:
+    get:
+      description: Get all users
+      tags:
+        - User
+      security:
+        - bearerAuth: []
+      summary: Auth JWT login
+      produces:
+        - application/json
+      responses:
+        200:
+          description: users array
+          schema:
+            $ref: '#/definitions/User'
+  /user:
+    get:
+      description: Get user
+      tags:
+        - User
+      security:
+        - bearerAuth: []
+      summary: Auth JWT login
+      produces:
+        - application/json
+      responses:
+        200:
+          description: user account
+          schema:
+            $ref: '#/definitions/User'
+    put:
+      description: Update user
+      tags:
+        - User
+      security:
+        - bearerAuth: []
+      summary: Auth JWT login
+      produces:
+        - application/json
+      parameters:
+        - name: email
+          description: User's email
+          in: formData
+          type: string
+        - name: phoneNumber
+          description: User's phoneNumber
+          in: formData
+          type: string
+        - name: name
+          description: User's name.
+          in: formData
+          type: string
+        - name: profileImg
+          description: User's profileImg
+          in: formData
+          type: string
+        - name: description
+          description: User's description
+          in: formData
+          type: string
+      responses:
+        200:
+          description: success
+          schema:
+            $ref: '#/definitions/User'
+        400:
+          description: There was a problem updating profile, please try again later.
+  /user/changePassword:
+    put:
+      description: Update user
+      tags:
+        - User
+      security:
+        - bearerAuth: []
+      summary: Auth JWT login
+      produces:
+        - application/json
+      parameters:
+        - name: password
+          description: User's old password
+          in: formData
+          required: true
+          type: string
+        - name: newPassword
+          description: User's phoneNumber
+          in: formData
+          required: true
+          type: string
+      responses:
+        200:
+          description: success
+          schema:
+            $ref: '#/definitions/User'
+        400:
+          description: Current password could not be verified! Please try again.

@@ -41,7 +41,7 @@ class PermissionSeeder {
     await updateUserProfilePermission.save()
 
 
-    const adminRole = await Role.find(1)
+    const adminRole = await Role.findBy('slug', 'admin')
     await adminRole.permissions().attach([
       createUsersPermission.id,
       updateUsersPermission.id,
@@ -51,12 +51,12 @@ class PermissionSeeder {
       updateUserProfilePermission.id
     ])
 
-    const driverRole = await Role.find(1)
+    const driverRole = await Role.findBy('slug', 'driver')
     await driverRole.permissions().attach([
 
     ])
 
-    const passengerRole = await Role.find(1)
+    const passengerRole = await Role.findBy('slug', 'passenger')
     await passengerRole.permissions().attach([
       createUsersPermission.id,
       readUserProfilePermission.id,

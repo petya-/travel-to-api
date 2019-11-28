@@ -10,7 +10,13 @@ definitions:
         type: string
       password:
         type: string
+      profileImg:
+        type: string
+      description:
+        type: string
     required:
       - username
       - email
       - password
+      - profileImg
+      - description

@@ -55,3 +55,18 @@ paths:
           description: login
           schema:
             $ref: '#/definitions/User'
+  /auth/verify:
+    post:
+      description: Verify user email
+      tags:
+        - Auth
+      security:
+        - bearerAuth: []
+      summary: Auth JWT login
+      produces:
+        - application/json
+      responses:
+        200:
+          description: verify
+          schema:
+            $ref: '#/definitions/User'
