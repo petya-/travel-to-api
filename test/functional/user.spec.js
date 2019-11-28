@@ -1,10 +1,5 @@
 'use strict';
-const {
-  test,
-  trait,
-  before,
-  after
-} = use('Test/Suite')('User');
+const { test, trait, before, after } = use('Test/Suite')('User');
 const User = use('App/Models/User');
 const Role = use('Role');
 
@@ -27,9 +22,7 @@ after(async () => {
   await user.delete();
 });
 
-test('cannot get list of users without a token', async ({
-  client
-}) => {
+test('cannot get list of users without a token', async ({ client }) => {
   const response = await client.get('api/users').end();
 
   response.assertStatus(401);
@@ -52,7 +45,7 @@ test('get list of users if the user authorized and has admin permissions', async
   response.assertStatus(200);
 
   response.assertJSON({
-    "message": "success",
-    "data": users.toJSON()
+    message: 'success',
+    data: users.toJSON()
   });
 });
