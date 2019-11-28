@@ -17,9 +17,7 @@ class UserController {
    *
    * @param {Object} response
    */
-  async index({
-    response
-  }) {
+  async index({ response }) {
     const users = await User.all();
     response.status(200).json({
       message: 'All Users',
@@ -36,10 +34,7 @@ class UserController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async show({
-    auth,
-    response
-  }) {
+  async show({ auth, response }) {
     const user = await User.query()
       .where('id', auth.current.user.id)
       .firstOrFail();
@@ -59,11 +54,7 @@ class UserController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async update({
-    auth,
-    request,
-    response
-  }) {
+  async update({ auth, request, response }) {
     try {
       // get currently authenticated user
       const user = auth.current.user;
@@ -89,16 +80,15 @@ class UserController {
     }
   }
 
-  async changePassword({
-    request,
-    auth,
-    response
-  }) {
+  async changePassword({ request, auth, response }) {
     // get currently authenticated user
     const user = auth.current.user;
 
     // verify if current password matches
-    const verifyPassword = await Hash.verify(request.input('password'), user.password);
+    const verifyPassword = await Hash.verify(
+      request.input('password'),
+      user.password
+    );
 
     // display appropriate message
     if (!verifyPassword) {
@@ -126,11 +116,7 @@ class UserController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async destroy({
-    params,
-    request,
-    response
-  }) {}
+  async destroy({ params, request, response }) {}
 }
 
 module.exports = UserController;
