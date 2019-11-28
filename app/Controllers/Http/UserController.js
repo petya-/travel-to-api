@@ -20,7 +20,7 @@ class UserController {
   async index({ response }) {
     const users = await User.all();
     response.status(200).json({
-      message: 'All Users',
+      message: 'success',
       data: users
     });
   }
