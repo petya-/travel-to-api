@@ -19,6 +19,7 @@ class User extends Model {
      * it to the database.
      */
     this.addHook('beforeSave', 'UserHook.hashPassword')
+    this.addHook('afterSave', 'UserHook.attachPassengerRole')
     this.addHook('afterFind', ['UserHook.isEnabled', 'UserHook.isVerified'])
 
   }
@@ -35,6 +36,16 @@ class User extends Model {
    */
   tokens() {
     return this.hasMany('App/Models/Token')
+  }
+
+  /**
+   * ACL traits
+   */
+  static get traits() {
+    return [
+      '@provider:Adonis/Acl/HasRole',
+      '@provider:Adonis/Acl/HasPermission'
+    ]
   }
 
 

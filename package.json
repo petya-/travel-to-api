@@ -32,6 +32,7 @@
     "@adonisjs/session": "^1.0.27",
     "@adonisjs/shield": "^1.0.8",
     "@adonisjs/vow": "^1.0.17",
+    "adonis-acl": "^1.1.1",
     "adonis-swagger": "^1.2.9",
     "pg": "^7.12.1"
   },

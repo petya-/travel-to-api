@@ -28,3 +28,11 @@ Run the following command to run startup migrations and seeders.
 ```js
 npm run migrate:seed
 ```
+
+## Deployment
+
+The API is deployed on [Heroku](https://travel-to-api.herokuapp.com)
+
+## Documentation
+
+[API Docs](https://travel-to-api.herokuapp.com/docs/)
