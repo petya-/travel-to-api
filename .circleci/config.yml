@@ -33,7 +33,7 @@ jobs:
 
       - run:
           name: Run tests
-          command: npm test:ci
+          command: npm run test:ci
       - store_artifacts:
           path: test-results.xml
           prefix: tests
