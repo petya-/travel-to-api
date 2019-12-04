@@ -30,7 +30,6 @@ jobs:
       - run:
           name: Run migrations and seeders
           command: npm run migrate:ci
-
       # - run:
       #     name: Start server
       #     command: ENV_SILENT=true npm start
