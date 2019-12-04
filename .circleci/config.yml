@@ -31,11 +31,10 @@ jobs:
           name: Run migrations and seeders
           command: npm run migrate:ci
 
-      -run:
-        name: Start server
-        commant: ENV_SILENT=true npm start
-        background: true
-
+      - run:
+          name: Start server
+          commant: ENV_SILENT=true npm start
+          background: true
 
       - run:
           name: Run tests
