@@ -34,11 +34,7 @@ jobs:
 
       - run:
           name: Run migrations and seeders
-          command: npm run migrate:seed
-
-      # - run:
-      #   name: Run migrations and seeders
-      #   command: npm run migrate:seed
+          command: node ace migration:refresh --seed --force
 
       - run:
           name: Run tests
