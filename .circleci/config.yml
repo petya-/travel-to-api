@@ -29,11 +29,11 @@ jobs:
 
       - run:
           name: Run migrations and seeders
-          command: ENV_SILENT=true node ace migration:refresh --seed --force
+          command: npm run migrate:ci
 
       - run:
           name: Run tests
-          command: npm test
+          command: npm test:ci
       - store_artifacts:
           path: test-results.xml
           prefix: tests
