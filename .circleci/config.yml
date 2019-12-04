@@ -32,6 +32,10 @@ jobs:
           name: copy env file
           command: cp .env.example .env
 
+      - run:
+          name: Run migrations and seeders
+          command: npm run migrate:seed
+
       # - run:
       #   name: Run migrations and seeders
       #   command: npm run migrate:seed
