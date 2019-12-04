@@ -10,7 +10,9 @@
     "dev": "nodemon --watch app --harmony server.js",
     "migrate": "adonis migration:run",
     "migrate:seed": "adonis migration:run --seed",
-    "migrate:refresh": "adonis migration:refresh"
+    "migrate:refresh": "adonis migration:refresh",
+    "migrate:ci": "ENV_SILENT=true node ace migration:refresh --seed --force",
+    "test:ci": "ENV_SILENT=true node ace test"
   },
   "keywords": [
     "adonisjs",
@@ -36,6 +38,7 @@
     "adonis-swagger": "^1.2.9",
     "pg": "^7.12.1"
   },
+  "devDependencies": {},
   "autoload": {
     "App": "./app"
   }
