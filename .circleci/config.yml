@@ -37,7 +37,7 @@ jobs:
 
       - run:
           name: Run migrations and seeders
-          command: node ace migration:refresh --seed --force
+          command: ENV_SILENT=true node ace migration:refresh --seed --force
 
       - run:
           name: Run tests
