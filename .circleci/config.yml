@@ -33,7 +33,7 @@ jobs:
 
       - run:
           name: Start server
-          commant: ENV_SILENT=true npm start
+          command: ENV_SILENT=true npm start
           background: true
 
       - run:
