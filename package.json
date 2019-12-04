@@ -36,6 +36,8 @@
     "adonis-swagger": "^1.2.9",
     "pg": "^7.12.1"
   },
+  "devDependencies": {
+  },
   "autoload": {
     "App": "./app"
   }
