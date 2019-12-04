@@ -28,9 +28,9 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
 
-      # - run:
-      #     name: copy env file
-      #     command: cp .env.example .env
+      - run:
+          name: copy env file
+          command: cp .env.example .env
       - run:
         name: Run migrations and seeders
         command: npm run migrate:seed
