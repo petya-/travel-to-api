@@ -8,6 +8,9 @@ jobs:
           DB_USER: root
           DB_PASSWORD: password
           DB_DATABASE: travel-to-db-test
+          DB_PORT: 5432
+          DB_HOST: 127.0.0.1
+
     working_directory: ~/repo
 
     steps:
