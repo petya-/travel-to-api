@@ -51,15 +51,17 @@ class TripController {
           ? request.input('requiresContact')
           : true
       });
-      console.log(trip);
       return response.json({
         status: 'success',
         message: 'Trip was successfully created!',
         data: trip
       });
     } catch (error) {
-      throw error;
-    }
+      return response.status(400).json({
+        status: 'error',
+        message: 'There was a problem creating the trip, please try again later.'
+      });
+      }
   }
 
   /**
