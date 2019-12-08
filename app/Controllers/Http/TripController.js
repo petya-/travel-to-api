@@ -3,6 +3,8 @@
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
+/** @typedef {import('@adonisjs/auth')} Auth */
+
 const Trip = use('App/Models/Trip');
 
 /**
@@ -14,15 +16,13 @@ class TripController {
    * GET trips
    *
    * @param {object} ctx
-   * @param {Request} ctx.request
    * @param {Response} ctx.response
-   * @param {View} ctx.view
    */
-  async index({ request, response, view }) {
+  async index({ response }) {
     try {
       const trips = await Trip.all();
       response.status(200).json({
-        message: 'success',
+        status: 'success',
         data: trips
       });
     } catch (error) {
@@ -37,9 +37,30 @@ class TripController {
    * @param {object} ctx
    * @param {Request} ctx.request
    * @param {Response} ctx.response
-   * @param {View} ctx.view
+   * @param {Auth} ctx.auth
    */
-  async create({ request, response, view }) {}
+  async create({ request, response, auth }) {
+    try {
+      const trip = await auth.user.trips().create({
+        from: request.input('from'),
+        to: request.input('to'),
+        departure: request.input('departure'),
+        numberOfPassengers: request.input('numberOfPassengers'),
+        price: request.input('price'),
+        requiresContact: request.input('requiresContact')
+          ? request.input('requiresContact')
+          : true
+      });
+      console.log(trip);
+      return response.json({
+        status: 'success',
+        message: 'Trip was successfully created!',
+        data: trip
+      });
+    } catch (error) {
+      throw error;
+    }
+  }
 
   /**
    * Create/save a new trip.
@@ -56,14 +77,15 @@ class TripController {
    * GET trips/user
    *
    * @param {object} ctx
-   * @param {Request} ctx.request
    * @param {Response} ctx.response
+   * @param {Auth} ctx.auth
+
    */
-  async show({ params, request, response, auth }) {
+  async show({ response, auth }) {
     try {
       const trips = await auth.user.trips().fetch();
       response.status(200).json({
-        message: 'success',
+        status: 'success',
         data: trips
       });
     } catch (error) {

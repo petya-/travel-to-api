@@ -3,6 +3,7 @@
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
+/** @typedef {import('@adonisjs/auth')} Auth */
 
 const User = use('App/Models/User');
 const Hash = use('Hash');
@@ -20,7 +21,7 @@ class UserController {
   async index({ response }) {
     const users = await User.all();
     response.status(200).json({
-      message: 'success',
+      status: 'success',
       data: users
     });
   }
@@ -30,9 +31,8 @@ class UserController {
    * GET account
    *
    * @param {object} ctx
-   * @param {Request} ctx.request
    * @param {Response} ctx.response
-   * @param {View} ctx.view
+   * @param {Auth} ctx.auth
    */
   async show({ auth, response }) {
     const user = await User.query()
@@ -52,7 +52,7 @@ class UserController {
    * @param {object} ctx
    * @param {Request} ctx.request
    * @param {Response} ctx.response
-   * @param {View} ctx.view
+   * @param {Auth} ctx.auth
    */
   async update({ auth, request, response }) {
     try {
