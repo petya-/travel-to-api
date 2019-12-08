@@ -40,6 +40,29 @@ class PermissionSeeder {
     updateUserProfilePermission.description = 'update user profile permission'
     await updateUserProfilePermission.save()
 
+    const readTripsPermission = new Permission()
+    readTripsPermission.slug = 'read_trips'
+    readTripsPermission.name = 'Read all trips'
+    readTripsPermission.description = 'read all trips permission'
+    await readTripsPermission.save()
+
+    const createTripPermission = new Permission()
+    createTripPermission.slug = 'create_trip'
+    createTripPermission.name = 'Create a trip'
+    createTripPermission.description = 'create a trip permission'
+    await createTripPermission.save()
+
+    const updateTripPermission = new Permission()
+    updateTripPermission.slug = 'update_trip'
+    updateTripPermission.name = 'Update a trip'
+    updateTripPermission.description = 'update a trip permission'
+    await updateTripPermission.save()
+
+    const readUserTripsPermission = new Permission()
+    readUserTripsPermission.slug = 'read_user_trips'
+    readUserTripsPermission.name = 'Read user trips'
+    readUserTripsPermission.description = 'read user trips permission'
+    await readUserTripsPermission.save()
 
     const adminRole = await Role.findBy('slug', 'admin')
     await adminRole.permissions().attach([
@@ -48,19 +71,25 @@ class PermissionSeeder {
       deleteUsersPermission.id,
       readUsersPermission.id,
       readUserProfilePermission.id,
-      updateUserProfilePermission.id
+      updateUserProfilePermission.id,
+      readTripsPermission.id,
+      createTripPermission.id,
+      updateTripPermission.id,
+      readUserTripsPermission.id,
     ])
 
     const driverRole = await Role.findBy('slug', 'driver')
     await driverRole.permissions().attach([
-
+      createTripPermission.id,
+      updateTripPermission.id,
+      readUserTripsPermission.id
     ])
 
     const passengerRole = await Role.findBy('slug', 'passenger')
     await passengerRole.permissions().attach([
       createUsersPermission.id,
       readUserProfilePermission.id,
-      updateUserProfilePermission.id
+      updateUserProfilePermission.id,
     ])
   }
 }
