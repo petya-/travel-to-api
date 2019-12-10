@@ -18,62 +18,62 @@ class PermissionSeeder {
   async run() {
 
     const createUsersPermission = await Factory.model('Adonis/Acl/Permission').create({
-      name: 'create_users',
-      slug: 'Create Users',
+      slug: 'create_users',
+      name: 'Create Users',
       description: 'create users permission'
     });
 
     const updateUsersPermission = await Factory.model('Adonis/Acl/Permission').create({
-      name: 'update_users',
-      slug: 'Update Users',
+      slug: 'update_users',
+      name: 'Update Users',
       description: 'update users permission'
     });
 
     const deleteUsersPermission = await Factory.model('Adonis/Acl/Permission').create({
-      name: 'delete_users',
-      slug: 'Delete Users',
+      slug: 'delete_users',
+      name: 'Delete Users',
       description: 'delete users permission'
     });
 
     const readUsersPermission = await Factory.model('Adonis/Acl/Permission').create({
-      name: 'read_users',
-      slug: 'Read Users',
+      slug: 'read_users',
+      name: 'Read Users',
       description: 'read users permission'
     });
 
     const readUserProfilePermission = await Factory.model('Adonis/Acl/Permission').create({
-      name: 'read_user_profile',
-      slug: 'Read user profile',
+      slug: 'read_user_profile',
+      name: 'Read user profile',
       description: 'read user profile permission'
     });
 
     const updateUserProfilePermission = await Factory.model('Adonis/Acl/Permission').create({
-      name: 'update_user_profile',
-      slug: 'Update user profile',
+      slug: 'update_user_profile',
+      name: 'Update user profile',
       description: 'update user profile permission'
     });
 
     const readTripsPermission = await Factory.model('Adonis/Acl/Permission').create({
-      name: 'read_trips',
-      slug: 'Read all trips',
+      slug: 'read_trips',
+      name: 'Read all trips',
       description: 'read all trips permission'
     });
 
     const createTripPermission = await Factory.model('Adonis/Acl/Permission').create({
-      name: 'create_trip',
-      slug: 'Create a trip',
+      slug: 'create_trip',
+      name: 'Create a trip',
       description: 'create a trip permission'
     });
 
     const updateTripPermission = await Factory.model('Adonis/Acl/Permission').create({
-      name: 'update_trip',
-      slug: 'Update a trip',
+      slug: 'update_trip',
+      name: 'Update a trip',
       description: 'update a trip permission'
     });
 
     const readUserTripsPermission = await Factory.model('Adonis/Acl/Permission').create({
-      name: 'read_user_trips',
-      slug: 'Read user trips',
+      slug: 'read_user_trips',
+      name: 'Read user trips',
       description: 'read user trips permission'
     });
 

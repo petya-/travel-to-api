@@ -10,7 +10,7 @@ class TripSchema extends Schema {
       table.string('from').notNullable()
       table.string('to').notNullable()
 
-      table.datetime('departure').notNullable()
+      table.datetime('departureTime').notNullable()
       table.integer('numberOfPassengers').notNullable().default(1)
       table.decimal('price').notNullable().default(0)
       table.boolean('requiresContact').notNullable().default(true)

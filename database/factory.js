@@ -54,9 +54,15 @@ Factory.blueprint('App/Models/Trip', (faker, i, data) => {
   return {
     from: faker.city(),
     to: faker.city(),
-    departure: DateTime.local(),
-    numberOfPassengers: faker.integer({ min: 0, max: 3 }),
-    price: faker.integer({ min: 4, max: 10 }),
+    departureTime: DateTime.utc(),
+    numberOfPassengers: faker.integer({
+      min: 0,
+      max: 3
+    }),
+    price: faker.integer({
+      min: 4,
+      max: 10
+    }),
     requiresContact: faker.bool(),
     driver_id: data.driver_id
   };

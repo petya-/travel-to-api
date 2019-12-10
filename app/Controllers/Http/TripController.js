@@ -44,7 +44,7 @@ class TripController {
       const trip = await auth.user.trips().create({
         from: request.input('from'),
         to: request.input('to'),
-        departure: request.input('departure'),
+        departureTime: request.input('departureTime'),
         numberOfPassengers: request.input('numberOfPassengers'),
         price: request.input('price'),
         requiresContact: request.input('requiresContact')
@@ -87,6 +87,7 @@ class TripController {
   async show({ response, auth }) {
     try {
       const trips = await auth.user.trips().fetch();
+      console.log(trips);
       response.status(200).json({
         status: 'success',
         data: trips

@@ -4,19 +4,24 @@ definitions:
     properties:
       id:
         type: uint
-      username:
-        type: string
       email:
-        type: string
+        type: email
       password:
+        type: string
+      name:
+        type: string
+      phoneNumber:
         type: string
       profileImg:
         type: string
       description:
         type: string
+      emailVerified:
+        type: boolean
+      enabled:
+        type: boolean
     required:
-      - username
       - email
       - password
-      - profileImg
-      - description
+      - name
+      - phoneNumber

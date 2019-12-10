@@ -54,6 +54,11 @@ Route.group(() => {
   .prefix('api/user')
   .middleware(['auth:jwt', 'can:read_user_profile', 'can:update_user_profile']);
 
+/*
+|--------------------------------------------------------------------------
+| Trip Routes
+|--------------------------------------------------------------------------
+*/
 Route.group(() => {
     Route.get('/', 'TripController.index').middleware(['can:read_trips']);
     Route.post('/', 'TripController.create').middleware(['can:create_trip']);
