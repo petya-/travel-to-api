@@ -26,3 +26,21 @@ Factory.blueprint('App/Models/User', (faker, i, data) => {
     emailVerified: true
   }
 })
+
+// Role blueprint
+Factory.blueprint('Adonis/Acl/Role', (faker, i, data) => {
+  return {
+    name: data.name,
+    slug: data.slug,
+    description: data.description
+  }
+})
+
+// Permission blueprint
+Factory.blueprint('Adonis/Acl/Role', (faker, i, data) => {
+  return {
+    name: data.name,
+    slug: data.slug,
+    description: data.description
+  }
+})

@@ -1,25 +1,26 @@
 'use strict';
-const Role = use('Role');
+const Factory = use('Factory')
 
 class RoleSeeder {
   async run() {
-    const adminRole = new Role();
-    adminRole.name = 'Admin';
-    adminRole.slug = 'admin';
-    adminRole.description = 'manage administration privileges';
-    await adminRole.save();
 
-    const driverRole = new Role();
-    driverRole.name = 'Driver';
-    driverRole.slug = 'driver';
-    driverRole.description = 'manage driver privileges';
-    await driverRole.save();
+    const adminRole = await Factory.model('Adonis/Acl/Role').create({
+      name: 'Admin',
+      slug: 'admin',
+      description: 'manage administration privileges'
+    });
 
-    const passengerRole = new Role();
-    passengerRole.name = 'Passenger';
-    passengerRole.slug = 'passenger';
-    passengerRole.description = 'manage passenger privileges';
-    await passengerRole.save();
+    const driverRole = await Factory.model('Adonis/Acl/Role').create({
+      name: 'Driver',
+      slug: 'driver',
+      description: 'manage driver privileges'
+    });
+
+    const passengerRole = await Factory.model('Adonis/Acl/Role').create({
+      name: 'Passenger',
+      slug: 'passenger',
+      description: 'manage passenger privileges'
+    });
   }
 }
 
