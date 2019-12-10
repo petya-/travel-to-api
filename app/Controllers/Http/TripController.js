@@ -87,7 +87,6 @@ class TripController {
   async show({ response, auth }) {
     try {
       const trips = await auth.user.trips().fetch();
-      console.log(trips);
       response.status(200).json({
         status: 'success',
         data: trips
