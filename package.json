@@ -36,6 +36,7 @@
     "@adonisjs/vow": "^1.0.17",
     "adonis-acl": "^1.1.1",
     "adonis-swagger": "^1.2.9",
+    "luxon": "^1.21.3",
     "pg": "^7.12.1"
   },
   "devDependencies": {},

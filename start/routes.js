@@ -39,6 +39,7 @@ Route.group(() => {
 | User Routes
 |--------------------------------------------------------------------------
 */
+
 Route.group(() => {
     Route.get('/', 'UserController.index');
   })
@@ -52,3 +53,18 @@ Route.group(() => {
   })
   .prefix('api/user')
   .middleware(['auth:jwt', 'can:read_user_profile', 'can:update_user_profile']);
+
+/*
+|--------------------------------------------------------------------------
+| Trip Routes
+|--------------------------------------------------------------------------
+*/
+Route.group(() => {
+    Route.get('/', 'TripController.index').middleware(['can:read_trips']);
+    Route.post('/', 'TripController.create').middleware(['can:create_trip']);
+    Route.put('/:id', 'TripController.update').middleware(['can:update_trip']);
+    Route.get('/user', 'TripController.show').middleware(['can:read_user_trips']);
+
+  })
+  .prefix('api/trips')
+  .middleware(['auth:jwt']);

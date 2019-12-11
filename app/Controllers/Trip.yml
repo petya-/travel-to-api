@@ -1,0 +1,78 @@
+paths:
+  /trips:
+    get:
+      description: Get all trips
+      tags:
+        - Trip
+      security:
+        - bearerAuth: []
+      summary: Auth JWT login
+      produces:
+        - application/json
+      responses:
+        200:
+          description: trips array
+          schema:
+            $ref: '#/definitions/Trip'
+    post:
+      description: Create trip
+      tags:
+        - Trip
+      security:
+        - bearerAuth: []
+      summary: Auth JWT login
+      produces:
+        - application/json
+      parameters:
+        - name: from
+          description: Start of journey
+          in: formData
+          type: string
+        - name: to
+          description: End of journey
+          in: formData
+          type: string
+        - name: departureTime
+          description: Date and time of departure in UTC0
+          in: formData
+          type: date-time
+        - name: numberOfPassengers
+          description: Number of available places for the trip
+          in: formData
+          type: integer
+        - name: price
+          description: Price for the trip in euros
+          in: formData
+          type: number
+        - name: requiresContact
+          description: Contact required before approval of trip request
+          in: formData
+          type: boolean
+      required:
+        - from
+        - to
+        - departureTime
+        - numberOfPassengers
+        - price
+      responses:
+        200:
+          description: created trip object
+          schema:
+            $ref: '#/definitions/Trip'
+        400:
+          description: There was a problem creating the trip, please try again later.
+  /trips/user:
+    get:
+      description: Get user trips
+      tags:
+        - Trip
+      security:
+        - bearerAuth: []
+      summary: Auth JWT login
+      produces:
+        - application/json
+      responses:
+        200:
+          description: Trips created by the user
+          schema:
+            $ref: '#/definitions/Trip'

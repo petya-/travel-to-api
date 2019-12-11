@@ -45,7 +45,7 @@ test('get list of users if the user authorized and has admin permissions', async
   response.assertStatus(200);
 
   response.assertJSON({
-    message: 'success',
+    status: 'success',
     data: users.toJSON()
   });
 });

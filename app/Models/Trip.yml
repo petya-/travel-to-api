@@ -1,0 +1,25 @@
+definitions:
+  Trip:
+    type: object
+    properties:
+      id:
+        type: uint
+      from:
+        type: string
+      to:
+        type: string
+      departureTime:
+        type: date-time
+      numberOfPassengers:
+        type: integer
+      price:
+        type: number
+      requiresContact:
+        type: boolean
+    required:
+      - from
+      - to
+      - name
+      - departureTime
+      - numberOfPassengers
+      - price

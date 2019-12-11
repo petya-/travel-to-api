@@ -39,6 +39,17 @@ class User extends Model {
   }
 
   /**
+   * A relationship on trips
+   *
+   * @method trips
+   *
+   * @return {Object}
+   */
+  trips() {
+    return this.hasMany('App/Models/Trip', 'id', 'driver_id')
+  }
+
+  /**
    * ACL traits
    */
   static get traits() {
