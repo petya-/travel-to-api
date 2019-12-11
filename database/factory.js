@@ -13,18 +13,17 @@
 
 /** @type {import('@adonisjs/lucid/src/Factory')} */
 const Factory = use('Factory');
-const { DateTime } = require('luxon');
+const {
+  DateTime
+} = require('luxon');
 
 // User blueprint
 Factory.blueprint('App/Models/User', (faker, i, data) => {
   return {
-    email: data && data.email ? data.email : faker.email(),
-    password:
-      data && data.password
-        ? data.password
-        : faker.string({
-            length: 8
-          }),
+    email: data.email || faker.email(),
+    password: data.password || faker.string({
+      length: 8
+    }),
     phoneNumber: faker.phone(),
     name: faker.name(),
     emailVerified: true
@@ -49,7 +48,7 @@ Factory.blueprint('Adonis/Acl/Permission', (faker, i, data) => {
   };
 });
 
-// Permission blueprint
+// Trip blueprint
 Factory.blueprint('App/Models/Trip', (faker, i, data) => {
   return {
     from: faker.city(),
@@ -65,5 +64,14 @@ Factory.blueprint('App/Models/Trip', (faker, i, data) => {
     }),
     requiresContact: faker.bool(),
     driver_id: data.driver_id
+  };
+});
+
+// Trip request blueprint
+Factory.blueprint('App/Models/TripRequest', (faker, i, data) => {
+  return {
+    status: data.status || "Pending",
+    trip_id: data.trip_id,
+    user_id: data.user_id
   };
 });

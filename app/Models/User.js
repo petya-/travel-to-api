@@ -50,6 +50,17 @@ class User extends Model {
   }
 
   /**
+   * A relationship on trip requests
+   *
+   * @method tripRequests
+   *
+   * @return {Object}
+   */
+  tripRequests() {
+    return this.hasMany('App/Models/TripRequest', 'id')
+  }
+
+  /**
    * ACL traits
    */
   static get traits() {

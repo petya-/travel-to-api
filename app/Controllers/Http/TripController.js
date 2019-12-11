@@ -86,7 +86,12 @@ class TripController {
    */
   async show({ response, auth }) {
     try {
-      const trips = await auth.user.trips().fetch();
+      const driverTrips = await auth.user.trips().fetch();
+      const tripRequests = await auth.user.tripRequests().fetch();
+      const trips = {
+        driver: driverTrips,
+        passenger: tripRequests
+      };
       response.status(200).json({
         status: 'success',
         data: trips
