@@ -64,7 +64,23 @@ Route.group(() => {
     Route.post('/', 'TripController.create').middleware(['can:create_trip']);
     Route.put('/:id', 'TripController.update').middleware(['can:update_trip']);
     Route.get('/user', 'TripController.show').middleware(['can:read_user_trips']);
-
   })
   .prefix('api/trips')
+  .middleware(['auth:jwt']);
+
+
+/*
+|--------------------------------------------------------------------------
+| Trip Request Routes
+|--------------------------------------------------------------------------
+*/
+Route.group(() => {
+    Route.get('/', 'TripRequestController.index').middleware(['can:read_trip_requests']);
+    Route.post('/', 'TripRequestController.create').middleware(['can:create_trip_request']);
+    Route.put('/:id', 'TripRequestController.update').middleware(['can:update_trip_request']);
+    Route.post('/:id/accept', 'TripRequestController.accept').middleware(['can:accept_trip_request']);
+    Route.post('/:id/reject', 'TripRequestController.reject').middleware(['can:reject_trip_request']);
+    Route.post('/:id/cancel', 'TripRequestController.cancel').middleware(['can:cancel_trip_request']);
+  })
+  .prefix('api/tripRequests')
   .middleware(['auth:jwt']);

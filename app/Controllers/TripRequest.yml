@@ -1,0 +1,44 @@
+paths:
+  /tripRequests:
+    get:
+      description: Get all trip requests
+      tags:
+        - TripRequest
+      security:
+        - bearerAuth: []
+      summary: Auth JWT login
+      produces:
+        - application/json
+      responses:
+        200:
+          description: trip requests array
+          schema:
+            $ref: '#/definitions/Trip'
+    post:
+      description: Create a trip request
+      tags:
+        - TripRequest
+      security:
+        - bearerAuth: []
+      summary: Auth JWT login
+      produces:
+        - application/json
+      parameters:
+        - name: trip_id
+          description: Id of the trip
+          in: formData
+          type: integer
+        - name: numberOfPassengers
+          description: Number of available places for the trip
+          in: formData
+          type: integer
+      required:
+        - trip_id
+        - numberOfPassengers
+      responses:
+        200:
+          description: created trip request object
+          schema:
+            $ref: '#/definitions/TripRequest'
+        400:
+          description: There was a problem creating the trip request, please try again later.

@@ -18,7 +18,9 @@ class TripController {
    * @param {object} ctx
    * @param {Response} ctx.response
    */
-  async index({ response }) {
+  async index({
+    response
+  }) {
     try {
       const trips = await Trip.all();
       response.status(200).json({
@@ -39,7 +41,11 @@ class TripController {
    * @param {Response} ctx.response
    * @param {Auth} ctx.auth
    */
-  async create({ request, response, auth }) {
+  async create({
+    request,
+    response,
+    auth
+  }) {
     try {
       const trip = await auth.user.trips().create({
         from: request.input('from'),
@@ -47,9 +53,7 @@ class TripController {
         departureTime: request.input('departureTime'),
         numberOfPassengers: request.input('numberOfPassengers'),
         price: request.input('price'),
-        requiresContact: request.input('requiresContact')
-          ? request.input('requiresContact')
-          : true
+        requiresContact: request.input('requiresContact') || true
       });
       return response.json({
         status: 'success',
@@ -59,8 +63,7 @@ class TripController {
     } catch (error) {
       return response.status(400).json({
         status: 'error',
-        message:
-          'There was a problem creating the trip, please try again later.'
+        message: 'There was a problem creating the trip, please try again later.'
       });
     }
   }
@@ -73,7 +76,10 @@ class TripController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async store({ request, response }) {}
+  async store({
+    request,
+    response
+  }) {}
 
   /**
    * Display a single trip.
@@ -84,7 +90,10 @@ class TripController {
    * @param {Auth} ctx.auth
 
    */
-  async show({ response, auth }) {
+  async show({
+    response,
+    auth
+  }) {
     try {
       const driverTrips = await auth.user.trips().fetch();
       const tripRequests = await auth.user.tripRequests().fetch();
@@ -112,7 +121,11 @@ class TripController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async update({ params, request, response }) {}
+  async update({
+    params,
+    request,
+    response
+  }) {}
 
   /**
    * Delete a trip with id.
@@ -122,7 +135,11 @@ class TripController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async destroy({ params, request, response }) {}
+  async destroy({
+    params,
+    request,
+    response
+  }) {}
 }
 
 module.exports = TripController;
