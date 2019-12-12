@@ -77,6 +77,37 @@ class PermissionSeeder {
       description: 'read user trips permission'
     });
 
+    const readTripRequestsPermission = await Factory.model('Adonis/Acl/Permission').create({
+      slug: 'read_trip_requests',
+      name: 'Read trip requests',
+      description: 'read trip requests'
+    });
+
+    const createTripRequestPermission = await Factory.model('Adonis/Acl/Permission').create({
+      slug: 'create_trip_request',
+      name: 'Create trip request',
+      description: 'create trip request'
+    });
+
+    const acceptTripRequestPermission = await Factory.model('Adonis/Acl/Permission').create({
+      slug: 'accept_trip_request',
+      name: 'Accept trip request',
+      description: 'accept trip request'
+    });
+
+    const rejectTripRequestPermission = await Factory.model('Adonis/Acl/Permission').create({
+      slug: 'reject_trip_request',
+      name: 'Reject trip request',
+      description: 'reject trip request'
+    });
+
+    const cancelTripRequestPermission = await Factory.model('Adonis/Acl/Permission').create({
+      slug: 'cancel_trip_request',
+      name: 'Cancel trip request',
+      description: 'cancel trip request'
+    });
+
+
     // Assign permissions to roles
 
     const adminRole = await Role.findBy('slug', 'admin')
@@ -91,13 +122,16 @@ class PermissionSeeder {
       createTripPermission.id,
       updateTripPermission.id,
       readUserTripsPermission.id,
+      readTripRequestsPermission.id,
     ])
 
     const driverRole = await Role.findBy('slug', 'driver')
     await driverRole.permissions().attach([
       createTripPermission.id,
       updateTripPermission.id,
-      readUserTripsPermission.id
+      readUserTripsPermission.id,
+      acceptTripRequestPermission.id,
+      rejectTripRequestPermission.id,
     ])
 
     const passengerRole = await Role.findBy('slug', 'passenger')
@@ -105,6 +139,8 @@ class PermissionSeeder {
       createUsersPermission.id,
       readUserProfilePermission.id,
       updateUserProfilePermission.id,
+      createTripRequestPermission.id,
+      cancelTripRequestPermission.id,
     ])
   }
 }

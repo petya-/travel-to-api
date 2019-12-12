@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
@@ -13,11 +13,20 @@ class TripRequestController {
    * GET triprequests
    *
    * @param {object} ctx
-   * @param {Request} ctx.request
    * @param {Response} ctx.response
-   * @param {View} ctx.view
    */
-  async index ({ request, response, view }) {
+  async index({
+    response
+  }) {
+    try {
+      const tripRequests = await TripRequest.all();
+      response.status(200).json({
+        status: 'success',
+        data: tripRequests
+      });
+    } catch (error) {
+      throw error;
+    }
   }
 
   /**
@@ -27,9 +36,31 @@ class TripRequestController {
    * @param {object} ctx
    * @param {Request} ctx.request
    * @param {Response} ctx.response
-   * @param {View} ctx.view
+   * @param {Auth} ctx.auth
    */
-  async create ({ request, response, view }) {
+  async create({
+    request,
+    response,
+    auth
+  }) {
+    try {
+      const tripRequest = await auth.user.tripRequests().create({
+        numberOfPassengers: request.input('numberOfPassengers'),
+        trip_id: request.input('trip_id'),
+        status: 'Pending'
+      });
+      return response.json({
+        status: 'success',
+        message: 'You have successfully requested a trip!',
+        data: tripRequest
+      });
+    } catch (error) {
+      console.log(error);
+      return response.status(400).json({
+        status: 'error',
+        message: 'There was a problem while requesting the trip, please try again later.'
+      });
+    }
   }
 
   /**
@@ -40,8 +71,10 @@ class TripRequestController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async store ({ request, response }) {
-  }
+  async store({
+    request,
+    response
+  }) {}
 
   /**
    * Display a single triprequest.
@@ -52,8 +85,12 @@ class TripRequestController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async show ({ params, request, response, view }) {
-  }
+  async show({
+    params,
+    request,
+    response,
+    view
+  }) {}
 
   /**
    * Render a form to update an existing triprequest.
@@ -64,8 +101,12 @@ class TripRequestController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async edit ({ params, request, response, view }) {
-  }
+  async edit({
+    params,
+    request,
+    response,
+    view
+  }) {}
 
   /**
    * Update triprequest details.
@@ -75,8 +116,11 @@ class TripRequestController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async update ({ params, request, response }) {
-  }
+  async update({
+    params,
+    request,
+    response
+  }) {}
 
   /**
    * Delete a triprequest with id.
@@ -86,8 +130,11 @@ class TripRequestController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async destroy ({ params, request, response }) {
-  }
+  async destroy({
+    params,
+    request,
+    response
+  }) {}
 }
 
-module.exports = TripRequestController
+module.exports = TripRequestController;
