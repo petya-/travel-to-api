@@ -1,5 +1,5 @@
 definitions:
-  Trip:
+  TripRequest:
     type: object
     properties:
       id:
