@@ -18,9 +18,7 @@ class TripController {
    * @param {object} ctx
    * @param {Response} ctx.response
    */
-  async index({
-    response
-  }) {
+  async index({ response }) {
     try {
       const trips = await Trip.all();
       response.status(200).json({
@@ -33,19 +31,16 @@ class TripController {
   }
 
   /**
-   * Render a form to be used for creating a new trip.
-   * GET trips/create
+   * Create/save a new trip.
+   * POST trips
    *
+   * @param {object} ctx
    * @param {object} ctx
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    * @param {Auth} ctx.auth
    */
-  async create({
-    request,
-    response,
-    auth
-  }) {
+  async store({ request, response }) {
     try {
       const trip = await auth.user.trips().create({
         from: request.input('from'),
@@ -63,26 +58,40 @@ class TripController {
     } catch (error) {
       return response.status(400).json({
         status: 'error',
-        message: 'There was a problem creating the trip, please try again later.'
+        message:
+          'There was a problem creating the trip, please try again later.'
       });
     }
   }
 
   /**
-   * Create/save a new trip.
-   * POST trips
+   * Display a single trip.
+   * GET trips/:id
    *
    * @param {object} ctx
-   * @param {Request} ctx.request
    * @param {Response} ctx.response
+   * @param {Params} ctx.params
+
    */
-  async store({
-    request,
-    response
-  }) {}
+  async show({ response, params }) {
+    try {
+      const { id } = params;
+      const trip = await Trip.findOrFail(id);
+
+      response.status(200).json({
+        status: 'success',
+        data: trip
+      });
+    } catch (error) {
+      return response.status(400).json({
+        status: 'error',
+        message: error.message
+      });
+    }
+  }
 
   /**
-   * Display a single trip.
+   * Display user trips.
    * GET trips/user
    *
    * @param {object} ctx
@@ -90,10 +99,7 @@ class TripController {
    * @param {Auth} ctx.auth
 
    */
-  async show({
-    response,
-    auth
-  }) {
+  async showUserTrips({ response, auth }) {
     try {
       const driverTrips = await auth.user.trips().fetch();
       const tripRequests = await auth.user.tripRequests().fetch();
@@ -121,11 +127,7 @@ class TripController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async update({
-    params,
-    request,
-    response
-  }) {}
+  async update({ params, request, response }) {}
 
   /**
    * Delete a trip with id.
@@ -135,11 +137,33 @@ class TripController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async destroy({
-    params,
-    request,
-    response
-  }) {}
+  async destroy({ params, request, response }) {}
+
+  /**
+   * Delete a trip with id.
+   * DELETE trips/:id
+   *
+   * @param {object} ctx
+   * @param {Request} ctx.request
+   * @param {Response} ctx.response
+   * @param {Params} ctx.params
+   */
+  async showTripRequests({ params, request, response }) {
+    try {
+      const { id } = params;
+      const trip = await Trip.findOrFail(id);
+      trip.tripRequests = await trip.tripRequests;
+      response.status(200).json({
+        status: 'success',
+        data: trip
+      });
+    } catch (error) {
+      return response.status(400).json({
+        status: 'error',
+        message: error.message
+      });
+    }
+  }
 }
 
 module.exports = TripController;
