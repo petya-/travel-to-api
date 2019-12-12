@@ -6,7 +6,7 @@ paths:
         - TripRequest
       security:
         - bearerAuth: []
-      summary: Auth JWT login
+      summary: Get all trip requests
       produces:
         - application/json
       responses:
@@ -20,7 +20,7 @@ paths:
         - TripRequest
       security:
         - bearerAuth: []
-      summary: Auth JWT login
+      summary: Create a trip request
       produces:
         - application/json
       parameters:

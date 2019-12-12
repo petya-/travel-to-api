@@ -2,6 +2,7 @@ paths:
   /auth/register:
     post:
       description: Register user with email
+      summary: Register user
       tags:
         - Auth
       produces:
@@ -35,6 +36,7 @@ paths:
   /auth/login:
     post:
       description: Login to the application
+      summary: Login
       tags:
         - Auth
       produces:
@@ -58,11 +60,11 @@ paths:
   /auth/verify:
     post:
       description: Verify user email
+      summary: Verify user
       tags:
         - Auth
       security:
         - bearerAuth: []
-      summary: Auth JWT login
       produces:
         - application/json
       responses:

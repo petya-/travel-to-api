@@ -15,9 +15,7 @@ class TripRequestController {
    * @param {object} ctx
    * @param {Response} ctx.response
    */
-  async index({
-    response
-  }) {
+  async index({ response }) {
     try {
       const tripRequests = await TripRequest.all();
       response.status(200).json({
@@ -30,19 +28,15 @@ class TripRequestController {
   }
 
   /**
-   * Render a form to be used for creating a new triprequest.
-   * GET triprequests/create
+   * Create/save a new triprequest.
+   * POST triprequests
    *
    * @param {object} ctx
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    * @param {Auth} ctx.auth
    */
-  async create({
-    request,
-    response,
-    auth
-  }) {
+  async store({ request, response, auth }) {
     try {
       const tripRequest = await auth.user.tripRequests().create({
         numberOfPassengers: request.input('numberOfPassengers'),
@@ -58,23 +52,11 @@ class TripRequestController {
       console.log(error);
       return response.status(400).json({
         status: 'error',
-        message: 'There was a problem while requesting the trip, please try again later.'
+        message:
+          'There was a problem while requesting the trip, please try again later.'
       });
     }
   }
-
-  /**
-   * Create/save a new triprequest.
-   * POST triprequests
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async store({
-    request,
-    response
-  }) {}
 
   /**
    * Display a single triprequest.
@@ -85,12 +67,9 @@ class TripRequestController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async show({
-    params,
-    request,
-    response,
-    view
-  }) {}
+  async show({ params, request, response, view }) {
+    const variable = 1;
+  }
 
   /**
    * Render a form to update an existing triprequest.
@@ -101,12 +80,7 @@ class TripRequestController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async edit({
-    params,
-    request,
-    response,
-    view
-  }) {}
+  async edit({ params, request, response, view }) {}
 
   /**
    * Update triprequest details.
@@ -116,11 +90,7 @@ class TripRequestController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async update({
-    params,
-    request,
-    response
-  }) {}
+  async update({ params, request, response }) {}
 
   /**
    * Delete a triprequest with id.
@@ -130,11 +100,7 @@ class TripRequestController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async destroy({
-    params,
-    request,
-    response
-  }) {}
+  async destroy({ params, request, response }) {}
 }
 
 module.exports = TripRequestController;

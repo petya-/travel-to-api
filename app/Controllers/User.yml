@@ -6,7 +6,7 @@ paths:
         - User
       security:
         - bearerAuth: []
-      summary: Auth JWT login
+      summary: Get all users
       produces:
         - application/json
       responses:
@@ -16,12 +16,12 @@ paths:
             $ref: '#/definitions/User'
   /user:
     get:
-      description: Get user
+      description: Get a user profile
       tags:
         - User
       security:
         - bearerAuth: []
-      summary: Auth JWT login
+      summary: Get a user profile
       produces:
         - application/json
       responses:
@@ -35,7 +35,7 @@ paths:
         - User
       security:
         - bearerAuth: []
-      summary: Auth JWT login
+      summary: Update user
       produces:
         - application/json
       parameters:
@@ -68,12 +68,12 @@ paths:
           description: There was a problem updating profile, please try again later.
   /user/changePassword:
     put:
-      description: Update user
+      description: Change user password
       tags:
         - User
       security:
         - bearerAuth: []
-      summary: Auth JWT login
+      summary: Change user password
       produces:
         - application/json
       parameters:

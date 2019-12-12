@@ -6,7 +6,7 @@ paths:
         - Trip
       security:
         - bearerAuth: []
-      summary: Auth JWT login
+      summary: Get all trips
       produces:
         - application/json
       responses:
@@ -20,7 +20,7 @@ paths:
         - Trip
       security:
         - bearerAuth: []
-      summary: Auth JWT login
+      summary: Create a trip
       produces:
         - application/json
       parameters:
@@ -68,7 +68,7 @@ paths:
         - Trip
       security:
         - bearerAuth: []
-      summary: Auth JWT login
+      summary: Get user trips
       produces:
         - application/json
       responses:
@@ -76,3 +76,37 @@ paths:
           description: Trips created by the user
           schema:
             $ref: '#/definitions/Trip'
+/trips/{id}:
+  get:
+    description: Get a trip by id
+    summary: Get a trip by id
+    tags:
+      - Trip
+    security:
+      - bearerAuth: []
+    produces:
+      - application/json
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+        description: Numeric id of the trip to get
+  /trips/{id}/request:
+    get:
+      description: Get a trip with trip requests
+      summary: Get a trip by id with the trip requests
+      tags:
+        - Trip
+      security:
+        - bearerAuth: []
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: Numeric id of the trip to get
