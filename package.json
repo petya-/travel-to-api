@@ -22,7 +22,6 @@
   "license": "UNLICENSED",
   "private": true,
   "dependencies": {
-    "@adonisjs/ace": "^5.0.8",
     "@adonisjs/auth": "^3.1.0",
     "@adonisjs/bodyparser": "^2.0.5",
     "@adonisjs/cors": "^1.0.7",
@@ -35,11 +34,14 @@
     "@adonisjs/shield": "^1.0.8",
     "@adonisjs/vow": "^1.0.17",
     "adonis-acl": "^1.1.1",
+    "adonis-lucid-optional-queries": "^1.0.1",
     "adonis-swagger": "^1.2.9",
     "luxon": "^1.21.3",
     "pg": "^7.12.1"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@adonisjs/ace": "^5.0.8"
+  },
   "autoload": {
     "App": "./app"
   }
