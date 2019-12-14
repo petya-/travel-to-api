@@ -4,8 +4,6 @@ paths:
       description: Get all trips
       tags:
         - Trip
-      security:
-        - bearerAuth: []
       summary: Get all trips
       produces:
         - application/json
@@ -110,3 +108,8 @@ paths:
             type: integer
           required: true
           description: Numeric id of the trip to get
+      responses:
+        200:
+          description: trip object
+          schema:
+            $ref: '#/definitions/Trip'
