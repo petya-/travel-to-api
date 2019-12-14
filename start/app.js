@@ -23,7 +23,8 @@ const providers = [
   '@adonisjs/mail/providers/MailProvider',
   '@adonisjs/cors/providers/CorsProvider',
   'adonis-swagger/providers/SwaggerProvider',
-  'adonis-acl/providers/AclProvider'
+  'adonis-acl/providers/AclProvider',
+  'adonis-lucid-optional-queries/providers/OptionalQueriesProvider'
 ];
 
 /*

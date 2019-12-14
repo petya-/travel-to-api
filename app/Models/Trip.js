@@ -1,9 +1,14 @@
-'use strict'
+'use strict';
 
 /** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
-const Model = use('Model')
+const Model = use('Model');
 
 class Trip extends Model {
+  static boot() {
+    super.boot();
+    // Add trait for optional query parameters
+    this.addTrait('@provider:Lucid/OptionalQueries');
+  }
 
   /**
    * A relationship on users
@@ -13,7 +18,7 @@ class Trip extends Model {
    * @return {Object}
    */
   users() {
-    return this.belongsTo('App/Models/User', 'id', 'driver_id')
+    return this.belongsTo('App/Models/User', 'id', 'driver_id');
   }
 
   /**
@@ -24,8 +29,8 @@ class Trip extends Model {
    * @return {Object}
    */
   tripRequests() {
-    return this.hasMany('App/Models/TripRequest', 'id')
+    return this.hasMany('App/Models/TripRequest', 'id');
   }
 }
 
-module.exports = Trip
+module.exports = Trip;

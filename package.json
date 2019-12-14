@@ -8,9 +8,10 @@
     "start": "node server.js",
     "test": "node ace test",
     "dev": "nodemon --watch app --harmony server.js",
-    "migrate": "adonis migration:run",
+    "migrate": "adonis migration",
+    "seed": "adonis migration",
     "migrate:seed": "adonis migration:run --seed",
-    "migrate:refresh": "adonis migration:refresh",
+    "migrate:refresh": "adonis migration:refresh --seed",
     "migrate:ci": "ENV_SILENT=true node ace migration:refresh --seed --force",
     "test:ci": "ENV_SILENT=true node ace test"
   },
