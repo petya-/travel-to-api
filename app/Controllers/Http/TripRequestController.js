@@ -9,8 +9,8 @@
  */
 class TripRequestController {
   /**
-   * Show a list of all triprequests.
-   * GET triprequests
+   * Show a list of all trip requests.
+   * GET tripRequests
    *
    * @param {object} ctx
    * @param {Response} ctx.response
@@ -28,8 +28,8 @@ class TripRequestController {
   }
 
   /**
-   * Create/save a new triprequest.
-   * POST triprequests
+   * Create/save a new trip request.
+   * POST tripRequests
    *
    * @param {object} ctx
    * @param {Request} ctx.request
@@ -60,31 +60,18 @@ class TripRequestController {
 
   /**
    * Display a single triprequest.
-   * GET triprequests/:id
+   * GET tripRequests/:id
    *
    * @param {object} ctx
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async show({ params, request, response, view }) {
-    const variable = 1;
-  }
-
-  /**
-   * Render a form to update an existing triprequest.
-   * GET triprequests/:id/edit
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async edit({ params, request, response, view }) {}
+  async show({ params, request, response, view }) {}
 
   /**
    * Update triprequest details.
-   * PUT or PATCH triprequests/:id
+   * PUT or PATCH tripRequests/:id
    *
    * @param {object} ctx
    * @param {Request} ctx.request
