@@ -4,6 +4,8 @@
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 
+const TripRequest = use('App/Models/TripRequest');
+
 /**
  * Resourceful controller for interacting with triprequests
  */
@@ -59,15 +61,29 @@ class TripRequestController {
   }
 
   /**
-   * Display a single triprequest.
+   * Get a single triprequest.
    * GET tripRequests/:id
    *
    * @param {object} ctx
-   * @param {Request} ctx.request
+   * @param {Request} ctx.params
    * @param {Response} ctx.response
-   * @param {View} ctx.view
    */
-  async show({ params, request, response, view }) {}
+  async show({ params, response }) {
+    try {
+      const { id } = params;
+      const tripRequest = await TripRequest.findOrFail(id);
+
+      response.status(200).json({
+        status: 'success',
+        data: tripRequest
+      });
+    } catch (error) {
+      return response.status(400).json({
+        status: 'error',
+        message: error.message
+      });
+    }
+  }
 
   /**
    * Update triprequest details.
@@ -78,6 +94,72 @@ class TripRequestController {
    * @param {Response} ctx.response
    */
   async update({ params, request, response }) {}
+
+  /**
+   * Accept a triprequest.
+   * PUT tripRequests/:id/accept
+   *
+   * @param {object} ctx
+   * @param {Request} ctx.params
+   * @param {Response} ctx.response
+   */
+  async accept({ params, response }) {
+    try {
+      const { id } = params;
+      const tripRequest = await TripRequest.findOrFail(id);
+      if (tripRequest.status === 'Pending') {
+        tripRequest.status = 'Accepted';
+        await tripRequest.save();
+
+        return response.status(200).json({
+          status: 'success',
+          data: tripRequest
+        });
+      }
+      return response.status(400).json({
+        status: 'error',
+        message: 'You can accept only a Pending request'
+      });
+    } catch (error) {
+      return response.status(400).json({
+        status: 'error',
+        message: error.message
+      });
+    }
+  }
+
+  /**
+   * Reject a triprequest.
+   * PUT tripRequests/:id/reject
+   *
+   * @param {object} ctx
+   * @param {Request} ctx.params
+   * @param {Response} ctx.response
+   */
+  async reject({ params, response }) {
+    try {
+      const { id } = params;
+      const tripRequest = await TripRequest.findOrFail(id);
+      if (tripRequest.status === 'Pending') {
+        tripRequest.status = 'Rejected';
+        await tripRequest.save();
+
+        return response.status(200).json({
+          status: 'success',
+          data: tripRequest
+        });
+      }
+      return response.status(400).json({
+        status: 'error',
+        message: 'You can reject only a Pending request'
+      });
+    } catch (error) {
+      return response.status(400).json({
+        status: 'error',
+        message: error.message
+      });
+    }
+  }
 
   /**
    * Delete a triprequest with id.

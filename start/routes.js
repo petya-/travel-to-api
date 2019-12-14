@@ -92,19 +92,22 @@ Route.group(() => {
   Route.get('/', 'TripRequestController.index').middleware([
     'can:read_trip_requests'
   ]);
+  Route.get('/:id', 'TripRequestController.show').middleware([
+    'can:read_trip_request'
+  ]);
   Route.post('/', 'TripRequestController.store').middleware([
     'can:create_trip_request'
   ]);
   Route.put('/:id', 'TripRequestController.update').middleware([
     'can:update_trip_request'
   ]);
-  Route.post('/:id/accept', 'TripRequestController.accept').middleware([
+  Route.put('/:id/accept', 'TripRequestController.accept').middleware([
     'can:accept_trip_request'
   ]);
-  Route.post('/:id/reject', 'TripRequestController.reject').middleware([
+  Route.put('/:id/reject', 'TripRequestController.reject').middleware([
     'can:reject_trip_request'
   ]);
-  Route.post('/:id/cancel', 'TripRequestController.cancel').middleware([
+  Route.put('/:id/cancel', 'TripRequestController.cancel').middleware([
     'can:cancel_trip_request'
   ]);
 })

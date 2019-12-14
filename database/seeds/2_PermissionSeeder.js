@@ -104,6 +104,14 @@ class PermissionSeeder {
       description: 'read trip requests'
     });
 
+    const readTripRequestPermission = await Factory.model(
+      'Adonis/Acl/Permission'
+    ).create({
+      slug: 'read_trip_request',
+      name: 'Read trip request',
+      description: 'read a single trip request'
+    });
+
     const createTripRequestPermission = await Factory.model(
       'Adonis/Acl/Permission'
     ).create({
@@ -152,6 +160,7 @@ class PermissionSeeder {
         createTripPermission.id,
         updateTripPermission.id,
         readUserTripsPermission.id,
+        readTripRequestPermission.id,
         readTripRequestsPermission.id
       ]);
 
@@ -162,6 +171,7 @@ class PermissionSeeder {
         createTripPermission.id,
         updateTripPermission.id,
         readUserTripsPermission.id,
+        readTripRequestPermission.id,
         acceptTripRequestPermission.id,
         rejectTripRequestPermission.id
       ]);
@@ -174,6 +184,7 @@ class PermissionSeeder {
         readUserProfilePermission.id,
         updateUserProfilePermission.id,
         readTripsPermission.id,
+        readTripRequestPermission.id,
         createTripRequestPermission.id,
         cancelTripRequestPermission.id
       ]);

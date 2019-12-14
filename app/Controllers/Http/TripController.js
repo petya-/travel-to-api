@@ -87,7 +87,7 @@ class TripController {
   }
 
   /**
-   * Display a single trip.
+   * Get a single trip.
    * GET trips/:id
    *
    * @param {object} ctx
