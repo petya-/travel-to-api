@@ -6,6 +6,7 @@
 /** @typedef {import('@adonisjs/auth')} Auth */
 
 const Trip = use('App/Models/Trip');
+const { DateTime } = require('luxon');
 
 /**
  * Resourceful controller for interacting with trips
@@ -16,11 +17,32 @@ class TripController {
    * GET trips
    *
    * @param {object} ctx
+   * @param {Response} ctx.request
    * @param {Response} ctx.response
    */
-  async index({ response }) {
+  async index({ request, response }) {
     try {
-      const trips = await Trip.all();
+      let startDate,
+        endDate = null;
+      if (request.input('date')) {
+        const inputDate = DateTime.fromISO(request.input('date'), {
+          zone: 'utc'
+        });
+        startDate = inputDate.startOf('day').toISO();
+        endDate = inputDate.endOf('day').toISO();
+      }
+      const trips = await Trip.query()
+        .where('status', 'Pending')
+        .optional(query => query.where('from', request.input('from')))
+        .optional(query => {
+          query.where('to', request.input('to'));
+        })
+        .optional(query => {
+          if (startDate && endDate) {
+            query.whereBetween('departureTime', [startDate, endDate]);
+          }
+        })
+        .fetch();
       response.status(200).json({
         status: 'success',
         data: trips
