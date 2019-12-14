@@ -3,17 +3,17 @@
 /** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
 const Model = use('Model');
 
-class TripRequest extends Model {
+class Message extends Model {
   /**
-   * A relationship on trip
+   * A relationship on conversation
    *
    * @method tripRequests
    *
    * @return {Object}
    */
-  trip() {
-    return this.belongsTo('App/Models/Trip', 'id');
+  messages() {
+    return this.belongsTo('App/Models/Conversation', 'id');
   }
 }
 
-module.exports = TripRequest;
+module.exports = Message;

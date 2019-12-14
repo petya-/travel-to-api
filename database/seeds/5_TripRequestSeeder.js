@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 /*
 |--------------------------------------------------------------------------
@@ -11,10 +11,13 @@
 */
 
 /** @type {import('@adonisjs/lucid/src/Factory')} */
-const Factory = use('Factory')
+const Factory = use('Factory');
+const User = use('App/Models/User');
 
 class TripRequestSeeder {
   async run() {
+    const passengerUser = await User.findBy('email', 'passenger@travel-to.com');
+
     await Factory.model('App/Models/TripRequest').create({
       trip_id: 1,
       user_id: 1
@@ -23,27 +26,27 @@ class TripRequestSeeder {
     await Factory.model('App/Models/TripRequest').create({
       trip_id: 2,
       user_id: 2,
-      status: "Accepted"
+      status: 'Accepted'
     });
 
     await Factory.model('App/Models/TripRequest').create({
       trip_id: 3,
       user_id: 3,
-      status: "Rejected"
+      status: 'Rejected'
     });
 
     await Factory.model('App/Models/TripRequest').create({
       trip_id: 4,
       user_id: 4,
-      status: "Accepted"
+      status: 'Accepted'
     });
 
     await Factory.model('App/Models/TripRequest').create({
       trip_id: 5,
-      user_id: 32,
-      status: "Accepted"
+      user_id: passengerUser.id,
+      status: 'Accepted'
     });
   }
 }
 
-module.exports = TripRequestSeeder
+module.exports = TripRequestSeeder;
