@@ -120,28 +120,8 @@ class TripController {
   }
 
   /**
-   * Update trip details.
-   * PUT or PATCH trips/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async update({ params, request, response }) {}
-
-  /**
-   * Delete a trip with id.
-   * DELETE trips/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async destroy({ params, request, response }) {}
-
-  /**
-   * Delete a trip with id.
-   * DELETE trips/:id
+   * Get a trip with trip requests
+   * GET trips/:id/tripRequests
    *
    * @param {object} ctx
    * @param {Request} ctx.request
@@ -164,6 +144,26 @@ class TripController {
       });
     }
   }
+
+  /**
+   * Update trip details.
+   * PUT or PATCH trips/:id
+   *
+   * @param {object} ctx
+   * @param {Request} ctx.request
+   * @param {Response} ctx.response
+   */
+  async update({ params, request, response }) {}
+
+  /**
+   * Delete a trip with id.
+   * DELETE trips/:id
+   *
+   * @param {object} ctx
+   * @param {Request} ctx.request
+   * @param {Response} ctx.response
+   */
+  async destroy({ params, request, response }) {}
 }
 
 module.exports = TripController;
