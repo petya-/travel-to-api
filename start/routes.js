@@ -61,7 +61,7 @@ Route.group(() => {
 */
 Route.group(() => {
   Route.get('/', 'TripController.index');
-  Route.get('/user', 'TripController.showUserTrips').middleware([
+  Route.get('/user', 'TripController.indexUserTrips').middleware([
     'auth:jwt',
     'can:read_user_trips'
   ]);
@@ -112,4 +112,16 @@ Route.group(() => {
   ]);
 })
   .prefix('api/tripRequests')
+  .middleware(['auth:jwt']);
+
+/*
+|--------------------------------------------------------------------------
+| Conversation Routes
+|--------------------------------------------------------------------------
+*/
+Route.group(() => {
+  Route.get('/', 'ConversationController.indexForUser').middleware([]);
+  Route.get('/:id', 'ConversationController.show').middleware([]);
+})
+  .prefix('api/conversations')
   .middleware(['auth:jwt']);

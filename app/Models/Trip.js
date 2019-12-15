@@ -13,7 +13,7 @@ class Trip extends Model {
   /**
    * A relationship on users
    *
-   * @method trips
+   * @method users
    *
    * @return {Object}
    */
@@ -30,6 +30,17 @@ class Trip extends Model {
    */
   tripRequests() {
     return this.hasMany('App/Models/TripRequest', 'id');
+  }
+
+  /**
+   * A relationship on conversations
+   *
+   * @method conversations
+   *
+   * @return {Object}
+   */
+  conversations() {
+    return this.hasMany('App/Models/Conversation', 'id');
   }
 }
 

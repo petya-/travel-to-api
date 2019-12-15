@@ -7,12 +7,23 @@ class TripRequest extends Model {
   /**
    * A relationship on trip
    *
-   * @method tripRequests
+   * @method trip
    *
    * @return {Object}
    */
   trip() {
     return this.belongsTo('App/Models/Trip', 'id');
+  }
+
+  /**
+   * A relationship on conversation
+   *
+   * @method conversation
+   *
+   * @return {Object}
+   */
+  conversation() {
+    return this.belongsTo('App/Models/Conversation', 'trip_request_id');
   }
 }
 
