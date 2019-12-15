@@ -54,7 +54,7 @@ class ConversationController {
         .where('id', id)
         .with('messages')
         .first();
-
+      // TODO: add check if the user is in conversation
       return {
         status: 'success',
         data: conversation

@@ -74,6 +74,7 @@ class TripRequestController {
     try {
       const { id } = params;
       const tripRequest = await TripRequest.findOrFail(id);
+      // TODO: add check if the user is in the trip or trip request
 
       response.status(200).json({
         status: 'success',
