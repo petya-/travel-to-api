@@ -5,6 +5,8 @@
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 
 const TripRequest = use('App/Models/TripRequest');
+const Event = use('Event');
+const Conversation = use('App/Models/Conversation');
 
 /**
  * Resourceful controller for interacting with triprequests
@@ -45,13 +47,15 @@ class TripRequestController {
         trip_id: request.input('trip_id'),
         status: 'Pending'
       });
+      await Event.fire('new::tripRequest', tripRequest, request, auth.user);
+      const conversation = await tripRequest.conversation().fetch();
+      console.log(conversation);
       return response.json({
         status: 'success',
         message: 'You have successfully requested a trip!',
         data: tripRequest
       });
     } catch (error) {
-      console.log(error);
       return response.status(400).json({
         status: 'error',
         message:
@@ -72,6 +76,7 @@ class TripRequestController {
     try {
       const { id } = params;
       const tripRequest = await TripRequest.findOrFail(id);
+      // TODO: add check if the user is in the trip or trip request
 
       response.status(200).json({
         status: 'success',

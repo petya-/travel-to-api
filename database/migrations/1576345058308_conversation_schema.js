@@ -3,18 +3,20 @@
 /** @type {import('@adonisjs/lucid/src/Schema')} */
 const Schema = use('Schema');
 
-class TripRequestSchema extends Schema {
+class ConversationSchema extends Schema {
   up() {
-    this.create('trip_requests', table => {
+    this.create('conversations', table => {
       table.increments();
+      table.boolean('active').default(true);
       table
-        .string('status')
-        .notNullable()
-        .default('Pending');
+        .integer('creator_id')
+        .unsigned()
+        .index();
       table
-        .integer('numberOfPassengers')
-        .notNullable()
-        .default(1);
+        .foreign('creator_id')
+        .references('id')
+        .on('users')
+        .onDelete('cascade');
       table
         .integer('trip_id')
         .unsigned()
@@ -25,21 +27,21 @@ class TripRequestSchema extends Schema {
         .on('trips')
         .onDelete('cascade');
       table
-        .integer('user_id')
+        .integer('trip_request_id')
         .unsigned()
         .index();
       table
-        .foreign('user_id')
+        .foreign('trip_request_id')
         .references('id')
-        .on('users')
+        .on('trip_requests')
         .onDelete('cascade');
       table.timestamps();
     });
   }
 
   down() {
-    this.drop('trip_requests');
+    this.drop('conversations');
   }
 }
 
-module.exports = TripRequestSchema;
+module.exports = ConversationSchema;

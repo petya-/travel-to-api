@@ -13,12 +13,12 @@ class Trip extends Model {
   /**
    * A relationship on users
    *
-   * @method trips
+   * @method users
    *
    * @return {Object}
    */
   users() {
-    return this.belongsTo('App/Models/User', 'id', 'driver_id');
+    return this.belongsTo('App/Models/User');
   }
 
   /**
@@ -29,7 +29,18 @@ class Trip extends Model {
    * @return {Object}
    */
   tripRequests() {
-    return this.hasMany('App/Models/TripRequest', 'id');
+    return this.hasMany('App/Models/TripRequest');
+  }
+
+  /**
+   * A relationship on conversations
+   *
+   * @method conversations
+   *
+   * @return {Object}
+   */
+  conversations() {
+    return this.hasMany('App/Models/Conversation');
   }
 }
 

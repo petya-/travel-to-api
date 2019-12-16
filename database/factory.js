@@ -62,7 +62,7 @@ Factory.blueprint('App/Models/Trip', (faker, i, data) => {
       min: 4,
       max: 10
     }),
-    requiresContact: faker.bool(),
+    requiresContact: data.requiresContact || faker.bool(),
     driver_id: data.driver_id
   };
 });
@@ -73,5 +73,24 @@ Factory.blueprint('App/Models/TripRequest', (faker, i, data) => {
     status: data.status || 'Pending',
     trip_id: data.trip_id,
     user_id: data.user_id
+  };
+});
+
+// Conversation blueprint
+Factory.blueprint('App/Models/Conversation', (faker, i, data) => {
+  return {
+    trip_id: data.trip_id,
+    trip_request_id: data.trip_request_id,
+    creator_id: data.creator_id
+  };
+});
+
+// Message blueprint
+Factory.blueprint('App/Models/Message', (faker, i, data) => {
+  return {
+    message: faker.sentence(),
+    sender_id: data.sender_id,
+    receiver_id: data.receiver_id,
+    conversation_id: data.conversation_id
   };
 });

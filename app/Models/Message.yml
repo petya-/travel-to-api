@@ -1,0 +1,21 @@
+definitions:
+  Message:
+    type: object
+    properties:
+      id:
+        type: uint
+      message:
+        type: text
+      read:
+        type: boolean
+      sender_id:
+        type: integer
+      receiver_id:
+        type: integer
+      conversation_id:
+        type: integer
+    required:
+      - message
+      - sender_id
+      - receiver_id
+      - conversation_id

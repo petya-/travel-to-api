@@ -32,6 +32,10 @@ paths:
           description: Number of available places for the trip
           in: formData
           type: integer
+        - name: message
+          description: Message to send to driver user. Required if trip requires contact
+          in: formData
+          type: text
       required:
         - trip_id
         - numberOfPassengers

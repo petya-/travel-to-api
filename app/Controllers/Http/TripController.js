@@ -105,7 +105,7 @@ class TripController {
         data: trip
       });
     } catch (error) {
-      return response.status(400).json({
+      return response.status(500).json({
         status: 'error',
         message: error.message
       });
@@ -121,7 +121,7 @@ class TripController {
    * @param {Auth} ctx.auth
 
    */
-  async showUserTrips({ response, auth }) {
+  async indexUserTrips({ response, auth }) {
     try {
       const driverTrips = await auth.user.trips().fetch();
       const tripRequests = await auth.user.tripRequests().fetch();
@@ -134,7 +134,7 @@ class TripController {
         data: trips
       });
     } catch (error) {
-      return response.status(400).json({
+      return response.status(500).json({
         status: 'error',
         message: 'An error occurred.'
       });
@@ -160,7 +160,7 @@ class TripController {
         data: trip
       });
     } catch (error) {
-      return response.status(400).json({
+      return response.status(500).json({
         status: 'error',
         message: error.message
       });

@@ -3,11 +3,7 @@ const User = use('App/Models/User');
 const Event = use('Event');
 const Role = use('Role');
 class AuthController {
-  async register({
-    request,
-    auth,
-    response
-  }) {
+  async register({ request, auth, response }) {
     // get user data from signup form
     const userData = request.only(['name', 'email', 'password', 'phoneNumber']);
     const role = request.input('role');
@@ -27,22 +23,17 @@ class AuthController {
         await user.roles().attach(driverRole.id);
       }
 
-      return response.json({
-        status: 'success',
-        data: token
-      });
+      return response.json({ status: 'success', data: token });
     } catch (err) {
       return response.status(400).json({
         status: 'error',
-        message: 'There was a problem creating the user, please try again later.'
+        message:
+          'There was a problem creating the user, please try again later.'
       });
     }
   }
 
-  async verify({
-    auth,
-    response
-  }) {
+  async verify({ auth, response }) {
     let user = await auth.getUser();
 
     if (user) {
@@ -58,29 +49,16 @@ class AuthController {
     });
   }
 
-  async login({
-    request,
-    auth,
-    response
-  }) {
+  async login({ request, auth, response }) {
     try {
-      const {
-        email,
-        password
-      } = request.all();
+      const { email, password } = request.all();
 
       // validate the user credentials and generate a JWT token
       const token = await auth.attempt(email, password);
 
-      return response.json({
-        status: 'success',
-        data: token
-      });
+      return response.json({ status: 'success', data: token });
     } catch (err) {
-      response.status(400).json({
-        status: 'error',
-        message: err.message
-      });
+      response.status(400).json({ status: 'error', message: err.message });
     }
   }
 }

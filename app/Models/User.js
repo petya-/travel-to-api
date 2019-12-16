@@ -1,27 +1,26 @@
-'use strict'
+'use strict';
 
 /** @type {import('@adonisjs/framework/src/Hash')} */
-const Hash = use('Hash')
+const Hash = use('Hash');
 
 /** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
-const Model = use('Model')
+const Model = use('Model');
 
 class User extends Model {
   static get hidden() {
-    return ['password']
+    return ['password'];
   }
 
   static boot() {
-    super.boot()
+    super.boot();
 
     /**
      * A hook to hash the user password before saving
      * it to the database.
      */
-    this.addHook('beforeSave', 'UserHook.hashPassword')
-    this.addHook('afterSave', 'UserHook.attachPassengerRole')
-    this.addHook('afterFind', ['UserHook.isEnabled', 'UserHook.isVerified'])
-
+    this.addHook('beforeSave', 'UserHook.hashPassword');
+    this.addHook('afterSave', 'UserHook.attachPassengerRole');
+    this.addHook('afterFind', ['UserHook.isEnabled', 'UserHook.isVerified']);
   }
 
   /**
@@ -35,7 +34,7 @@ class User extends Model {
    * @return {Object}
    */
   tokens() {
-    return this.hasMany('App/Models/Token')
+    return this.hasMany('App/Models/Token');
   }
 
   /**
@@ -46,7 +45,7 @@ class User extends Model {
    * @return {Object}
    */
   trips() {
-    return this.hasMany('App/Models/Trip', 'id', 'driver_id')
+    return this.hasMany('App/Models/Trip', 'id', 'driver_id');
   }
 
   /**
@@ -57,7 +56,18 @@ class User extends Model {
    * @return {Object}
    */
   tripRequests() {
-    return this.hasMany('App/Models/TripRequest', 'id')
+    return this.hasMany('App/Models/TripRequest');
+  }
+
+  /**
+   * A relationship on conversations
+   *
+   * @method tripRequests
+   *
+   * @return {Object}
+   */
+  conversations() {
+    return this.hasMany('App/Models/Conversation', 'id', 'creator_id');
   }
 
   /**
@@ -67,10 +77,8 @@ class User extends Model {
     return [
       '@provider:Adonis/Acl/HasRole',
       '@provider:Adonis/Acl/HasPermission'
-    ]
+    ];
   }
-
-
 }
 
-module.exports = User
+module.exports = User;

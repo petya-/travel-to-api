@@ -24,7 +24,8 @@ const providers = [
   '@adonisjs/cors/providers/CorsProvider',
   'adonis-swagger/providers/SwaggerProvider',
   'adonis-acl/providers/AclProvider',
-  'adonis-lucid-optional-queries/providers/OptionalQueriesProvider'
+  'adonis-lucid-optional-queries/providers/OptionalQueriesProvider',
+  '@adonisjs/websocket/providers/WsProvider'
 ];
 
 /*
