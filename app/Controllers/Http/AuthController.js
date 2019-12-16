@@ -23,10 +23,7 @@ class AuthController {
         await user.roles().attach(driverRole.id);
       }
 
-      return response.json({
-        status: 'success',
-        data: token
-      });
+      return response.json({ status: 'success', data: token });
     } catch (err) {
       return response.status(400).json({
         status: 'error',
@@ -59,15 +56,9 @@ class AuthController {
       // validate the user credentials and generate a JWT token
       const token = await auth.attempt(email, password);
 
-      return response.json({
-        status: 'success',
-        data: token
-      });
+      return response.json({ status: 'success', data: token });
     } catch (err) {
-      response.status(400).json({
-        status: 'error',
-        message: err.message
-      });
+      response.status(400).json({ status: 'error', message: err.message });
     }
   }
 }

@@ -1,0 +1,58 @@
+paths:
+  /conversations:
+    get:
+      description: Get all user conversations
+      tags:
+        - Conversation
+      security:
+        - bearerAuth: []
+      summary: Get all user conversations
+      produces:
+        - application/json
+      responses:
+        200:
+          description: conversations with messages array
+          schema:
+            $ref: '#/definitions/Conversation'
+  /conversations/{id}:
+    get:
+      description: Get a conversation with messages by id
+      tags:
+        - Conversation
+      security:
+        - bearerAuth: []
+      summary: Get a conversation with messages
+      produces:
+        - application/json
+      responses:
+        200:
+          description: conversation object with messages array
+          schema:
+            $ref: '#/definitions/Conversation'
+  /conversations/{id}/message:
+    post:
+      description: Create a new message
+      tags:
+        - Message
+      security:
+        - bearerAuth: []
+      summary: Create a new message
+      produces:
+        - application/json
+      parameters:
+        - name: message
+          description: Message content
+          in: formData
+          type: text
+        - name: receiver_id
+          description: Id of user that should receive the message
+          in: formData
+          type: integer
+      required:
+        - message
+        - receiver_id
+      responses:
+        200:
+          description: message object
+          schema:
+            $ref: '#/definitions/Message'

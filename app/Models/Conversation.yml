@@ -1,0 +1,18 @@
+definitions:
+  Conversation:
+    type: object
+    properties:
+      id:
+        type: uint
+      active:
+        type: boolean
+      creator_id:
+        type: integer
+      trip_id:
+        type: integer
+      trip_request_id:
+        type: integer
+    required:
+      - creator_id
+      - trip_id
+      - trip_request_id

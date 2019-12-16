@@ -12,7 +12,18 @@ class Conversation extends Model {
    * @return {Object}
    */
   messages() {
-    return this.hasMany('App/Models/Message', 'id');
+    return this.hasMany('App/Models/Message');
+  }
+
+  /**
+   * A relationship on conversation
+   *
+   * @method conversation
+   *
+   * @return {Object}
+   */
+  tripRequest() {
+    return this.belongsTo('App/Models/TripRequest', 'id', 'trip_request_id');
   }
 }
 

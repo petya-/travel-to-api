@@ -26,10 +26,7 @@ class ConversationController {
         .orderBy('created_at', 'desc')
         .fetch();
 
-      return {
-        status: 'success',
-        conversations
-      };
+      return { status: 'success', conversations };
     } catch (error) {
       return response.status(500).json({
         status: 'error',
@@ -45,7 +42,6 @@ class ConversationController {
    * @param {object} ctx
    * @param {Response} ctx.response
    * @param {Params} ctx.params
-
    */
   async show({ response, params }) {
     try {
@@ -55,19 +51,59 @@ class ConversationController {
         .with('messages')
         .first();
       // TODO: add check if the user is in conversation
-      return {
-        status: 'success',
-        data: conversation
-      };
+      return { status: 'success', data: conversation };
     } catch (error) {
+      return response
+        .status(500)
+        .json({ status: 'error', message: error.message });
+    }
+  }
+
+  /**
+   * Create a new message
+   * POST conversations/:id/message
+   *
+   * @param {object} ctx
+   * @param {Response} ctx.response
+   * @param {Params} ctx.params
+   */
+  async createMessage({ request, response, params, auth }) {
+    try {
+      const message = request.input('message');
+      const receiver_id = request.input('receiver_id');
+
+      const user = auth.user;
+      // Conversation id from params
+      const { id } = params;
+      const conversation = await Conversation.findOrFail(id);
+
+      if (!conversation) {
+        return response
+          .status(404)
+          .json({ status: 'error', message: 'No conversation found!' });
+      }
+
+      const newMessage = await conversation.messages().create({
+        message,
+        sender_id: user.id,
+        receiver_id,
+        conversation_id: conversation.id
+      });
+
+      broadcast(conversation.id, 'room:newMessage', newMessage);
+
+      return response.status(200).json({
+        status: 'success',
+        message: newMessage
+      });
+    } catch (error) {
+      console.log(error.message);
       return response.status(500).json({
         status: 'error',
-        message: error.message
+        message: 'There was an error while creating the message'
       });
     }
   }
 }
-
-// TODO: Add create message route
 
 module.exports = ConversationController;

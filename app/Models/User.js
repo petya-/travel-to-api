@@ -56,7 +56,7 @@ class User extends Model {
    * @return {Object}
    */
   tripRequests() {
-    return this.hasMany('App/Models/TripRequest', 'id');
+    return this.hasMany('App/Models/TripRequest');
   }
 
   /**
@@ -67,7 +67,7 @@ class User extends Model {
    * @return {Object}
    */
   conversations() {
-    return this.hasMany('App/Models/Conversation', 'creator_id');
+    return this.hasMany('App/Models/Conversation', 'id', 'creator_id');
   }
 
   /**

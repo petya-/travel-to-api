@@ -12,7 +12,7 @@ class TripRequest extends Model {
    * @return {Object}
    */
   trip() {
-    return this.belongsTo('App/Models/Trip', 'id');
+    return this.belongsTo('App/Models/Trip');
   }
 
   /**
@@ -23,7 +23,7 @@ class TripRequest extends Model {
    * @return {Object}
    */
   conversation() {
-    return this.belongsTo('App/Models/Conversation', 'trip_request_id');
+    return this.belongsTo('App/Models/Conversation', 'id', 'trip_request_id');
   }
 }
 

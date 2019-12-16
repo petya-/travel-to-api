@@ -11,8 +11,8 @@ class Message extends Model {
    *
    * @return {Object}
    */
-  messages() {
-    return this.belongsTo('App/Models/Conversation', 'id');
+  conversation() {
+    return this.belongsTo('App/Models/Conversation');
   }
 }
 

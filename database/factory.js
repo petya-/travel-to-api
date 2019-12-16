@@ -62,7 +62,7 @@ Factory.blueprint('App/Models/Trip', (faker, i, data) => {
       min: 4,
       max: 10
     }),
-    requiresContact: faker.bool(),
+    requiresContact: data.requiresContact || faker.bool(),
     driver_id: data.driver_id
   };
 });

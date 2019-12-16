@@ -21,6 +21,14 @@ adonis new yardstick
 
 or manually clone the repo and then run `npm install`.
 
+## Environment Setup
+
+Create a `.env` file from `.env.example` and add populate it with the database and email connection
+
+```bash
+copy .env.example .env
+```
+
 ### Migrations and Seeders
 
 Run the following command to run startup migrations and seeders.

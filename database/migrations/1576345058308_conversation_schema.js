@@ -24,7 +24,7 @@ class ConversationSchema extends Schema {
       table
         .foreign('trip_id')
         .references('id')
-        .on('trip_requests')
+        .on('trips')
         .onDelete('cascade');
       table
         .integer('trip_request_id')

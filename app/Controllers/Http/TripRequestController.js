@@ -48,6 +48,8 @@ class TripRequestController {
         status: 'Pending'
       });
       await Event.fire('new::tripRequest', tripRequest, request, auth.user);
+      const conversation = await tripRequest.conversation().fetch();
+      console.log(conversation);
       return response.json({
         status: 'success',
         message: 'You have successfully requested a trip!',

@@ -122,6 +122,9 @@ Route.group(() => {
 Route.group(() => {
   Route.get('/', 'ConversationController.indexForUser').middleware([]);
   Route.get('/:id', 'ConversationController.show').middleware([]);
+  Route.post('/:id/message', 'ConversationController.createMessage').middleware(
+    []
+  );
 })
   .prefix('api/conversations')
   .middleware(['auth:jwt']);

@@ -46,6 +46,12 @@ class TripRequestSeeder {
       user_id: passengerUser.id,
       status: 'Accepted'
     });
+
+    await Factory.model('App/Models/TripRequest').create({
+      trip_id: 21,
+      user_id: passengerUser.id,
+      status: 'Pending'
+    });
   }
 }
 

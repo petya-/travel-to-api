@@ -18,7 +18,7 @@ class Trip extends Model {
    * @return {Object}
    */
   users() {
-    return this.belongsTo('App/Models/User', 'id', 'driver_id');
+    return this.belongsTo('App/Models/User');
   }
 
   /**
@@ -29,7 +29,7 @@ class Trip extends Model {
    * @return {Object}
    */
   tripRequests() {
-    return this.hasMany('App/Models/TripRequest', 'id');
+    return this.hasMany('App/Models/TripRequest');
   }
 
   /**
@@ -40,7 +40,7 @@ class Trip extends Model {
    * @return {Object}
    */
   conversations() {
-    return this.hasMany('App/Models/Conversation', 'id');
+    return this.hasMany('App/Models/Conversation');
   }
 }
 

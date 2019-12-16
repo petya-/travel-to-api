@@ -13,17 +13,17 @@
 /** @type {import('@adonisjs/lucid/src/Factory')} */
 const Factory = use('Factory');
 const User = use('App/Models/User');
-const TripRequest = use('App/Models/TripRequest');
+const Trip = use('App/Models/Trip');
 
 class ConversationSeeder {
   async run() {
     const driverUser = await User.findBy('email', 'driver@travel-to.com');
     const passengerUser = await User.findBy('email', 'passenger@travel-to.com');
-    const tripRequest = await TripRequest.findBy('user_id', passengerUser.id);
-    const trip = await tripRequest.trip().fetch();
+    const trip = await Trip.findOrFail(21);
+    const tripRequests = await trip.tripRequests().fetch();
 
     const conversation = await Factory.model('App/Models/Conversation').create({
-      trip_request_id: tripRequest.id,
+      trip_request_id: tripRequests.first().id,
       trip_id: trip.id,
       creator_id: passengerUser.id
     });

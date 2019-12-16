@@ -26,6 +26,7 @@ class TripSeeder {
       departureTime: DateTime.fromISO('2019-12-24', {
         zone: 'utc'
       }).toISO(),
+      requiresContact: true,
       driver_id: driverUser.id
     });
   }
