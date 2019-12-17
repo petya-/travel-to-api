@@ -6,20 +6,10 @@ const Role = use('Role');
 trait('Test/ApiClient');
 trait('Auth/Client');
 
-let user;
+let adminUser;
 
 before(async () => {
-  user = await User.create({
-    email: 'petyab@gmail.com',
-    password: 'petya',
-    phoneNumber: '+4534421237',
-    name: 'Petya B',
-    emailVerified: true
-  });
-});
-
-after(async () => {
-  await user.delete();
+  adminUser = await User.findBy('email', 'admin@travel-to.com');
 });
 
 test('cannot get list of users without a token', async ({ client }) => {
@@ -34,11 +24,9 @@ test('cannot get list of users without a token', async ({ client }) => {
 test('get list of users if the user authorized and has admin permissions', async ({
   client
 }) => {
-  const adminRole = await Role.findBy('slug', 'admin');
-  await user.roles().attach([adminRole.id]);
   const response = await client
     .get('api/users')
-    .loginVia(user, 'jwt')
+    .loginVia(adminUser, 'jwt')
     .end();
 
   const users = await User.all();
@@ -49,3 +37,7 @@ test('get list of users if the user authorized and has admin permissions', async
     data: users.toJSON()
   });
 });
+
+test('user can get his profile', async ({ client, assert }) => {});
+test('user can update his profile', async ({ client, assert }) => {});
+test('user can change his password', async ({ client, assert }) => {});

@@ -7,6 +7,22 @@ paths:
       summary: Get all trips
       produces:
         - application/json
+      parameters:
+        - in: query
+          name: from
+          type: string
+          required: false
+          description: Start destination
+        - in: query
+          name: to
+          type: string
+          required: false
+          description: The number of items to return.
+        - in: query
+          name: date
+          type: date
+          required: false
+          description: Date or DateTime for trip
       responses:
         200:
           description: trips array
@@ -23,11 +39,11 @@ paths:
         - application/json
       parameters:
         - name: from
-          description: Start of journey
+          description: Start destination of trip
           in: formData
           type: string
         - name: to
-          description: End of journey
+          description: End destination of trip
           in: formData
           type: string
         - name: departureTime

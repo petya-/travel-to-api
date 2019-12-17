@@ -7,7 +7,6 @@ function broadcast(id, type, data) {
   const topic = channel.topic(`conversation:${id}`);
 
   if (!topic) {
-    console.error('No one has subscribed to this topic yet');
     return;
   }
 
