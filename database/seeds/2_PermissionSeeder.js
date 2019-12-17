@@ -184,6 +184,7 @@ class PermissionSeeder {
         readUserProfilePermission.id,
         updateUserProfilePermission.id,
         readTripsPermission.id,
+        readUserTripsPermission.id,
         readTripRequestPermission.id,
         createTripRequestPermission.id,
         cancelTripRequestPermission.id

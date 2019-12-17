@@ -42,6 +42,7 @@ class TripController {
             query.whereBetween('departureTime', [startDate, endDate]);
           }
         })
+        .with('driver')
         .fetch();
       response.status(200).json({
         status: 'success',
@@ -98,7 +99,10 @@ class TripController {
   async show({ response, params }) {
     try {
       const { id } = params;
-      const trip = await Trip.findOrFail(id);
+      const trip = await Trip.query()
+        .where('id', id)
+        .with('driver')
+        .first();
 
       response.status(200).json({
         status: 'success',

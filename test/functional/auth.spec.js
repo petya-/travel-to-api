@@ -1,27 +1,77 @@
 'use strict';
-const { test, trait, before, after } = use('Test/Suite')('User');
+const { test, trait, before, after } = use('Test/Suite')('Authenthication');
 const User = use('App/Models/User');
-const Role = use('Role');
+const Event = use('Event');
 
 trait('Test/ApiClient');
 trait('Auth/Client');
 
-// let user;
+test('user can signup via email as passenger', async ({ client, assert }) => {
+  Event.fake();
 
-// before(async () => {
-//   user = await User.create({
-//     email: 'petyab@gmail.com',
-//     password: 'petya',
-//     phoneNumber: '+4534421237',
-//     name: 'Petya B',
-//     emailVerified: true
-//   });
-// });
+  const userData = {
+    name: 'Joe Doe',
+    email: 'joe@example.com',
+    password: 'mySecurePassword',
+    phoneNumber: '22344356'
+  };
 
-// after(async () => {
-//   await user.delete();
-// });
+  const response = await client
+    .post('api/auth/register')
+    .send(userData)
+    .end();
 
-test('user can signup with email and password and receive an email', async ({
-  client
-}) => {});
+  response.assertStatus(200);
+  assert.notEqual(response.body.data.token, null);
+
+  // Make sure event to send mail is dispatched
+  const recentEvent = Event.pullRecent();
+  assert.equal(recentEvent.event, 'new::user');
+  Event.restore();
+});
+
+test('user can signup via email as driver and get welcome mail', async ({
+  client,
+  assert
+}) => {
+  Event.fake();
+
+  const userData = {
+    name: 'Joeh Doeh',
+    email: 'joeh@example.com',
+    password: 'mySecurePassword2',
+    phoneNumber: '22344355',
+    role: 'driver'
+  };
+
+  const response = await client
+    .post('api/auth/register')
+    .send(userData)
+    .end();
+
+  response.assertStatus(200);
+  assert.notEqual(response.body.data.token, null);
+
+  // Make sure event to send mail is dispatched
+  const recentEvent = Event.pullRecent();
+  assert.equal(recentEvent.event, 'new::user');
+  Event.restore();
+});
+
+test('user cannot login if the email is not verified', async ({ client }) => {
+  const userData = {
+    name: 'Joeh Doeh',
+    email: 'joeh@example.com'
+  };
+
+  const response = await client
+    .post('api/auth/login')
+    .send(userData)
+    .end();
+
+  response.assertStatus(403);
+  response.assertError({
+    status: 'error',
+    message: 'Your email address is not confirmed!'
+  });
+});

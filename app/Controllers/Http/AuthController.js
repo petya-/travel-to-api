@@ -58,7 +58,7 @@ class AuthController {
 
       return response.json({ status: 'success', data: token });
     } catch (err) {
-      response.status(400).json({ status: 'error', message: err.message });
+      response.status(403).json({ status: 'error', message: err.message });
     }
   }
 }

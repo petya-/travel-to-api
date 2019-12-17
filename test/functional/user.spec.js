@@ -1,5 +1,5 @@
 'use strict';
-const { test, trait, before, after } = use('Test/Suite')('Authenthication');
+const { test, trait, before, after } = use('Test/Suite')('User');
 const User = use('App/Models/User');
 const Role = use('Role');
 
@@ -37,3 +37,7 @@ test('get list of users if the user authorized and has admin permissions', async
     data: users.toJSON()
   });
 });
+
+test('user can get his profile', async ({ client, assert }) => {});
+test('user can update his profile', async ({ client, assert }) => {});
+test('user can change his password', async ({ client, assert }) => {});

@@ -17,8 +17,8 @@ class Trip extends Model {
    *
    * @return {Object}
    */
-  users() {
-    return this.belongsTo('App/Models/User');
+  driver() {
+    return this.belongsTo('App/Models/User', 'driver_id', 'id');
   }
 
   /**
