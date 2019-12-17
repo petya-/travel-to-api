@@ -121,7 +121,9 @@ Route.group(() => {
 */
 Route.group(() => {
   Route.get('/', 'ConversationController.indexForUser').middleware([]);
-  Route.get('/:id', 'ConversationController.show').middleware([]);
+  Route.get('/:id', 'ConversationController.show').middleware([
+    'isInConversation'
+  ]);
   Route.post('/:id/message', 'ConversationController.createMessage').middleware(
     []
   );

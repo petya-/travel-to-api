@@ -15,18 +15,18 @@ class ConversationController {
    */
   async indexForUser({ response, auth }) {
     try {
-      const { id } = auth.user;
+      const { user } = auth;
       const conversations = await Conversation.query()
-        .where('creator_id', id)
+        .where('creator_id', user.id)
         .where('active', true)
-        .whereHas('messages', (builder, id) => {
-          builder.where('sender_id', 1).orWhere('receiver_id', 32);
+        .whereHas('messages', builder => {
+          builder.where('sender_id', user.id).orWhere('receiver_id', user.id);
         })
         .with('messages')
         .orderBy('created_at', 'desc')
         .fetch();
 
-      return { status: 'success', conversations };
+      return { status: 'success', data: conversations };
     } catch (error) {
       return response.status(500).json({
         status: 'error',
@@ -94,7 +94,7 @@ class ConversationController {
 
       return response.status(200).json({
         status: 'success',
-        message: newMessage
+        data: newMessage
       });
     } catch (error) {
       console.log(error.message);
