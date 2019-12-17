@@ -1,8 +1,8 @@
-'use strict'
+'use strict';
 
 /** @type {import('@adonisjs/framework/src/Server')} */
-const Server = use('Server')
-Server.use(['Adonis/Middleware/Cors'])
+const Server = use('Server');
+Server.use(['Adonis/Middleware/Cors']);
 
 /*
 |--------------------------------------------------------------------------
@@ -21,7 +21,7 @@ const globalMiddleware = [
   'Adonis/Middleware/AuthInit',
   'App/Middleware/ConvertEmptyStringsToNull',
   'Adonis/Acl/Init'
-]
+];
 
 /*
 |--------------------------------------------------------------------------
@@ -45,7 +45,8 @@ const namedMiddleware = {
   guest: 'Adonis/Middleware/AllowGuestOnly',
   is: 'Adonis/Acl/Is',
   can: 'Adonis/Acl/Can',
-}
+  isInConversation: 'App/Middleware/ConversationParticipant'
+};
 
 /*
 |--------------------------------------------------------------------------
@@ -57,11 +58,8 @@ const namedMiddleware = {
 | control over request lifecycle.
 |
 */
-const serverMiddleware = [
-  'Adonis/Middleware/Static'
-]
+const serverMiddleware = ['Adonis/Middleware/Static'];
 
-Server
-  .registerGlobal(globalMiddleware)
+Server.registerGlobal(globalMiddleware)
   .registerNamed(namedMiddleware)
-  .use(serverMiddleware)
+  .use(serverMiddleware);

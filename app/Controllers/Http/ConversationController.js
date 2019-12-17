@@ -1,6 +1,8 @@
 'use strict';
 const Conversation = use('App/Models/Conversation');
+const Message = use('App/Models/Message');
 const { broadcast } = require('../../utils/socket.utils');
+const { DateTime } = require('luxon');
 
 class ConversationController {
   /**
@@ -15,18 +17,18 @@ class ConversationController {
    */
   async indexForUser({ response, auth }) {
     try {
-      const { id } = auth.user;
+      const { user } = auth;
       const conversations = await Conversation.query()
-        .where('creator_id', id)
+        .where('creator_id', user.id)
         .where('active', true)
-        .whereHas('messages', (builder, id) => {
-          builder.where('sender_id', 1).orWhere('receiver_id', 32);
+        .whereHas('messages', builder => {
+          builder.where('sender_id', user.id).orWhere('receiver_id', user.id);
         })
         .with('messages')
         .orderBy('created_at', 'desc')
         .fetch();
 
-      return { status: 'success', conversations };
+      return { status: 'success', data: conversations };
     } catch (error) {
       return response.status(500).json({
         status: 'error',
@@ -94,13 +96,49 @@ class ConversationController {
 
       return response.status(200).json({
         status: 'success',
-        message: newMessage
+        data: newMessage
       });
     } catch (error) {
       console.log(error.message);
       return response.status(500).json({
         status: 'error',
         message: 'There was an error while creating the message'
+      });
+    }
+  }
+
+  async markAsRead({ response, params, auth }) {
+    const { id } = params;
+    const { user } = auth;
+
+    try {
+      const message = await Message.find(id);
+
+      if (!message) {
+        return response.status(404).json({
+          status: 'error',
+          message: 'The message does not exist.'
+        });
+      }
+
+      if (message.receiver_id !== user.id) {
+        return response.status(403).json({
+          status: 'error',
+          message: 'Cannot mark as read a message that is not addressed to you!'
+        });
+      }
+
+      message.read = DateTime.utc();
+      await message.save();
+
+      return response.status(200).json({
+        status: 'success',
+        data: message
+      });
+    } catch (error) {
+      return response.status(500).json({
+        status: 'success',
+        data: 'There was an error while marking the message as read'
       });
     }
   }

@@ -121,10 +121,23 @@ Route.group(() => {
 */
 Route.group(() => {
   Route.get('/', 'ConversationController.indexForUser').middleware([]);
-  Route.get('/:id', 'ConversationController.show').middleware([]);
+  Route.get('/:id', 'ConversationController.show').middleware([
+    'isInConversation'
+  ]);
   Route.post('/:id/message', 'ConversationController.createMessage').middleware(
-    []
+    ['isInConversation']
   );
 })
   .prefix('api/conversations')
+  .middleware(['auth:jwt']);
+
+/*
+|--------------------------------------------------------------------------
+| Messaging Routes
+|--------------------------------------------------------------------------
+*/
+Route.group(() => {
+  Route.put('/:id', 'ConversationController.markAsRead').middleware();
+})
+  .prefix('api/messages')
   .middleware(['auth:jwt']);

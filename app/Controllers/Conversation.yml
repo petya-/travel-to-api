@@ -56,3 +56,18 @@ paths:
           description: message object
           schema:
             $ref: '#/definitions/Message'
+  /messages/{id}:
+    put:
+      description: Mark a message as read
+      tags:
+        - Message
+      security:
+        - bearerAuth: []
+      summary: Mark a message as read
+      produces:
+        - application/json
+      responses:
+        200:
+          description: message object
+          schema:
+            $ref: '#/definitions/Message'
