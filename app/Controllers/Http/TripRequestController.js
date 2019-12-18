@@ -6,7 +6,6 @@
 
 const TripRequest = use('App/Models/TripRequest');
 const Event = use('Event');
-const Conversation = use('App/Models/Conversation');
 
 /**
  * Resourceful controller for interacting with triprequests
@@ -48,8 +47,7 @@ class TripRequestController {
         status: 'Pending'
       });
       await Event.fire('new::tripRequest', tripRequest, request, auth.user);
-      const conversation = await tripRequest.conversation().fetch();
-      console.log(conversation);
+
       return response.json({
         status: 'success',
         message: 'You have successfully requested a trip!',
@@ -76,7 +74,6 @@ class TripRequestController {
     try {
       const { id } = params;
       const tripRequest = await TripRequest.findOrFail(id);
-      // TODO: add check if the user is in the trip or trip request
 
       response.status(200).json({
         status: 'success',

@@ -63,7 +63,7 @@ class TripController {
    * @param {Response} ctx.response
    * @param {Auth} ctx.auth
    */
-  async store({ request, response }) {
+  async store({ request, response, auth }) {
     try {
       const trip = await auth.user.trips().create({
         from: request.input('from'),
@@ -71,7 +71,8 @@ class TripController {
         departureTime: request.input('departureTime'),
         numberOfPassengers: request.input('numberOfPassengers'),
         price: request.input('price'),
-        requiresContact: request.input('requiresContact') || true
+        requiresContact: request.input('requiresContact') || true,
+        status: 'Pending'
       });
       return response.json({
         status: 'success',
@@ -150,11 +151,10 @@ class TripController {
    * GET trips/:id/tripRequests
    *
    * @param {object} ctx
-   * @param {Request} ctx.request
    * @param {Response} ctx.response
    * @param {Params} ctx.params
    */
-  async showTripRequests({ params, request, response }) {
+  async showTripRequests({ params, response }) {
     try {
       const { id } = params;
       const trip = await Trip.findOrFail(id);

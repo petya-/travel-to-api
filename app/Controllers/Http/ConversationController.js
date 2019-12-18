@@ -99,7 +99,6 @@ class ConversationController {
         data: newMessage
       });
     } catch (error) {
-      console.log(error.message);
       return response.status(500).json({
         status: 'error',
         message: 'There was an error while creating the message'
