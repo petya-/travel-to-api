@@ -144,8 +144,7 @@ test('can mark message as read', async ({ client, assert }) => {
 });
 
 test('cannot mark message as read if the user is not the receiver_id', async ({
-  client,
-  assert
+  client
 }) => {
   const message = await Message.findOrFail(2);
   const response = await client
@@ -162,8 +161,7 @@ test('cannot mark message as read if the user is not the receiver_id', async ({
 });
 
 test('cannot mark message as read if the message does not exist', async ({
-  client,
-  assert
+  client
 }) => {
   const response = await client
     .put(`api/messages/12`)

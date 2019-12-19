@@ -45,7 +45,8 @@ const namedMiddleware = {
   guest: 'Adonis/Middleware/AllowGuestOnly',
   is: 'Adonis/Acl/Is',
   can: 'Adonis/Acl/Can',
-  isInConversation: 'App/Middleware/ConversationParticipant'
+  isInConversation: 'App/Middleware/ConversationParticipant',
+  isInTrip: 'App/Middleware/TripParticipant'
 };
 
 /*
