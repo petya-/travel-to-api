@@ -90,27 +90,27 @@ paths:
           description: Trips created by the user
           schema:
             $ref: '#/definitions/Trip'
-/trips/{id}:
-  get:
-    description: Get a trip by id
-    summary: Get a trip by id
-    tags:
-      - Trip
-    security:
-      - bearerAuth: []
-    produces:
-      - application/json
-    parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-        description: Numeric id of the trip
+  /trips/{id}:
+    get:
+      description: Get a trip by id
+      summary: Get a trip by id
+      tags:
+        - Trip
+      security:
+        - bearerAuth: []
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: Numeric id of the trip
   /trips/{id}/request:
     get:
-      description: Get a trip with trip requests
-      summary: Get a trip by id with the trip requests
+      summary: Get a trip with trip requests
+      description: Get a trip by id with the trip requests
       tags:
         - Trip
       security:
@@ -130,9 +130,9 @@ paths:
           schema:
             $ref: '#/definitions/Trip'
   /trips/{id}/cancel:
-    get:
-      description: Cancel a trip
-      summary: Driver can cancel a trip up to 24h before the departure time
+    put:
+      summary: Cancel a trip
+      description: Driver can cancel a trip up to 24h before the departure time
       tags:
         - Trip
       security:
