@@ -20,15 +20,14 @@ class TripCreator {
       .where('driver_id', user.id)
       .first();
 
-    if (!conversation) {
+    if (!trip || trip.driver_id !== user.id) {
       return response.status(403).json({
         status: 'error',
-        message: 'You are the creator of the trip.'
+        message: 'You are not the creator of the trip.'
       });
     }
-
     await next();
   }
 }
 
-module.exports = ConversationParticipant;
+module.exports = TripCreator;

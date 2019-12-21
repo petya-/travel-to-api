@@ -95,7 +95,6 @@ class TripController {
    * @param {object} ctx
    * @param {Response} ctx.response
    * @param {Params} ctx.params
-
    */
   async show({ response, params }) {
     try {
@@ -124,7 +123,6 @@ class TripController {
    * @param {object} ctx
    * @param {Response} ctx.response
    * @param {Auth} ctx.auth
-
    */
   async indexUserTrips({ response, auth }) {
     try {
@@ -167,6 +165,58 @@ class TripController {
       return response.status(500).json({
         status: 'error',
         message: error.message
+      });
+    }
+  }
+
+  /**
+   * Cancel a trip
+   * GET trips/:id/cancel
+   *
+   * @param {object} ctx
+   * @param {Response} ctx.response
+   * @param {Params} ctx.params
+   * @param {Auth} ctx.auth
+   */
+  async cancel({ response, params, auth }) {
+    const { id } = params;
+    const { user } = auth;
+
+    try {
+      const trip = await Trip.find(id);
+
+      const tomorrow = DateTime.utc().plus({
+        days: 1,
+        hours: 0,
+        minutes: 0,
+        seconds: 0
+      });
+
+      const { hours } = tomorrow
+        .diff(DateTime.fromJSDate(trip.departureTime), 'hours')
+        .toObject();
+
+      if (hours > 24) {
+        return response.status(400).json({
+          status: 'error',
+          message:
+            'You cannot cancel a trip less that 24h before the departure time.'
+        });
+      }
+
+      trip.status = 'Cancelled';
+      await trip.save();
+
+      return response.status(200).json({
+        status: 'success',
+        data: trip
+      });
+    } catch (error) {
+      console.log(error);
+
+      return response.status(500).json({
+        status: 'error',
+        message: 'There was an error while cancelling the trip.'
       });
     }
   }
