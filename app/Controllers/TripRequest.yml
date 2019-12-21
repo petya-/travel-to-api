@@ -62,7 +62,7 @@ paths:
           schema:
             type: integer
           required: true
-          description: Numeric id of the trip to get
+          description: Numeric id of the trip request
       responses:
         200:
           description: trip request object
@@ -84,7 +84,7 @@ paths:
         schema:
           type: integer
         required: true
-        description: Numeric id of the trip to get
+        description: Numeric id of the trip request
     responses:
       200:
         description: trip request object
@@ -106,7 +106,7 @@ paths:
         schema:
           type: integer
         required: true
-        description: Numeric id of the trip to get
+        description: Numeric id of the trip request
     responses:
       200:
         description: trip request object

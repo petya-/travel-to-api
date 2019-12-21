@@ -106,7 +106,7 @@ paths:
         schema:
           type: integer
         required: true
-        description: Numeric id of the trip to get
+        description: Numeric id of the trip
   /trips/{id}/request:
     get:
       description: Get a trip with trip requests
@@ -123,7 +123,29 @@ paths:
           schema:
             type: integer
           required: true
-          description: Numeric id of the trip to get
+          description: Numeric id of the trip
+      responses:
+        200:
+          description: trip object
+          schema:
+            $ref: '#/definitions/Trip'
+  /trips/{id}/cancel:
+    get:
+      description: Cancel a trip
+      summary: Driver can cancel a trip up to 24h before the departure time
+      tags:
+        - Trip
+      security:
+        - bearerAuth: []
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: Numeric id of the trip to cancel
       responses:
         200:
           description: trip object
