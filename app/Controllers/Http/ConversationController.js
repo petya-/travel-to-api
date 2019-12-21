@@ -52,7 +52,7 @@ class ConversationController {
         .where('id', id)
         .with('messages')
         .first();
-      // TODO: add check if the user is in conversation
+
       return { status: 'success', data: conversation };
     } catch (error) {
       return response
@@ -73,10 +73,9 @@ class ConversationController {
     try {
       const message = request.input('message');
       const receiver_id = request.input('receiver_id');
-
-      const user = auth.user;
-      // Conversation id from params
       const { id } = params;
+      const { user } = auth;
+
       const conversation = await Conversation.findOrFail(id);
 
       if (!conversation) {

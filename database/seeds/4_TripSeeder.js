@@ -29,6 +29,36 @@ class TripSeeder {
       requiresContact: true,
       driver_id: driverUser.id
     });
+
+    await Factory.model('App/Models/Trip').create({
+      from: 'Plovdiv',
+      to: 'Sofia',
+      departureTime: DateTime.utc()
+        .minus({
+          days: 1,
+          hours: 2,
+          minutes: 0,
+          seconds: 0
+        })
+        .toISO(),
+      requiresContact: true,
+      driver_id: driverUser.id
+    });
+
+    await Factory.model('App/Models/Trip').create({
+      from: 'Sofia',
+      to: 'Plovdiv',
+      departureTime: DateTime.utc()
+        .plus({
+          days: 3,
+          hours: 0,
+          minutes: 0,
+          seconds: 0
+        })
+        .toISO(),
+      requiresContact: true,
+      driver_id: driverUser.id
+    });
   }
 }
 

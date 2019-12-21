@@ -7,11 +7,12 @@ const { DateTime } = require('luxon');
 trait('Test/ApiClient');
 trait('Auth/Client');
 
-let passengerUser, driverUser, newTrip;
+let passengerUser, driverUser, adminUser, newTrip;
 
 before(async () => {
   passengerUser = await User.findBy('email', 'passenger@travel-to.com');
   driverUser = await User.findBy('email', 'driver@travel-to.com');
+  adminUser = await User.findBy('email', 'admin@travel-to.com');
   newTrip = {
     from: 'Oslo',
     to: 'Copenhagen',
@@ -126,4 +127,54 @@ test('driver user can create a trip', async ({ client, assert }) => {
   assert.equal(response.body.data.departureTime, newTrip.departureTime.toISO());
   assert.equal(response.body.data.driver_id, driverUser.id);
   assert.equal(response.body.data.status, 'Pending');
+  newTrip = response.body.data;
+});
+
+test('driver can cancel only his trips', async ({ client, assert }) => {
+  newTrip.status = 'Cancelled';
+
+  const response = await client
+    .put(`api/trips/${newTrip.id}/cancel`)
+    .send(newTrip)
+    .loginVia(adminUser, 'jwt')
+    .end();
+
+  response.assertStatus(403);
+  response.assertError({
+    status: 'error',
+    message: 'You are not the creator of the trip.'
+  });
+});
+
+test('driver cannot cancel a trip if the departure date is less that 24h from now', async ({
+  client,
+  assert
+}) => {
+  const trip = await Trip.findBy('from', 'Plovdiv');
+  assert.equal(trip.status, 'Pending');
+
+  const response = await client
+    .put(`api/trips/${newTrip.id}/cancel`)
+    .send(newTrip)
+    .loginVia(driverUser, 'jwt')
+    .end();
+  response.assertStatus(400);
+  response.assertError({
+    status: 'error',
+    message: 'You cannot cancel a trip less that 24h before the departure time.'
+  });
+});
+
+test('driver can cancel a trip', async ({ client, assert }) => {
+  const trip = await Trip.findBy('from', 'Sofia');
+  assert.equal(trip.status, 'Pending');
+
+  const response = await client
+    .put(`api/trips/${trip.id}/cancel`)
+    .send(trip)
+    .loginVia(driverUser, 'jwt')
+    .end();
+
+  response.assertStatus(200);
+  assert.equal(response.body.data.status, 'Cancelled');
 });

@@ -46,7 +46,8 @@ const namedMiddleware = {
   is: 'Adonis/Acl/Is',
   can: 'Adonis/Acl/Can',
   isInConversation: 'App/Middleware/ConversationParticipant',
-  isInTrip: 'App/Middleware/TripParticipant'
+  isInTrip: 'App/Middleware/TripParticipant',
+  isTripDriver: 'App/Middleware/TripCreator'
 };
 
 /*
