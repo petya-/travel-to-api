@@ -80,7 +80,7 @@ class TripController {
         data: trip
       });
     } catch (error) {
-      return response.status(400).json({
+      return response.status(500).json({
         status: 'error',
         message:
           'There was a problem creating the trip, please try again later.'
