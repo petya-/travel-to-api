@@ -125,12 +125,19 @@ Route.group(() => {
 |--------------------------------------------------------------------------
 */
 Route.group(() => {
-  Route.get('/', 'ConversationController.indexForUser').middleware([]);
+  Route.get('/', 'ConversationController.indexForUser').middleware([
+    'can:read_conversations'
+  ]);
   Route.get('/:id', 'ConversationController.show').middleware([
+    'can:read_conversations',
+    'isInConversation'
+  ]);
+  Route.put('/:id', 'ConversationController.update').middleware([
+    'can:update_conversation',
     'isInConversation'
   ]);
   Route.post('/:id/message', 'ConversationController.createMessage').middleware(
-    ['isInConversation']
+    ['can:create_message', 'isInConversation']
   );
 })
   .prefix('api/conversations')
@@ -142,7 +149,9 @@ Route.group(() => {
 |--------------------------------------------------------------------------
 */
 Route.group(() => {
-  Route.put('/:id', 'ConversationController.markAsRead').middleware();
+  Route.put('/:id', 'ConversationController.markAsRead').middleware([
+    'can:update_message'
+  ]);
 })
   .prefix('api/messages')
   .middleware(['auth:jwt']);

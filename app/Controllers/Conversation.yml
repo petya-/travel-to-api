@@ -29,6 +29,20 @@ paths:
           description: conversation object with messages array
           schema:
             $ref: '#/definitions/Conversation'
+    put:
+      description: Close a conversation
+      tags:
+        - Conversation
+      security:
+        - bearerAuth: []
+      summary: Close a conversation
+      produces:
+        - application/json
+      responses:
+        200:
+          description: conversation object
+          schema:
+            $ref: '#/definitions/Conversation'
   /conversations/{id}/message:
     post:
       description: Create a new message

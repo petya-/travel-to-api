@@ -16,6 +16,11 @@ const Role = use('Role');
 
 class PermissionSeeder {
   async run() {
+    /*
+    |--------------------------------------------------------------------------
+    | User Permissions
+    |--------------------------------------------------------------------------
+    */
     const createUsersPermission = await Factory.model(
       'Adonis/Acl/Permission'
     ).create({
@@ -64,6 +69,11 @@ class PermissionSeeder {
       description: 'update user profile permission'
     });
 
+    /*
+    |--------------------------------------------------------------------------
+    | Trip Permissions
+    |--------------------------------------------------------------------------
+    */
     const readTripsPermission = await Factory.model(
       'Adonis/Acl/Permission'
     ).create({
@@ -96,6 +106,11 @@ class PermissionSeeder {
       description: 'read user trips permission'
     });
 
+    /*
+    |--------------------------------------------------------------------------
+    | Trip Request Permissions
+    |--------------------------------------------------------------------------
+    */
     const readTripRequestsPermission = await Factory.model(
       'Adonis/Acl/Permission'
     ).create({
@@ -144,6 +159,44 @@ class PermissionSeeder {
       description: 'cancel trip request'
     });
 
+    /*
+    |--------------------------------------------------------------------------
+    | Conversation Permissions
+    |--------------------------------------------------------------------------
+    */
+
+    const readConversationsPermission = await Factory.model(
+      'Adonis/Acl/Permission'
+    ).create({
+      slug: 'read_conversations',
+      name: 'Read conversations',
+      description: 'read conversations'
+    });
+
+    const updateConversationPermission = await Factory.model(
+      'Adonis/Acl/Permission'
+    ).create({
+      slug: 'update_conversation',
+      name: 'Update conversation',
+      description: 'update conversation'
+    });
+
+    const createMessagePermission = await Factory.model(
+      'Adonis/Acl/Permission'
+    ).create({
+      slug: 'create_message',
+      name: 'Create message',
+      description: 'create message'
+    });
+
+    const updateMessagePermission = await Factory.model(
+      'Adonis/Acl/Permission'
+    ).create({
+      slug: 'update_message',
+      name: 'Update message',
+      description: 'update message'
+    });
+
     // Assign permissions to roles
 
     const adminRole = await Role.findBy('slug', 'admin');
@@ -187,7 +240,11 @@ class PermissionSeeder {
         readUserTripsPermission.id,
         readTripRequestPermission.id,
         createTripRequestPermission.id,
-        cancelTripRequestPermission.id
+        cancelTripRequestPermission.id,
+        readConversationsPermission.id,
+        updateConversationPermission.id,
+        createMessagePermission.id,
+        updateMessagePermission.id
       ]);
   }
 }

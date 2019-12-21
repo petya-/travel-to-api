@@ -94,16 +94,16 @@ test('can send a message', async ({ client, assert }) => {
     .post(`api/conversations/${conversation.id}/message`)
     .send({
       message,
-      receiver_id: driverUser.id
+      receiver_id: passengerUser.id
     })
-    .loginVia(passengerUser, 'jwt')
+    .loginVia(driverUser, 'jwt')
     .end();
   response.assertStatus(200);
 
   assert.equal(response.body.data.message, message);
   assert.equal(response.body.data.read, null);
-  assert.equal(response.body.data.sender_id, passengerUser.id);
-  assert.equal(response.body.data.receiver_id, driverUser.id);
+  assert.equal(response.body.data.sender_id, driverUser.id);
+  assert.equal(response.body.data.receiver_id, passengerUser.id);
   assert.equal(response.body.data.conversation_id, conversation.id);
 });
 
@@ -136,7 +136,7 @@ test('can mark message as read', async ({ client, assert }) => {
 
   const response = await client
     .put(`api/messages/${message.id}`)
-    .loginVia(driverUser, 'jwt')
+    .loginVia(passengerUser, 'jwt')
     .end();
 
   response.assertStatus(200);
@@ -173,4 +173,32 @@ test('cannot mark message as read if the message does not exist', async ({
     status: 'error',
     message: 'The message does not exist.'
   });
+});
+
+test('cannot close a conversation that I am not part of', async ({
+  client
+}) => {
+  const response = await client
+    .put(`api/conversations/${conversation.id}`)
+    .loginVia(adminUser, 'jwt')
+    .end();
+
+  response.assertStatus(403);
+  response.assertError({
+    status: 'error',
+    message:
+      'You are not part of the conversation that you are trying to access.'
+  });
+});
+
+test('can close a conversation', async ({ client, assert }) => {
+  assert.equal(conversation.active, true);
+
+  const response = await client
+    .put(`api/conversations/${conversation.id}`)
+    .loginVia(driverUser, 'jwt')
+    .end();
+
+  response.assertStatus(200);
+  assert.equal(response.body.data.active, false);
 });

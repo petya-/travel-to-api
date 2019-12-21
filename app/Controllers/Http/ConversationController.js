@@ -106,6 +106,15 @@ class ConversationController {
     }
   }
 
+  /**
+   * Mark message as read
+   * PUT messages/:id
+   *
+   * @param {object} ctx
+   * @param {Response} ctx.response
+   * @param {Params} ctx.params
+   * @param {Auth} ctx.auth
+   */
   async markAsRead({ response, params, auth }) {
     const { id } = params;
     const { user } = auth;
@@ -138,6 +147,42 @@ class ConversationController {
       return response.status(500).json({
         status: 'success',
         data: 'There was an error while marking the message as read'
+      });
+    }
+  }
+
+  /**
+   * Close conversation
+   * PUT conversations/:id
+   *
+   * @param {object} ctx
+   * @param {Response} ctx.response
+   * @param {Params} ctx.params
+   * @param {Auth} ctx.auth
+   */
+  async update({ response, params, auth }) {
+    const { id } = params;
+    const { user } = auth;
+
+    try {
+      const conversation = await Conversation.find(id);
+      if (!conversation) {
+        return response.status(404).json({
+          status: 'error',
+          message: 'The conversation does not exist.'
+        });
+      }
+
+      conversation.active = false;
+      await conversation.save();
+      return response.status(200).json({
+        status: 'success',
+        data: conversation
+      });
+    } catch (error) {
+      return response.status(500).json({
+        status: 'success',
+        data: 'There was an error while closing the conversation'
       });
     }
   }

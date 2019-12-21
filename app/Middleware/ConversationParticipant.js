@@ -17,10 +17,10 @@ class ConversationParticipant {
 
     const conversation = await Conversation.query()
       .where('id', id)
-      .where('creator_id', user.id)
       .whereHas('messages', builder => {
         builder.where('sender_id', user.id).orWhere('receiver_id', user.id);
       })
+      .orWhere('creator_id', user.id)
       .first();
 
     if (!conversation) {
