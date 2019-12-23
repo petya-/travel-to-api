@@ -13,7 +13,7 @@ test('user can signup via email as passenger', async ({ client, assert }) => {
     name: 'Joe Doe',
     email: 'joe@example.com',
     password: 'mySecurePassword',
-    phoneNumber: '22344356'
+    phone_number: '22344356'
   };
 
   const response = await client
@@ -40,7 +40,7 @@ test('user can signup via email as driver and get welcome mail', async ({
     name: 'Joeh Doeh',
     email: 'joeh@example.com',
     password: 'mySecurePassword2',
-    phoneNumber: '22344355',
+    phone_number: '22344355',
     role: 'driver'
   };
 

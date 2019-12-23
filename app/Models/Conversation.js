@@ -16,14 +16,25 @@ class Conversation extends Model {
   }
 
   /**
-   * A relationship on conversation
+   * A relationship on tripReuqest
    *
    * @method conversation
    *
    * @return {Object}
    */
   tripRequest() {
-    return this.belongsTo('App/Models/TripRequest', 'id', 'trip_request_id');
+    return this.belongsTo('App/Models/TripRequest');
+  }
+
+  /**
+   * A relationship on conversation
+   *
+   * @method conversation
+   *
+   * @return {Object}
+   */
+  trip() {
+    return this.belongsTo('App/Models/Trip');
   }
 }
 

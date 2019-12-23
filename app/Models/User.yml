@@ -10,13 +10,13 @@ definitions:
         type: string
       name:
         type: string
-      phoneNumber:
+      phone_number:
         type: string
-      profileImg:
+      profile_img:
         type: string
       description:
         type: string
-      emailVerified:
+      email_verified:
         type: boolean
       enabled:
         type: boolean
@@ -24,4 +24,4 @@ definitions:
       - email
       - password
       - name
-      - phoneNumber
+      - phone_number

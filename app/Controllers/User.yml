@@ -43,16 +43,16 @@ paths:
           description: User's email
           in: formData
           type: string
-        - name: phoneNumber
-          description: User's phoneNumber
+        - name: phone_number
+          description: User's phone_number
           in: formData
           type: string
         - name: name
           description: User's name.
           in: formData
           type: string
-        - name: profileImg
-          description: User's profileImg
+        - name: profile_img
+          description: User's profile_img
           in: formData
           type: string
         - name: description
@@ -83,7 +83,7 @@ paths:
           required: true
           type: string
         - name: newPassword
-          description: User's phoneNumber
+          description: User's phone_number
           in: formData
           required: true
           type: string

@@ -6,10 +6,10 @@ const { broadcast } = require('../utils/socket.utils');
 
 TripRequest.createConversation = async (tripRequest, request, user) => {
   try {
-    // create new conversation if trip requiresContact
+    // create new conversation if trip requires_contact
     const trip = await Trip.findOrFail(request.input('trip_id'));
 
-    if (trip.requiresContact) {
+    if (trip.requires_contact) {
       const conversation = await trip.conversations().create({
         creator_id: user.id,
         trip_request_id: tripRequest.id

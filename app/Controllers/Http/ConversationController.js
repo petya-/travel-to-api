@@ -38,7 +38,7 @@ class ConversationController {
   }
 
   /**
-   * Get a single trip.
+   * Get a single conversation.
    * GET conversations/:id
    *
    * @param {object} ctx
@@ -51,6 +51,10 @@ class ConversationController {
       const conversation = await Conversation.query()
         .where('id', id)
         .with('messages')
+        .with('messages.sender')
+        .with('messages.receiver')
+        .with('trip')
+        .with('tripRequest')
         .first();
 
       return { status: 'success', data: conversation };

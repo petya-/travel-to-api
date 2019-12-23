@@ -17,7 +17,7 @@ before(async () => {
 
   trip = await Trip.findBy('from', 'Copenhagen');
   newTripRequest = {
-    numberOfPassengers: 2,
+    number_of_passengers: 2,
     trip_id: trip.id,
     message: 'Hi, I would like to travel with you. Where are you leaving from?'
   };
@@ -38,7 +38,7 @@ test('passenger can create a trip request', async ({ client, assert }) => {
   response.assertStatus(200);
   assert.equal(status, 'success');
   assert.equal(data.trip_id, newTripRequest.trip_id);
-  assert.equal(data.numberOfPassengers, newTripRequest.numberOfPassengers);
+  assert.equal(data.number_of_passengers, newTripRequest.number_of_passengers);
   assert.equal(data.status, 'Pending');
 
   const recentEvent = Event.pullRecent();

@@ -28,7 +28,7 @@ paths:
           description: Id of the trip
           in: formData
           type: integer
-        - name: numberOfPassengers
+        - name: number_of_passengers
           description: Number of available places for the trip
           in: formData
           type: integer
@@ -38,7 +38,7 @@ paths:
           type: text
       required:
         - trip_id
-        - numberOfPassengers
+        - number_of_passengers
       responses:
         200:
           description: created trip request object

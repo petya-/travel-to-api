@@ -12,7 +12,7 @@ class TripRequestSchema extends Schema {
         .notNullable()
         .default('Pending');
       table
-        .integer('numberOfPassengers')
+        .integer('number_of_passengers')
         .notNullable()
         .default(1);
       table

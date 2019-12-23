@@ -23,7 +23,7 @@ paths:
           in: formData
           required: true
           type: string
-        - name: phoneNumber
+        - name: phone_number
           description: User's phone number.
           in: formData
           required: true
