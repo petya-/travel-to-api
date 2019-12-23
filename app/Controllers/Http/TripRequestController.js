@@ -42,7 +42,7 @@ class TripRequestController {
   async store({ request, response, auth }) {
     try {
       const tripRequest = await auth.user.tripRequests().create({
-        numberOfPassengers: request.input('numberOfPassengers'),
+        number_of_passengers: request.input('number_of_passengers'),
         trip_id: request.input('trip_id'),
         status: 'Pending'
       });

@@ -46,11 +46,11 @@ paths:
           description: End destination of trip
           in: formData
           type: string
-        - name: departureTime
+        - name: departure_time
           description: Date and time of departure in UTC0
           in: formData
           type: date-time
-        - name: numberOfPassengers
+        - name: number_of_passengers
           description: Number of available places for the trip
           in: formData
           type: integer
@@ -58,15 +58,15 @@ paths:
           description: Price for the trip in euros
           in: formData
           type: number
-        - name: requiresContact
+        - name: requires_contact
           description: Contact required before approval of trip request
           in: formData
           type: boolean
       required:
         - from
         - to
-        - departureTime
-        - numberOfPassengers
+        - departure_time
+        - number_of_passengers
         - price
       responses:
         200:

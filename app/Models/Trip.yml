@@ -8,18 +8,18 @@ definitions:
         type: string
       to:
         type: string
-      departureTime:
+      departure_time:
         type: date-time
-      numberOfPassengers:
+      number_of_passengers:
         type: integer
       price:
         type: number
-      requiresContact:
+      requires_contact:
         type: boolean
     required:
       - from
       - to
       - name
-      - departureTime
-      - numberOfPassengers
+      - departure_time
+      - number_of_passengers
       - price

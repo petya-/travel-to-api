@@ -24,9 +24,9 @@ Factory.blueprint('App/Models/User', (faker, i, data) => {
       faker.string({
         length: 8
       }),
-    phoneNumber: faker.phone(),
+    phone_number: faker.phone(),
     name: faker.name(),
-    emailVerified: true
+    email_verified: true
   };
 });
 
@@ -53,8 +53,8 @@ Factory.blueprint('App/Models/Trip', (faker, i, data) => {
   return {
     from: data.from || faker.city(),
     to: data.to || faker.city(),
-    departureTime: data.departureTime || DateTime.utc(),
-    numberOfPassengers: faker.integer({
+    departure_time: data.departure_time || DateTime.utc().toISO(),
+    number_of_passengers: faker.integer({
       min: 0,
       max: 3
     }),
@@ -62,7 +62,7 @@ Factory.blueprint('App/Models/Trip', (faker, i, data) => {
       min: 4,
       max: 10
     }),
-    requiresContact: data.requiresContact || faker.bool(),
+    requires_contact: data.requires_contact || faker.bool(),
     driver_id: data.driver_id
   };
 });

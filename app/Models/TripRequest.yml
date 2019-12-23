@@ -6,7 +6,7 @@ definitions:
         type: uint
       status:
         type: string
-      numberOfPassengers:
+      number_of_passengers:
         type: integer
       trip_id:
         type: integer

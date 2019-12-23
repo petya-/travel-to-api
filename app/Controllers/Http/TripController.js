@@ -39,7 +39,7 @@ class TripController {
         })
         .optional(query => {
           if (startDate && endDate) {
-            query.whereBetween('departureTime', [startDate, endDate]);
+            query.whereBetween('departure_time', [startDate, endDate]);
           }
         })
         .with('driver')
@@ -68,10 +68,10 @@ class TripController {
       const trip = await auth.user.trips().create({
         from: request.input('from'),
         to: request.input('to'),
-        departureTime: request.input('departureTime'),
-        numberOfPassengers: request.input('numberOfPassengers'),
+        departure_time: request.input('departure_time'),
+        number_of_passengers: request.input('number_of_passengers'),
         price: request.input('price'),
-        requiresContact: request.input('requiresContact') || true,
+        requires_contact: request.input('requires_contact') || true,
         status: 'Pending'
       });
       return response.json({
@@ -193,7 +193,7 @@ class TripController {
       });
 
       const { hours } = tomorrow
-        .diff(DateTime.fromJSDate(trip.departureTime), 'hours')
+        .diff(DateTime.fromJSDate(trip.departure_time), 'hours')
         .toObject();
 
       if (hours > 24) {

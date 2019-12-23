@@ -16,8 +16,8 @@ before(async () => {
   newTrip = {
     from: 'Oslo',
     to: 'Copenhagen',
-    departureTime: DateTime.utc(),
-    numberOfPassengers: 2,
+    departure_time: DateTime.utc(),
+    number_of_passengers: 2,
     price: 7
   };
 });
@@ -124,7 +124,10 @@ test('driver user can create a trip', async ({ client, assert }) => {
   assert.equal(response.body.status, 'success');
   assert.equal(response.body.data.from, newTrip.from);
   assert.equal(response.body.data.to, newTrip.to);
-  assert.equal(response.body.data.departureTime, newTrip.departureTime.toISO());
+  assert.equal(
+    response.body.data.departure_time,
+    newTrip.departure_time.toISO()
+  );
   assert.equal(response.body.data.driver_id, driverUser.id);
   assert.equal(response.body.data.status, 'Pending');
   newTrip = response.body.data;

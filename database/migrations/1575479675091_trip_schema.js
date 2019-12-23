@@ -9,9 +9,9 @@ class TripSchema extends Schema {
       table.increments();
       table.string('from').notNullable();
       table.string('to').notNullable();
-      table.datetime('departureTime').notNullable();
+      table.datetime('departure_time').notNullable();
       table
-        .integer('numberOfPassengers')
+        .integer('number_of_passengers')
         .notNullable()
         .default(1);
       table
@@ -19,7 +19,7 @@ class TripSchema extends Schema {
         .notNullable()
         .default(0);
       table
-        .boolean('requiresContact')
+        .boolean('requires_contact')
         .notNullable()
         .default(true);
       table

@@ -14,6 +14,28 @@ class Message extends Model {
   conversation() {
     return this.belongsTo('App/Models/Conversation');
   }
+
+  /**
+   * A relationship on user
+   *
+   * @method tripRequests
+   *
+   * @return {Object}
+   */
+  receiver() {
+    return this.belongsTo('App/Models/User', 'receiver_id', 'id');
+  }
+
+  /**
+   * A relationship on user
+   *
+   * @method tripRequests
+   *
+   * @return {Object}
+   */
+  sender() {
+    return this.belongsTo('App/Models/User', 'sender_id', 'id');
+  }
 }
 
 module.exports = Message;

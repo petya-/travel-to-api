@@ -5,7 +5,12 @@ const Role = use('Role');
 class AuthController {
   async register({ request, auth, response }) {
     // get user data from signup form
-    const userData = request.only(['name', 'email', 'password', 'phoneNumber']);
+    const userData = request.only([
+      'name',
+      'email',
+      'password',
+      'phone_number'
+    ]);
     const role = request.input('role');
 
     try {
@@ -37,7 +42,7 @@ class AuthController {
     let user = await auth.getUser();
 
     if (user) {
-      user.emailVerified = true;
+      user.email_verified = true;
       user.save();
       user.revokeTokens();
       await generateJWTToken(auth, user);

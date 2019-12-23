@@ -26,6 +26,10 @@ before(async () => {
   conversation = await tripRequest
     .conversation()
     .with('messages')
+    .with('messages.sender')
+    .with('messages.receiver')
+    .with('trip')
+    .with('tripRequest')
     .fetch();
 
   conversations = await passengerUser
@@ -57,17 +61,20 @@ test('can get user conversation with messages', async ({ client }) => {
   });
 });
 
-test('can get a conversation by id', async ({ client }) => {
+test('can get a conversation by id', async ({ client, assert }) => {
   const response = await client
     .get(`api/conversations/${conversation.id}`)
     .loginVia(passengerUser, 'jwt')
     .end();
+  const { data } = response.body;
 
   response.assertStatus(200);
-  response.assertJSON({
-    status: 'success',
-    data: conversation.toJSON()
-  });
+  assert.equal(data.id, conversation.id);
+  assert.isArray(data.messages);
+  assert.isObject(data.messages[0].sender);
+  assert.isObject(data.messages[0].receiver);
+  assert.isObject(data.trip);
+  assert.isObject(data.tripRequest);
 });
 
 test('cannot get a conversation by id if the user is not part of the conversation', async ({
