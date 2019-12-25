@@ -18,10 +18,7 @@ class TripSchema extends Schema {
         .decimal('price')
         .notNullable()
         .default(0);
-      table
-        .boolean('requires_contact')
-        .notNullable()
-        .default(true);
+      table.notNullable().default(true);
       table
         .string('status')
         .notNullable()

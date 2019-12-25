@@ -71,7 +71,6 @@ class TripController {
         departure_time: request.input('departure_time'),
         number_of_passengers: request.input('number_of_passengers'),
         price: request.input('price'),
-        requires_contact: request.input('requires_contact') || true,
         status: 'Pending'
       });
       return response.json({
