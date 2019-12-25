@@ -18,7 +18,6 @@ class TripSchema extends Schema {
         .decimal('price')
         .notNullable()
         .default(0);
-      table.notNullable().default(true);
       table
         .string('status')
         .notNullable()
