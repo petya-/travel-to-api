@@ -29,16 +29,17 @@ paths:
           in: formData
           type: integer
         - name: number_of_passengers
-          description: Number of available places for the trip
+          description: Number of passengers that you want to requiest the trip for
           in: formData
           type: integer
         - name: message
-          description: Message to send to driver user. Required if trip requires contact
+          description: Message to send to driver
           in: formData
           type: text
       required:
         - trip_id
         - number_of_passengers
+        - message
       responses:
         200:
           description: created trip request object

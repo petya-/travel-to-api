@@ -1,18 +1,18 @@
 'use strict';
 
 const TripRequest = (exports = module.exports = {});
-const Trip = use('App/Models/Trip');
+const Conversation = use('App/Models/Conversation');
 const { broadcast } = require('../utils/socket.utils');
 
 TripRequest.createConversation = async (tripRequest, request, user) => {
   try {
+    const trip = await tripRequest.trip().fetch();
     // create new conversation
-    const trip = await Trip.findOrFail(request.input('trip_id'));
-
-    const conversation = await trip.conversations().create({
-      creator_id: user.id,
-      trip_request_id: tripRequest.id
-    });
+    const conversation = new Conversation();
+    conversation.creator_id = user.id;
+    conversation.trip_id = tripRequest.trip_id;
+    conversation.trip_request_id = tripRequest.id;
+    await conversation.save();
 
     // create new message fromr request
     const message = await conversation.messages().create({
@@ -20,6 +20,7 @@ TripRequest.createConversation = async (tripRequest, request, user) => {
       sender_id: user.id,
       receiver_id: trip.driver_id
     });
+
     // broadcast conversation
     broadcast(conversation.id, 'conversation:newMessage', message);
 

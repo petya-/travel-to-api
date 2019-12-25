@@ -46,7 +46,7 @@ class TripRequestController {
         trip_id: request.input('trip_id'),
         status: 'Pending'
       });
-      await Event.fire('new::tripRequest', tripRequest, request, auth.user);
+      Event.fire('new::tripRequest', tripRequest, request, auth.user);
 
       return response.json({
         status: 'success',
