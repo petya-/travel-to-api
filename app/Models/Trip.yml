@@ -14,8 +14,6 @@ definitions:
         type: integer
       price:
         type: number
-      requires_contact:
-        type: boolean
     required:
       - from
       - to

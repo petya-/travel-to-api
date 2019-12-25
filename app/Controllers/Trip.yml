@@ -58,10 +58,6 @@ paths:
           description: Price for the trip in euros
           in: formData
           type: number
-        - name: requires_contact
-          description: Contact required before approval of trip request
-          in: formData
-          type: boolean
       required:
         - from
         - to

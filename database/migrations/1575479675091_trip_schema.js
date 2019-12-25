@@ -19,10 +19,6 @@ class TripSchema extends Schema {
         .notNullable()
         .default(0);
       table
-        .boolean('requires_contact')
-        .notNullable()
-        .default(true);
-      table
         .string('status')
         .notNullable()
         .default('Pending');
