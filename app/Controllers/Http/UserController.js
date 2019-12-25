@@ -35,14 +35,26 @@ class UserController {
    * @param {Auth} ctx.auth
    */
   async show({ auth, response }) {
-    const user = await User.query()
-      .where('id', auth.current.user.id)
-      .firstOrFail();
+    try {
+      const user = await User.query()
+        .where('id', auth.current.user.id)
+        .firstOrFail();
 
-    return response.json({
-      status: 'success',
-      data: user
-    });
+      const roles = await user.getRoles();
+      user.role = roles.includes('driver') ? 'driver' : 'passenger';
+
+      return response.json({
+        status: 'success',
+        data: user
+      });
+    } catch (error) {
+      console.log(error);
+
+      return response.status(500).json({
+        status: 'error',
+        message: 'There was a problem while getting the profile.'
+      });
+    }
   }
 
   /**
@@ -73,7 +85,7 @@ class UserController {
         data: user
       });
     } catch (error) {
-      return response.status(400).json({
+      return response.status(500).json({
         status: 'error',
         message: 'There was a problem updating profile, please try again later.'
       });
