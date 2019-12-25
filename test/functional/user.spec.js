@@ -6,10 +6,11 @@ const Role = use('Role');
 trait('Test/ApiClient');
 trait('Auth/Client');
 
-let adminUser;
+let adminUser, driverUser;
 
 before(async () => {
   adminUser = await User.findBy('email', 'admin@travel-to.com');
+  driverUser = await User.findBy('email', 'driver@travel-to.com');
 });
 
 test('cannot get list of users without a token', async ({ client }) => {
@@ -38,6 +39,19 @@ test('get list of users if the user authorized and has admin permissions', async
   });
 });
 
-test('user can get his profile', async ({ client, assert }) => {});
+test('user can get his profile', async ({ client, assert }) => {
+  const response = await client
+    .get('api/user')
+    .loginVia(driverUser, 'jwt')
+    .end();
+
+  response.assertStatus(200);
+  driverUser.role = 'driver';
+
+  response.assertJSON({
+    status: 'success',
+    data: driverUser.toJSON()
+  });
+});
 test('user can update his profile', async ({ client, assert }) => {});
 test('user can change his password', async ({ client, assert }) => {});

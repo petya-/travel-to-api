@@ -155,7 +155,7 @@ class TripController {
     try {
       const { id } = params;
       const trip = await Trip.findOrFail(id);
-      trip.tripRequests = await trip.tripRequests;
+      trip.tripRequests = await trip.tripRequests().fetch();
       response.status(200).json({
         status: 'success',
         data: trip
