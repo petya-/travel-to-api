@@ -17,9 +17,11 @@ const { DateTime } = require('luxon');
 class TripSeeder {
   async run() {
     const driverUser = await User.findBy('email', 'driver@travel-to.com');
-    const trips = await Factory.model('App/Models/Trip').createMany(20, {
+
+    await Factory.model('App/Models/Trip').createMany(20, {
       driver_id: driverUser.id
     });
+
     await Factory.model('App/Models/Trip').create({
       from: 'Copenhagen',
       to: 'Oslo',
