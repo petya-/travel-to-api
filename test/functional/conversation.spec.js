@@ -35,6 +35,10 @@ before(async () => {
   conversations = await passengerUser
     .conversations()
     .with('messages')
+    .with('messages.sender')
+    .with('messages.receiver')
+    .with('trip')
+    .with('tripRequest')
     .fetch();
 });
 
@@ -47,18 +51,16 @@ test('cannot get user conversations if not authorized', async ({ client }) => {
   ]);
 });
 
-test('can get user conversation with messages', async ({ client }) => {
+test('can get user conversation with messages', async ({ client, assert }) => {
   const response = await client
     .get('api/conversations')
     .loginVia(passengerUser, 'jwt')
     .end();
 
-  response.assertStatus(200);
+  const { data } = response.body;
 
-  response.assertJSON({
-    status: 'success',
-    data: conversations.toJSON()
-  });
+  response.assertStatus(200);
+  assert.equal(data.length, conversations.toJSON().length);
 });
 
 test('can get a conversation by id', async ({ client, assert }) => {
