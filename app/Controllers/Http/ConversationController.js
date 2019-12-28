@@ -25,6 +25,10 @@ class ConversationController {
           builder.where('sender_id', user.id).orWhere('receiver_id', user.id);
         })
         .with('messages')
+        .with('messages.sender')
+        .with('messages.receiver')
+        .with('trip')
+        .with('tripRequest')
         .orderBy('created_at', 'desc')
         .fetch();
 
