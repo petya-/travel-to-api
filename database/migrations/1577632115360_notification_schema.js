@@ -9,11 +9,11 @@ class NotificationSchema extends Schema {
       table.increments();
       table.text('message').notNullable();
       table
-        .integer('creator_id')
+        .integer('user_id')
         .unsigned()
         .index();
       table
-        .foreign('creator_id')
+        .foreign('user_id')
         .references('id')
         .on('users')
         .onDelete('cascade');
@@ -28,6 +28,7 @@ class NotificationSchema extends Schema {
         .onDelete('cascade');
       table
         .integer('trip_request_id')
+        .nullable()
         .unsigned()
         .index();
       table

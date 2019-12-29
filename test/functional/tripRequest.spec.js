@@ -43,6 +43,7 @@ test('passenger can create a trip request', async ({ client, assert }) => {
 
   const recentEvent = Event.pullRecent();
   assert.equal(recentEvent.event, 'new::tripRequest');
+
   Event.restore();
 });
 

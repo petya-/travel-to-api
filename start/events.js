@@ -3,7 +3,10 @@ const Event = use('Event');
 Event.on('new::user', 'User.sendWelcomeEmail');
 
 Event.on('new::tripRequest', 'TripRequest.createConversation');
+Event.on('new::tripRequest', 'TripRequest.sendNotification');
+Event.on('accept::tripRequest', 'TripRequest.sendNotification');
+Event.on('reject::tripRequest', 'TripRequest.sendNotification');
 
-Event.on('new:message', async message => {
-  // TODO: send notification
-});
+Event.on('cancel::trip', 'Trip.sendNotification');
+
+Event.on('new:message', 'Message.sendNotification');
