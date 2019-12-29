@@ -107,6 +107,7 @@ test('can send a message', async ({ client, assert }) => {
     })
     .loginVia(driverUser, 'jwt')
     .end();
+
   response.assertStatus(200);
 
   assert.equal(response.body.data.message, message);

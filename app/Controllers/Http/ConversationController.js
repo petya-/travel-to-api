@@ -1,7 +1,7 @@
 'use strict';
 const Conversation = use('App/Models/Conversation');
 const Message = use('App/Models/Message');
-const { broadcast } = require('../../utils/socket.utils');
+const { broadcastMessage } = require('../../utils/socket.utils');
 const { DateTime } = require('luxon');
 
 class ConversationController {
@@ -98,7 +98,7 @@ class ConversationController {
         conversation_id: conversation.id
       });
 
-      broadcast(conversation.id, 'room:newMessage', newMessage);
+      broadcastMessage(conversation.id, 'room:newMessage', newMessage);
 
       return response.status(200).json({
         status: 'success',

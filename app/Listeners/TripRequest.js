@@ -2,7 +2,7 @@
 
 const TripRequest = (exports = module.exports = {});
 const Conversation = use('App/Models/Conversation');
-const { broadcast } = require('../utils/socket.utils');
+const { broadcastMessage } = require('../utils/socket.utils');
 
 TripRequest.createConversation = async (tripRequest, request, user) => {
   try {
@@ -22,7 +22,7 @@ TripRequest.createConversation = async (tripRequest, request, user) => {
     });
 
     // broadcast conversation
-    broadcast(conversation.id, 'conversation:newMessage', message);
+    broadcastMessage(conversation.id, 'conversation:newMessage', message);
 
     // call new:message event
   } catch (error) {
