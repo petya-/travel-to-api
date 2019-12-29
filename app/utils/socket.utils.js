@@ -1,6 +1,6 @@
 const Ws = use('Ws');
 
-function broadcast(id, type, data) {
+function broadcastMessage(id, type, data) {
   const channel = Ws.getChannel('conversation:*');
 
   if (!channel) return;
@@ -10,13 +10,15 @@ function broadcast(id, type, data) {
     return;
   }
 
-  emit, broadcast, broadcastToAll;
   topic.broadcast(`message`, {
     type,
     data
   });
 }
 
+function broadcastNotification() {}
+
 module.exports = {
-  broadcast
+  broadcastMessage,
+  broadcastNotification
 };
