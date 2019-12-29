@@ -10,7 +10,6 @@ function broadcast(id, type, data) {
     return;
   }
 
-  emit, broadcast, broadcastToAll;
   topic.broadcast(`message`, {
     type,
     data
