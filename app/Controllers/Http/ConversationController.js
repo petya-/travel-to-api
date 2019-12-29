@@ -19,7 +19,6 @@ class ConversationController {
     try {
       const { user } = auth;
       const conversations = await Conversation.query()
-        .where('creator_id', user.id)
         .where('active', true)
         .whereHas('messages', builder => {
           builder.where('sender_id', user.id).orWhere('receiver_id', user.id);
