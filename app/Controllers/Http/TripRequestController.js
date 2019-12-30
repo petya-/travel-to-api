@@ -5,7 +5,9 @@
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 
 const TripRequest = use('App/Models/TripRequest');
+const Trip = use('App/Models/Trip');
 const Event = use('Event');
+const { DateTime } = require('luxon');
 
 /**
  * Resourceful controller for interacting with triprequests
@@ -163,6 +165,57 @@ class TripRequestController {
       return response.status(400).json({
         status: 'error',
         message: error.message
+      });
+    }
+  }
+
+  /**
+   * Cancel a trip
+   * GET trips/:id/cancel
+   *
+   * @param {object} ctx
+   * @param {Response} ctx.response
+   * @param {Params} ctx.params
+   * @param {Auth} ctx.auth
+   */
+  async cancel({ response, params, auth }) {
+    try {
+      const { id } = params;
+      const { user } = auth;
+
+      const tripRequest = await TripRequest.findOrFail(id);
+      const trip = await Trip.findOrFail(tripRequest.trip_id);
+
+      const tomorrow = DateTime.utc().plus({
+        days: 1,
+        hours: 0,
+        minutes: 0,
+        seconds: 0
+      });
+      const { hours } = tomorrow
+        .diff(DateTime.fromJSDate(trip.departure_time), 'hours')
+        .toObject();
+
+      if (hours > 24) {
+        return response.status(400).json({
+          status: 'error',
+          message:
+            'You cannot cancel a trip request less that 24h before the departure time.'
+        });
+      }
+      tripRequest.status = 'Cancelled';
+      await tripRequest.save();
+
+      Event.fire('cancel::tripRequest', tripRequest, user);
+
+      return response.status(200).json({
+        status: 'success',
+        data: tripRequest
+      });
+    } catch (error) {
+      return response.status(500).json({
+        status: 'error',
+        message: 'There was an error while cancelling the trip request.'
       });
     }
   }

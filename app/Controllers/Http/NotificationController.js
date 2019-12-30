@@ -19,8 +19,6 @@ class NotificationController {
 
       return { status: 'success', data: notifications.toJSON() };
     } catch (error) {
-      console.log(error);
-
       return response.status(500).json({
         status: 'error',
         message: 'An error occurred while getting user notifications.'

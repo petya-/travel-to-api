@@ -16,6 +16,18 @@ Trip.sendNotification = async (trip, user) => {
   }
 };
 
+Trip.cancelTripRequests = async (trip, user) => {
+  try {
+    const tripRequests = await trip.tripRequests().fetch();
+    if (tripRequests.toJSON().length > 0) {
+      await tripRequests.toJSON().forEach(async tripRequest => {
+        tripRequest.status = 'Rejected';
+        await tripRequest.save();
+      });
+    }
+  } catch (error) {}
+};
+
 async function broadcastNotifications(trip, tripRequests, user) {
   tripRequests.forEach(async tripRequest => {
     const notification = new Notification();

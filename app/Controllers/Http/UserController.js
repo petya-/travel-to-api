@@ -48,8 +48,6 @@ class UserController {
         data: user
       });
     } catch (error) {
-      console.log(error);
-
       return response.status(500).json({
         status: 'error',
         message: 'There was a problem while getting the profile.'
