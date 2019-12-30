@@ -2,6 +2,7 @@
 const { test, trait, before } = use('Test/Suite')('Trip');
 const User = use('App/Models/User');
 const Trip = use('App/Models/Trip');
+const Event = use('Event');
 const { DateTime } = require('luxon');
 
 trait('Test/ApiClient');
@@ -169,6 +170,8 @@ test('driver cannot cancel a trip if the departure date is less that 24h from no
 });
 
 test('driver can cancel a trip', async ({ client, assert }) => {
+  Event.fake();
+
   const trip = await Trip.findBy('from', 'Sofia');
   assert.equal(trip.status, 'Pending');
 
@@ -180,4 +183,9 @@ test('driver can cancel a trip', async ({ client, assert }) => {
 
   response.assertStatus(200);
   assert.equal(response.body.data.status, 'Cancelled');
+
+  const recentEvent = Event.pullRecent();
+  assert.equal(recentEvent.event, 'cancel::trip');
+
+  Event.restore();
 });

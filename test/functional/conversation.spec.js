@@ -3,6 +3,8 @@ const { test, trait, before, after } = use('Test/Suite')('Conversation');
 const User = use('App/Models/User');
 const Trip = use('App/Models/Trip');
 const Message = use('App/Models/Message');
+const Event = use('Event');
+
 const { DateTime } = require('luxon');
 
 trait('Test/ApiClient');
@@ -97,6 +99,8 @@ test('cannot get a conversation by id if the user is not part of the conversatio
 });
 
 test('can send a message', async ({ client, assert }) => {
+  Event.fake();
+
   const message =
     'Hi, I can pick you up without a problem. What is your exact location?';
   const response = await client
@@ -107,6 +111,7 @@ test('can send a message', async ({ client, assert }) => {
     })
     .loginVia(driverUser, 'jwt')
     .end();
+
   response.assertStatus(200);
 
   assert.equal(response.body.data.message, message);
@@ -114,6 +119,11 @@ test('can send a message', async ({ client, assert }) => {
   assert.equal(response.body.data.sender_id, driverUser.id);
   assert.equal(response.body.data.receiver_id, passengerUser.id);
   assert.equal(response.body.data.conversation_id, conversation.id);
+
+  const recentEvent = Event.pullRecent();
+  assert.equal(recentEvent.event, 'new::message');
+
+  Event.restore();
 });
 
 test('cannot send a message if a user is not part of the conversation', async ({

@@ -71,6 +71,17 @@ class User extends Model {
   }
 
   /**
+   * A relationship on notifications
+   *
+   * @method tripRequests
+   *
+   * @return {Object}
+   */
+  notifications() {
+    return this.hasMany('App/Models/Notification');
+  }
+
+  /**
    * ACL traits
    */
   static get traits() {
