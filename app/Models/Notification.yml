@@ -1,0 +1,20 @@
+definitions:
+  Notification:
+    type: object
+    properties:
+      id:
+        type: uint
+      message:
+        type: text
+      read:
+        type: boolean
+      user_id:
+        type: integer
+      trip_id:
+        type: integer
+      trip_request_id:
+        type: integer
+    required:
+      - message
+      - user_id
+      - trip_id
