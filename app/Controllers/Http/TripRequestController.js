@@ -104,14 +104,16 @@ class TripRequestController {
    * @param {object} ctx
    * @param {Request} ctx.params
    * @param {Response} ctx.response
+   * @param {Auth} ctx.auth
    */
-  async accept({ params, response }) {
+  async accept({ params, response, auth }) {
     try {
       const { id } = params;
       const tripRequest = await TripRequest.findOrFail(id);
       if (tripRequest.status === 'Pending') {
         tripRequest.status = 'Accepted';
         await tripRequest.save();
+        Event.fire('accept::tripRequest', tripRequest, auth.user);
 
         return response.status(200).json({
           status: 'success',
@@ -137,14 +139,16 @@ class TripRequestController {
    * @param {object} ctx
    * @param {Request} ctx.params
    * @param {Response} ctx.response
+   * @param {Auth} ctx.auth
    */
-  async reject({ params, response }) {
+  async reject({ params, response, auth }) {
     try {
       const { id } = params;
       const tripRequest = await TripRequest.findOrFail(id);
       if (tripRequest.status === 'Pending') {
         tripRequest.status = 'Rejected';
         await tripRequest.save();
+        Event.fire('reject::tripRequest', tripRequest, auth.user);
 
         return response.status(200).json({
           status: 'success',

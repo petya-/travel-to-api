@@ -6,6 +6,7 @@
 /** @typedef {import('@adonisjs/auth')} Auth */
 
 const Trip = use('App/Models/Trip');
+const Event = use('Event');
 const { DateTime } = require('luxon');
 
 /**
@@ -206,13 +207,13 @@ class TripController {
       trip.status = 'Cancelled';
       await trip.save();
 
+      Event.fire('cancel::trip', trip, user);
+
       return response.status(200).json({
         status: 'success',
         data: trip
       });
     } catch (error) {
-      console.log(error);
-
       return response.status(500).json({
         status: 'error',
         message: 'There was an error while cancelling the trip.'

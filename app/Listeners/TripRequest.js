@@ -31,7 +31,7 @@ TripRequest.createConversation = async (tripRequest, request, user) => {
     throw error;
   }
 };
-TripRequest.sendNotification = async (tripRequest, request, user) => {
+TripRequest.sendNotification = async (tripRequest, user) => {
   try {
     const trip = await tripRequest.trip().fetch();
     let message, user_id;

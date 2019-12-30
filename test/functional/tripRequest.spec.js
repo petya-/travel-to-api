@@ -112,6 +112,7 @@ test('driver can accept a trip request', async ({ client, assert }) => {
     .put(`api/tripRequests/${newTripRequest.id}/accept`)
     .loginVia(driverUser, 'jwt')
     .end();
+  console.log(response);
 
   response.assertStatus(200);
   assert.equal(response.body.data.status, 'Accepted');
