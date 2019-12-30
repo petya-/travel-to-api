@@ -51,6 +51,11 @@ TripRequest.sendNotification = async (tripRequest, user) => {
       user_id = tripRequest.user_id;
     }
 
+    if (tripRequest.status == 'Cancelled') {
+      message = `The trip request from ${trip.from} to ${trip.to} was cancelled by ${user.name}.`;
+      user_id = trip.driver_id;
+    }
+
     const notification = new Notification();
     notification.message = message;
     notification.user_id = user_id;

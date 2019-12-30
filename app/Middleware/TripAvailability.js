@@ -42,7 +42,7 @@ class TripAvailability {
     if (totalApprovedPassengers < trip.number_of_passengers)
       return await next();
 
-    return response.status(403).json({
+    return response.status(400).json({
       status: 'error',
       message: 'The trip has the maximum number of passengers'
     });

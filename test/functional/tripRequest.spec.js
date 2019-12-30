@@ -95,6 +95,7 @@ test('passenger cannot accept a trip request', async ({ client }) => {
     'ForbiddenException: Access forbidden. You are not allowed to this resource.'
   );
 });
+
 test('passenger cannot reject a trip request', async ({ client }) => {
   const response = await client
     .put(`api/tripRequests/${newTripRequest.id}/reject`)
@@ -148,11 +149,47 @@ test('passenger cannot create a trip request if it exceeds the number of people'
     .loginVia(passengerUser, 'jwt')
     .end();
 
-  response.assertStatus(403);
+  response.assertStatus(400);
   response.assertError({
     status: 'error',
     message: 'The trip has the maximum number of passengers'
   });
 
   Event.restore();
+});
+
+test('passenger canot cancel a trip request that is less than 24h before the trip', async ({
+  client,
+  assert
+}) => {
+  const response = await client
+    .put(`api/tripRequests/${newTripRequest.id}/cancel`)
+    .loginVia(passengerUser, 'jwt')
+    .end();
+
+  response.assertStatus(400);
+  response.assertError({
+    status: 'error',
+    message:
+      'You cannot cancel a trip request less that 24h before the departure time.'
+  });
+});
+
+test('passenger can cancel a trip request up to 24h before the trip', async ({
+  client,
+  assert
+}) => {
+  const tripRequest = await passengerUser
+    .tripRequests()
+    .where('trip_id', 23)
+    .first();
+  assert.equal(tripRequest.status, 'Pending');
+
+  const response = await client
+    .put(`api/tripRequests/${tripRequest.id}/cancel`)
+    .loginVia(passengerUser, 'jwt')
+    .end();
+
+  response.assertStatus(200);
+  assert.equal(response.body.data.status, 'Cancelled');
 });
