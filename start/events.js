@@ -9,5 +9,6 @@ Event.on('reject::tripRequest', 'TripRequest.sendNotification');
 Event.on('cancel::tripRequest', 'TripRequest.sendNotification');
 
 Event.on('cancel::trip', 'Trip.sendNotification');
+Event.on('cancel::trip', 'Trip.cancelTripRequests');
 
 Event.on('new:message', 'Message.sendNotification');
