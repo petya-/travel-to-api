@@ -15,7 +15,6 @@ class ConversationController {
    * @param {Response} ctx.request
    * @param {Response} ctx.response
    * @param {Auth} ctx.auth
-
    */
   async indexForUser({ response, auth }) {
     try {

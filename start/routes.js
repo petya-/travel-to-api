@@ -138,9 +138,10 @@ Route.group(() => {
     'can:update_conversation',
     'isInConversation'
   ]);
-  Route.post('/:id/message', 'ConversationController.createMessage').middleware(
-    ['can:create_message', 'isInConversation']
-  );
+  Route.post(
+    '/:id/message',
+    'ConversationController.createMessage'
+  ).middleware(['can:create_message', 'isInConversation']);
 })
   .prefix('api/conversations')
   .middleware(['auth:jwt']);
@@ -156,4 +157,20 @@ Route.group(() => {
   ]);
 })
   .prefix('api/messages')
+  .middleware(['auth:jwt']);
+
+/*
+|--------------------------------------------------------------------------
+| Notification Routes
+|--------------------------------------------------------------------------
+*/
+Route.group(() => {
+  Route.get('/', 'NotificationController.indexForUser').middleware([
+    'can:read_notifications'
+  ]);
+  Route.put('/:id', 'NotificationController.markAsRead').middleware([
+    'can:update_notification'
+  ]);
+})
+  .prefix('api/notifications')
   .middleware(['auth:jwt']);
