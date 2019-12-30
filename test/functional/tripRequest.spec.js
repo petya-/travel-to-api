@@ -129,3 +129,30 @@ test('driver cannot reject an already accepted request', async ({ client }) => {
     message: 'You can reject only a Pending request'
   });
 });
+
+test('passenger cannot create a trip request if it exceeds the number of people', async ({
+  client,
+  assert
+}) => {
+  Event.fake();
+
+  const tripRequest = {
+    number_of_passengers: 4,
+    trip_id: trip.id,
+    message: 'Hi, I would like to travel with you. Where are you leaving from?'
+  };
+
+  const response = await client
+    .post('api/tripRequests')
+    .send(tripRequest)
+    .loginVia(passengerUser, 'jwt')
+    .end();
+
+  response.assertStatus(403);
+  response.assertError({
+    status: 'error',
+    message: 'The trip has the maximum number of passengers'
+  });
+
+  Event.restore();
+});

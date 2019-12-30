@@ -99,7 +99,8 @@ Route.group(() => {
     'isInTrip'
   ]);
   Route.post('/', 'TripRequestController.store').middleware([
-    'can:create_trip_request'
+    'can:create_trip_request',
+    'isNotFullyBooked'
   ]);
   Route.put('/:id', 'TripRequestController.update').middleware([
     'can:update_trip_request',
@@ -107,7 +108,8 @@ Route.group(() => {
   ]);
   Route.put('/:id/accept', 'TripRequestController.accept').middleware([
     'can:accept_trip_request',
-    'isInTrip'
+    'isInTrip',
+    'isNotFullyBooked'
   ]);
   Route.put('/:id/reject', 'TripRequestController.reject').middleware([
     'can:reject_trip_request',
