@@ -8,6 +8,7 @@ class NotificationSchema extends Schema {
     this.create('notifications', table => {
       table.increments();
       table.text('message').notNullable();
+      table.datetime('read').nullable();
       table
         .integer('user_id')
         .unsigned()
