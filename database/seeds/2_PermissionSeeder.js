@@ -197,6 +197,28 @@ class PermissionSeeder {
       description: 'update message'
     });
 
+    /*
+    |--------------------------------------------------------------------------
+    | Notification Permissions
+    |--------------------------------------------------------------------------
+    */
+
+    const readNotificationsPermission = await Factory.model(
+      'Adonis/Acl/Permission'
+    ).create({
+      slug: 'read_notifications',
+      name: 'Read notifications',
+      description: 'read notifications'
+    });
+
+    const updateNotificationPermission = await Factory.model(
+      'Adonis/Acl/Permission'
+    ).create({
+      slug: 'update_notification',
+      name: 'Update notification',
+      description: 'update notification'
+    });
+
     // Assign permissions to roles
 
     const adminRole = await Role.findBy('slug', 'admin');
@@ -244,7 +266,9 @@ class PermissionSeeder {
         readConversationsPermission.id,
         updateConversationPermission.id,
         createMessagePermission.id,
-        updateMessagePermission.id
+        updateMessagePermission.id,
+        readNotificationsPermission.id,
+        updateNotificationPermission.id
       ]);
   }
 }
