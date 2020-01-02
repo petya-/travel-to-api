@@ -101,31 +101,38 @@ class UserController {
    * @param {Auth} ctx.auth
    */
   async changePassword({ request, auth, response }) {
-    // get currently authenticated user
-    const user = auth.current.user;
+    try {
+      // get currently authenticated user
+      const user = auth.current.user;
 
-    // verify if current password matches
-    const verifyPassword = await Hash.verify(
-      request.input('password'),
-      user.password
-    );
+      // verify if current password matches
+      const verifyPassword = await Hash.verify(
+        request.input('password'),
+        user.password
+      );
 
-    // display appropriate message
-    if (!verifyPassword) {
-      return response.status(400).json({
+      // display appropriate message
+      if (!verifyPassword) {
+        return response.status(400).json({
+          status: 'error',
+          message: 'Current password could not be verified! Please try again.'
+        });
+      }
+
+      // hash and save new password
+      user.password = request.input('newPassword');
+      await user.save();
+
+      return response.json({
+        status: 'success',
+        message: 'Password updated!'
+      });
+    } catch (error) {
+      return response.status(500).json({
         status: 'error',
-        message: 'Current password could not be verified! Please try again.'
+        message: 'User password could not be updated! Please try again.'
       });
     }
-
-    // hash and save new password
-    user.password = request.input('newPassword');
-    await user.save();
-
-    return response.json({
-      status: 'success',
-      message: 'Password updated!'
-    });
   }
 
   /**
@@ -152,11 +159,9 @@ class UserController {
         data: user
       });
     } catch (error) {
-      console.log(error);
-
       return response.status(500).json({
         status: 'error',
-        message: error.message
+        message: 'User role could not be updated! Please try again.'
       });
     }
   }

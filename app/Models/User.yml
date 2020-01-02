@@ -12,7 +12,7 @@ definitions:
         type: string
       phone_number:
         type: string
-      profile_img:
+      profile_imgxwx:
         type: string
       description:
         type: string
