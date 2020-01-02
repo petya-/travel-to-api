@@ -6,6 +6,7 @@
 /** @typedef {import('@adonisjs/auth')} Auth */
 
 const User = use('App/Models/User');
+const Role = use('Role');
 const Hash = use('Hash');
 
 /**
@@ -57,7 +58,7 @@ class UserController {
 
   /**
    * Update an existing user.
-   * PUT account/
+   * PUT user/
    *
    * @param {object} ctx
    * @param {Request} ctx.request
@@ -90,32 +91,79 @@ class UserController {
     }
   }
 
+  /**
+   * Change user password
+   * PUT user/changePassword
+   *
+   * @param {object} ctx
+   * @param {Request} ctx.request
+   * @param {Response} ctx.response
+   * @param {Auth} ctx.auth
+   */
   async changePassword({ request, auth, response }) {
-    // get currently authenticated user
-    const user = auth.current.user;
+    try {
+      // get currently authenticated user
+      const user = auth.current.user;
 
-    // verify if current password matches
-    const verifyPassword = await Hash.verify(
-      request.input('password'),
-      user.password
-    );
+      // verify if current password matches
+      const verifyPassword = await Hash.verify(
+        request.input('password'),
+        user.password
+      );
 
-    // display appropriate message
-    if (!verifyPassword) {
-      return response.status(400).json({
+      // display appropriate message
+      if (!verifyPassword) {
+        return response.status(400).json({
+          status: 'error',
+          message: 'Current password could not be verified! Please try again.'
+        });
+      }
+
+      // hash and save new password
+      user.password = request.input('newPassword');
+      await user.save();
+
+      return response.json({
+        status: 'success',
+        message: 'Password updated!'
+      });
+    } catch (error) {
+      return response.status(500).json({
         status: 'error',
-        message: 'Current password could not be verified! Please try again.'
+        message: 'User password could not be updated! Please try again.'
       });
     }
+  }
 
-    // hash and save new password
-    user.password = request.input('newPassword');
-    await user.save();
+  /**
+   * Make passenger a driver
+   * PUT users/:id/becomeDriver
+   *
+   * @param {object} ctx
+   * @param {Request} ctx.request
+   * @param {Response} ctx.response
+   * @param {Auth} ctx.auth
+   * @param {Params} ctx.params
+   */
+  async becomeDriver({ request, params, auth, response }) {
+    try {
+      const { id } = params;
+      const user = await User.find(id);
 
-    return response.json({
-      status: 'success',
-      message: 'Password updated!'
-    });
+      const driverRole = await Role.findBy('slug', 'driver');
+      await user.roles().attach(driverRole.id);
+      user.role = 'driver';
+
+      response.status(200).json({
+        status: 'success',
+        data: user
+      });
+    } catch (error) {
+      return response.status(500).json({
+        status: 'error',
+        message: 'User role could not be updated! Please try again.'
+      });
+    }
   }
 
   /**

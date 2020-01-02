@@ -25,7 +25,8 @@ const providers = [
   'adonis-swagger/providers/SwaggerProvider',
   'adonis-acl/providers/AclProvider',
   'adonis-lucid-optional-queries/providers/OptionalQueriesProvider',
-  '@adonisjs/websocket/providers/WsProvider'
+  '@adonisjs/websocket/providers/WsProvider',
+  '@adonisjs/validator/providers/ValidatorProvider'
 ];
 
 /*

@@ -6,11 +6,12 @@ const Role = use('Role');
 trait('Test/ApiClient');
 trait('Auth/Client');
 
-let adminUser, driverUser;
+let adminUser, driverUser, randomUser;
 
 before(async () => {
   adminUser = await User.findBy('email', 'admin@travel-to.com');
   driverUser = await User.findBy('email', 'driver@travel-to.com');
+  randomUser = await User.first();
 });
 
 test('cannot get list of users without a token', async ({ client }) => {
@@ -55,3 +56,27 @@ test('user can get his profile', async ({ client, assert }) => {
 });
 test('user can update his profile', async ({ client, assert }) => {});
 test('user can change his password', async ({ client, assert }) => {});
+
+test('passenger user can become a driver', async ({ client, assert }) => {
+  let roles = await randomUser.getRoles();
+
+  assert.include(roles, 'passenger');
+  assert.notInclude(roles, 'driver');
+
+  const response = await client
+    .put(`api/users/${randomUser.id}/becomeDriver`)
+    .loginVia(randomUser, 'jwt')
+    .end();
+
+  response.assertStatus(200);
+  randomUser.role = 'driver';
+
+  response.assertJSON({
+    status: 'success',
+    data: randomUser.toJSON()
+  });
+
+  roles = await randomUser.getRoles();
+  assert.include(roles, 'passenger');
+  assert.include(roles, 'driver');
+});
