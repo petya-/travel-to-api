@@ -28,7 +28,8 @@ class TripSeeder {
       departure_time: DateTime.fromISO('2019-12-24', {
         zone: 'utc'
       }).toISO(),
-      driver_id: driverUser.id
+      driver_id: driverUser.id,
+      number_of_passengers: 2
     });
 
     await Factory.model('App/Models/Trip').create({

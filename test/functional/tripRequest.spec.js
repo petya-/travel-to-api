@@ -132,8 +132,7 @@ test('driver cannot reject an already accepted request', async ({ client }) => {
 });
 
 test('passenger cannot create a trip request if it exceeds the number of people', async ({
-  client,
-  assert
+  client
 }) => {
   Event.fake();
 
