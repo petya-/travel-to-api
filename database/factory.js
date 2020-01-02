@@ -54,10 +54,12 @@ Factory.blueprint('App/Models/Trip', (faker, i, data) => {
     from: data.from || faker.city(),
     to: data.to || faker.city(),
     departure_time: data.departure_time || DateTime.utc().toISO(),
-    number_of_passengers: faker.integer({
-      min: 0,
-      max: 3
-    }),
+    number_of_passengers:
+      data.number_of_passengers ||
+      faker.integer({
+        min: 0,
+        max: 3
+      }),
     price: faker.integer({
       min: 4,
       max: 10
