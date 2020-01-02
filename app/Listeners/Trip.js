@@ -22,7 +22,7 @@ Trip.cancelTripRequests = async (trip, user) => {
     if (tripRequests.toJSON().length > 0) {
       await tripRequests.toJSON().forEach(async tripRequest => {
         tripRequest.status = 'Rejected';
-        await tripRequest.save();
+        await tripRequest;
       });
     }
   } catch (error) {}

@@ -41,10 +41,13 @@ Route.group(() => {
 */
 
 Route.group(() => {
-  Route.get('/', 'UserController.index');
+  Route.get('/', 'UserController.index').middleware(['can:read_users']);
+  Route.put('/:id/becomeDriver', 'UserController.becomeDriver').middleware([
+    'can:update_user_profile'
+  ]);
 })
   .prefix('api/users')
-  .middleware('auth:jwt', 'can:read_users');
+  .middleware('auth:jwt');
 
 Route.group(() => {
   Route.get('/', 'UserController.show');
