@@ -38,7 +38,32 @@ paths:
             $ref: '#/definitions/User'
         500:
           description: User role could not be updated! Please try again.
-
+  /users/report:
+    post:
+      summary: Report a user
+      description: Report a user
+      tags:
+        - ReportedUser
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: user_id
+          description: ID of the user to report
+          in: formData
+          type: integer
+          required: true
+        - name: reason
+          description: Reason for reporting the user
+          in: formData
+          type: string
+          required: true
+      produces:
+        - application/json
+      responses:
+        200:
+          description: reported user object
+          schema:
+            $ref: '#/definitions/ReportedUser'
   /user:
     get:
       description: Get a user profile

@@ -6,11 +6,12 @@ const Role = use('Role');
 trait('Test/ApiClient');
 trait('Auth/Client');
 
-let adminUser, driverUser, randomUser;
+let adminUser, driverUser, randomUser, passengerUser;
 
 before(async () => {
   adminUser = await User.findBy('email', 'admin@travel-to.com');
   driverUser = await User.findBy('email', 'driver@travel-to.com');
+  passengerUser = await User.findBy('email', 'passenger@travel-to.com');
   randomUser = await User.first();
 });
 
@@ -54,6 +55,7 @@ test('user can get his profile', async ({ client, assert }) => {
     data: driverUser.toJSON()
   });
 });
+
 test('user can update his profile', async ({ client, assert }) => {});
 test('user can change his password', async ({ client, assert }) => {});
 
@@ -79,4 +81,19 @@ test('passenger user can become a driver', async ({ client, assert }) => {
   roles = await randomUser.getRoles();
   assert.include(roles, 'passenger');
   assert.include(roles, 'driver');
+});
+
+test('user can report another user', async ({ client, assert }) => {
+  const response = await client
+    .post(`api/users/report`)
+    .send({
+      reason: 'He did not show up for the trip',
+      user_id: randomUser.id
+    })
+    .loginVia(passengerUser, 'jwt')
+    .end();
+
+  response.assertStatus(200);
+  assert.equal(response.body.data.reporter_id, passengerUser.id);
+  assert.equal(response.body.data.reported_id, randomUser.id);
 });
