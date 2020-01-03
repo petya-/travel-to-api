@@ -45,6 +45,7 @@ Route.group(() => {
   Route.put('/:id/becomeDriver', 'UserController.becomeDriver').middleware([
     'can:update_user_profile'
   ]);
+  Route.post('/report', 'UserController.report').validator('ReportUser');
 })
   .prefix('api/users')
   .middleware('auth:jwt');

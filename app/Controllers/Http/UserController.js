@@ -6,6 +6,7 @@
 /** @typedef {import('@adonisjs/auth')} Auth */
 
 const User = use('App/Models/User');
+const ReportedUser = use('App/Models/ReportedUser');
 const Role = use('Role');
 const Hash = use('Hash');
 
@@ -140,12 +141,10 @@ class UserController {
    * PUT users/:id/becomeDriver
    *
    * @param {object} ctx
-   * @param {Request} ctx.request
    * @param {Response} ctx.response
-   * @param {Auth} ctx.auth
    * @param {Params} ctx.params
    */
-  async becomeDriver({ request, params, auth, response }) {
+  async becomeDriver({ params, response }) {
     try {
       const { id } = params;
       const user = await User.find(id);
@@ -162,6 +161,37 @@ class UserController {
       return response.status(500).json({
         status: 'error',
         message: 'User role could not be updated! Please try again.'
+      });
+    }
+  }
+
+  /**
+   * Delete a user with id.
+   * DELETE users/:id
+   *
+   * @param {object} ctx
+   * @param {Request} ctx.request
+   * @param {Response} ctx.response
+   * @param {Auth} ctx.auth
+   */
+  async report({ request, response, auth }) {
+    try {
+      const { user_id, reason } = request.all();
+
+      const userToReport = new ReportedUser();
+      userToReport.reason = reason;
+      userToReport.reported_id = user_id;
+      userToReport.reporter_id = auth.user.id;
+      await userToReport.save();
+
+      response.status(200).json({
+        status: 'success',
+        data: userToReport
+      });
+    } catch (error) {
+      return response.status(500).json({
+        status: 'error',
+        message: 'User could not be reported! Please try again.'
       });
     }
   }

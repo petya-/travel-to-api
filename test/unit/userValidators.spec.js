@@ -1,8 +1,10 @@
-const { test } = use('Test/Suite')('Validators');
+const { group, test } = use('Test/Suite')('User Validators');
 const StoreUserValidator = use('App/Validators/StoreUser');
+const ReportUserValidator = use('App/Validators/ReportUser');
 const { validate } = use('Validator');
 
-test('validate user email must be an email', async ({ assert }) => {
+// StoreUser validator
+test('StoreUser. Validate user email must be an email', async ({ assert }) => {
   const userValidator = new StoreUserValidator();
 
   const validation = await validate(
@@ -25,7 +27,7 @@ test('validate user email must be an email', async ({ assert }) => {
   ]);
 });
 
-test('validate user password is required', async ({ assert }) => {
+test('StoreUser. Validate user password is required', async ({ assert }) => {
   const userValidator = new StoreUserValidator();
 
   const validation = await validate(
@@ -49,7 +51,7 @@ test('validate user password is required', async ({ assert }) => {
   ]);
 });
 
-test('validate user password lenght', async ({ assert }) => {
+test('StoreUser. Validate user password lenght', async ({ assert }) => {
   const userValidator = new StoreUserValidator();
 
   const validation = await validate(
@@ -73,7 +75,9 @@ test('validate user password lenght', async ({ assert }) => {
   ]);
 });
 
-test('validate user phone_number is required', async ({ assert }) => {
+test('StoreUser. Validate user phone_number is required', async ({
+  assert
+}) => {
   const userValidator = new StoreUserValidator();
 
   const validation = await validate(
@@ -98,7 +102,7 @@ test('validate user phone_number is required', async ({ assert }) => {
   ]);
 });
 
-test('validate user phone_number lenght', async ({ assert }) => {
+test('StoreUser. Validate user phone_number lenght', async ({ assert }) => {
   const userValidator = new StoreUserValidator();
 
   const validation = await validate(
@@ -119,6 +123,78 @@ test('validate user phone_number lenght', async ({ assert }) => {
       field: 'phone_number',
       message: 'You must provide a phone number with at least 6 digits.',
       validation: 'min'
+    }
+  ]);
+});
+
+// ReportUser validator
+test('ReportUser. Validate reported user_id is required', async ({
+  assert
+}) => {
+  const reportUserValidator = new ReportUserValidator();
+
+  const validation = await validate(
+    {
+      user_id: '',
+      reason: 'The driver did not show up.'
+    },
+    reportUserValidator.rules,
+    reportUserValidator.messages
+  );
+
+  assert.isTrue(validation.fails());
+
+  assert.deepEqual(validation.messages(), [
+    {
+      field: 'user_id',
+      message: 'You must provide a user id to report.',
+      validation: 'required'
+    }
+  ]);
+});
+
+test('ReportUser. Validate reported user exists', async ({ assert }) => {
+  const reportUserValidator = new ReportUserValidator();
+
+  const validation = await validate(
+    {
+      user_id: 245,
+      reason: 'The driver did not show up.'
+    },
+    reportUserValidator.rules,
+    reportUserValidator.messages
+  );
+
+  assert.isTrue(validation.fails());
+
+  assert.deepEqual(validation.messages(), [
+    {
+      field: 'user_id',
+      message: 'You must provide an existing user id.',
+      validation: 'exists'
+    }
+  ]);
+});
+
+test('ReportUser. Validate reason is required', async ({ assert }) => {
+  const reportUserValidator = new ReportUserValidator();
+
+  const validation = await validate(
+    {
+      user_id: 2,
+      reason: ''
+    },
+    reportUserValidator.rules,
+    reportUserValidator.messages
+  );
+
+  assert.isTrue(validation.fails());
+
+  assert.deepEqual(validation.messages(), [
+    {
+      field: 'reason',
+      message: 'You must provide a reason for reporting the user.',
+      validation: 'required'
     }
   ]);
 });
