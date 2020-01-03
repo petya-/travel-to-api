@@ -1,0 +1,31 @@
+paths:
+  /notificatons:
+    get:
+      description: Get all user notificatons
+      tags:
+        - Notificaton
+      security:
+        - bearerAuth: []
+      summary: Get all user notificatons
+      produces:
+        - application/json
+      responses:
+        200:
+          description: notificatons with messages array
+          schema:
+            $ref: '#/definitions/Notificaton'
+  /notificatons/{id}:
+    put:
+      description: Mark a notification as read
+      tags:
+        - Notificaton
+      security:
+        - bearerAuth: []
+      summary: Mark notification as read
+      produces:
+        - application/json
+      responses:
+        200:
+          description: notificaton object
+          schema:
+            $ref: '#/definitions/Notificaton'

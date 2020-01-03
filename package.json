@@ -7,10 +7,13 @@
   "scripts": {
     "start": "node server.js",
     "test": "node ace test",
-    "dev": "nodemon --watch app server.js",
-    "migrate": "adonis migration:run",
+    "dev": "nodemon --watch app --harmony server.js",
+    "migrate": "adonis migration",
+    "seed": "adonis migration",
     "migrate:seed": "adonis migration:run --seed",
-    "migrate:refresh": "adonis migration:refresh"
+    "migrate:refresh": "adonis migration:refresh --seed",
+    "migrate:ci": "ENV_SILENT=true node ace migration:refresh --seed --force",
+    "test:ci": "ENV_SILENT=true node ace test"
   },
   "keywords": [
     "adonisjs",
@@ -31,10 +34,16 @@
     "@adonisjs/mail": "^3.0.10",
     "@adonisjs/session": "^1.0.27",
     "@adonisjs/shield": "^1.0.8",
+    "@adonisjs/validator": "^5.0.6",
     "@adonisjs/vow": "^1.0.17",
+    "@adonisjs/websocket": "^1.0.12",
+    "adonis-acl": "^1.1.1",
+    "adonis-lucid-optional-queries": "^1.0.1",
     "adonis-swagger": "^1.2.9",
+    "luxon": "^1.21.3",
     "pg": "^7.12.1"
   },
+  "devDependencies": {},
   "autoload": {
     "App": "./app"
   }

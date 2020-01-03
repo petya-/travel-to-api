@@ -1,0 +1,149 @@
+paths:
+  /trips:
+    get:
+      description: Get all trips
+      tags:
+        - Trip
+      summary: Get all trips
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: from
+          type: string
+          required: false
+          description: Start destination
+        - in: query
+          name: to
+          type: string
+          required: false
+          description: The number of items to return.
+        - in: query
+          name: date
+          type: date
+          required: false
+          description: Date or DateTime for trip
+      responses:
+        200:
+          description: trips array
+          schema:
+            $ref: '#/definitions/Trip'
+    post:
+      description: Create trip
+      tags:
+        - Trip
+      security:
+        - bearerAuth: []
+      summary: Create a trip
+      produces:
+        - application/json
+      parameters:
+        - name: from
+          description: Start destination of trip
+          in: formData
+          type: string
+        - name: to
+          description: End destination of trip
+          in: formData
+          type: string
+        - name: departure_time
+          description: Date and time of departure in UTC0
+          in: formData
+          type: date-time
+        - name: number_of_passengers
+          description: Number of available places for the trip
+          in: formData
+          type: integer
+        - name: price
+          description: Price for the trip in euros
+          in: formData
+          type: number
+      required:
+        - from
+        - to
+        - departure_time
+        - number_of_passengers
+        - price
+      responses:
+        200:
+          description: created trip object
+          schema:
+            $ref: '#/definitions/Trip'
+        400:
+          description: There was a problem creating the trip, please try again later.
+  /trips/user:
+    get:
+      description: Get user trips
+      tags:
+        - Trip
+      security:
+        - bearerAuth: []
+      summary: Get user trips
+      produces:
+        - application/json
+      responses:
+        200:
+          description: Trips created by the user
+          schema:
+            $ref: '#/definitions/Trip'
+  /trips/{id}:
+    get:
+      description: Get a trip by id
+      summary: Get a trip by id
+      tags:
+        - Trip
+      security:
+        - bearerAuth: []
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: Numeric id of the trip
+  /trips/{id}/request:
+    get:
+      summary: Get a trip with trip requests
+      description: Get a trip by id with the trip requests
+      tags:
+        - Trip
+      security:
+        - bearerAuth: []
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: Numeric id of the trip
+      responses:
+        200:
+          description: trip object
+          schema:
+            $ref: '#/definitions/Trip'
+  /trips/{id}/cancel:
+    put:
+      summary: Cancel a trip
+      description: Driver can cancel a trip up to 24h before the departure time
+      tags:
+        - Trip
+      security:
+        - bearerAuth: []
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: Numeric id of the trip to cancel
+      responses:
+        200:
+          description: trip object
+          schema:
+            $ref: '#/definitions/Trip'

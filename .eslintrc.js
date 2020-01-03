@@ -1,6 +1,5 @@
 module.exports = {
   extends: ['plugin:prettier/recommended'],
-
   plugins: ['prettier'],
   env: {
     browser: true,
@@ -21,5 +20,4 @@ module.exports = {
       }
     ],
     'object-property-newline': 0
-  }
 };

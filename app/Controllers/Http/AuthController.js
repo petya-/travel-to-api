@@ -1,10 +1,17 @@
 'use strict';
 const User = use('App/Models/User');
 const Event = use('Event');
+const Role = use('Role');
 class AuthController {
   async register({ request, auth, response }) {
     // get user data from signup form
-    const userData = request.only(['name', 'email', 'password', 'phoneNumber']);
+    const userData = request.only([
+      'name',
+      'email',
+      'password',
+      'phone_number'
+    ]);
+    const role = request.input('role');
 
     try {
       // save user to database
@@ -15,14 +22,18 @@ class AuthController {
       // fire user created event
       Event.fire('new::user', user);
 
-      return response.json({
-        status: 'success',
-        data: token
-      });
+      // attach driver role if set
+      if (role && role === 'driver') {
+        const driverRole = await Role.findBy('slug', 'driver');
+        await user.roles().attach(driverRole.id);
+      }
+
+      return response.json({ status: 'success', data: token });
     } catch (err) {
       return response.status(400).json({
         status: 'error',
-        message: 'There was a problem creating the user, please try again later.'
+        message:
+          'There was a problem creating the user, please try again later.'
       });
     }
   }
@@ -31,7 +42,7 @@ class AuthController {
     let user = await auth.getUser();
 
     if (user) {
-      user.emailVerified = true;
+      user.email_verified = true;
       user.save();
       user.revokeTokens();
       await generateJWTToken(auth, user);
@@ -50,19 +61,11 @@ class AuthController {
       // validate the user credentials and generate a JWT token
       const token = await auth.attempt(email, password);
 
-      return response.json({
-        status: 'success',
-        data: token
-      });
+      return response.json({ status: 'success', data: token });
     } catch (err) {
-      response.status(400).json({
-        status: 'error',
-        message: err.message
-      });
+      response.status(403).json({ status: 'error', message: err.message });
     }
   }
-
-
 }
 
 async function generateJWTToken(auth, user) {

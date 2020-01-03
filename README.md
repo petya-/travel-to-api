@@ -21,6 +21,14 @@ adonis new yardstick
 
 or manually clone the repo and then run `npm install`.
 
+## Environment Setup
+
+Create a `.env` file from `.env.example` and add populate it with the database and email connection
+
+```bash
+copy .env.example .env
+```
+
 ### Migrations and Seeders
 
 Run the following command to run startup migrations and seeders.
@@ -28,3 +36,11 @@ Run the following command to run startup migrations and seeders.
 ```js
 npm run migrate:seed
 ```
+
+## Deployment
+
+The API is deployed on [Heroku](https://travel-to-api.herokuapp.com)
+
+## Documentation
+
+[API Docs](https://travel-to-api.herokuapp.com/docs/)

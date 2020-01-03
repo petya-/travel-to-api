@@ -1,0 +1,18 @@
+definitions:
+  TripRequest:
+    type: object
+    properties:
+      id:
+        type: uint
+      status:
+        type: string
+      number_of_passengers:
+        type: integer
+      trip_id:
+        type: integer
+      user_id:
+        type: integer
+    required:
+      - status
+      - trip_id
+      - user_id

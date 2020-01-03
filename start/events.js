@@ -1,11 +1,14 @@
-const Event = use('Event')
-const Mail = use('Mail')
+const Event = use('Event');
 
-Event.on('new::user', async (user) => {
-  await Mail.send('emails.welcome', user.toJSON(), message => {
-    message
-      .to(user.email)
-      .from('<from-email>')
-      .subject('Welcome to TravelTo app!');
-  });
-})
+Event.on('new::user', 'User.sendWelcomeEmail');
+
+Event.on('new::tripRequest', 'TripRequest.createConversation');
+Event.on('new::tripRequest', 'TripRequest.sendNotification');
+Event.on('accept::tripRequest', 'TripRequest.sendNotification');
+Event.on('reject::tripRequest', 'TripRequest.sendNotification');
+Event.on('cancel::tripRequest', 'TripRequest.sendNotification');
+
+Event.on('cancel::trip', 'Trip.sendNotification');
+Event.on('cancel::trip', 'Trip.cancelTripRequests');
+
+Event.on('new:message', 'Message.sendNotification');

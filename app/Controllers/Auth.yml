@@ -2,6 +2,7 @@ paths:
   /auth/register:
     post:
       description: Register user with email
+      summary: Register user
       tags:
         - Auth
       produces:
@@ -22,7 +23,7 @@ paths:
           in: formData
           required: true
           type: string
-        - name: phoneNumber
+        - name: phone_number
           description: User's phone number.
           in: formData
           required: true
@@ -35,6 +36,7 @@ paths:
   /auth/login:
     post:
       description: Login to the application
+      summary: Login
       tags:
         - Auth
       produces:
@@ -53,5 +55,20 @@ paths:
       responses:
         200:
           description: login
+          schema:
+            $ref: '#/definitions/User'
+  /auth/verify:
+    post:
+      description: Verify user email
+      summary: Verify user
+      tags:
+        - Auth
+      security:
+        - bearerAuth: []
+      produces:
+        - application/json
+      responses:
+        200:
+          description: verify
           schema:
             $ref: '#/definitions/User'

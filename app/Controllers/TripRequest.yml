@@ -1,0 +1,137 @@
+paths:
+  /tripRequests:
+    get:
+      description: Get all trip requests
+      tags:
+        - TripRequest
+      security:
+        - bearerAuth: []
+      summary: Get all trip requests
+      produces:
+        - application/json
+      responses:
+        200:
+          description: trip requests array
+          schema:
+            $ref: '#/definitions/Trip'
+    post:
+      description: Create a trip request
+      tags:
+        - TripRequest
+      security:
+        - bearerAuth: []
+      summary: Create a trip request
+      produces:
+        - application/json
+      parameters:
+        - name: trip_id
+          description: Id of the trip
+          in: formData
+          type: integer
+        - name: number_of_passengers
+          description: Number of passengers that you want to requiest the trip for
+          in: formData
+          type: integer
+        - name: message
+          description: Message to send to driver
+          in: formData
+          type: text
+      required:
+        - trip_id
+        - number_of_passengers
+        - message
+      responses:
+        200:
+          description: created trip request object
+          schema:
+            $ref: '#/definitions/TripRequest'
+        400:
+          description: There was a problem creating the trip request, please try again later.
+  /tripRequests/{id}:
+    get:
+      description: Get a trip request by id
+      summary: Get a trip request by id
+      tags:
+        - TripRequest
+      security:
+        - bearerAuth: []
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: Numeric id of the trip request
+      responses:
+        200:
+          description: trip request object
+          schema:
+            $ref: '#/definitions/TripRequest'
+/tripRequests/{id}/accept:
+  put:
+    description: Accept a trip request by id
+    summary: Accept a trip request by id
+    tags:
+      - TripRequest
+    security:
+      - bearerAuth: []
+    produces:
+      - application/json
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+        description: Numeric id of the trip request
+    responses:
+      200:
+        description: trip request object
+        schema:
+          $ref: '#/definitions/TripRequest'
+/tripRequests/{id}/reject:
+  put:
+    description: Reject a trip request by id
+    summary: Reject a trip request by id
+    tags:
+      - TripRequest
+    security:
+      - bearerAuth: []
+    produces:
+      - application/json
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+        description: Numeric id of the trip request
+    responses:
+      200:
+        description: trip request object
+        schema:
+          $ref: '#/definitions/TripRequest'
+/tripRequests/{id}/cancel:
+  put:
+    description: Passenger can cancel a trip request up to 24h before the departure time
+    summary: Cancel a trip request by id
+    tags:
+      - TripRequest
+    security:
+      - bearerAuth: []
+    produces:
+      - application/json
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+        description: Numeric id of the trip request
+    responses:
+      200:
+        description: trip request object
+        schema:
+          $ref: '#/definitions/TripRequest'
