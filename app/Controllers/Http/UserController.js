@@ -166,8 +166,8 @@ class UserController {
   }
 
   /**
-   * Delete a user with id.
-   * DELETE users/:id
+   * Report a user
+   * POST users/report
    *
    * @param {object} ctx
    * @param {Request} ctx.request

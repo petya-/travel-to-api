@@ -1,0 +1,18 @@
+definitions:
+  ReportedUser:
+    type: object
+    properties:
+      id:
+        type: uint
+      reason:
+        type: string
+      approved:
+        type: boolean
+      reporter_id:
+        type: integer
+      reported_id:
+        type: integer
+    required:
+      - reason
+      - reporter_id
+      - reported_id
