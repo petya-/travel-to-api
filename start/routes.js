@@ -22,7 +22,7 @@ Route.on('/').render('welcome');
 |--------------------------------------------------------------------------
 */
 Route.group(() => {
-  Route.post('/register', 'AuthController.register');
+  Route.post('/register', 'AuthController.register').validator('StoreUser');
   Route.post('/login', 'AuthController.login');
 })
   .prefix('api/auth')
