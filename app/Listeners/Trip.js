@@ -9,7 +9,11 @@ Trip.sendNotification = async (trip, user) => {
     const tripRequests = await trip.tripRequests().fetch();
 
     if (tripRequests.toJSON().length > 0) {
-      await broadcastNotifications(trip, tripRequests.toJSON(), user);
+      await broadcastNotifications(
+        trip,
+        tripRequests.toJSON(),
+        `The trip from ${trip.from} to ${trip.to} was cancelled by ${user.name}.`
+      );
     }
   } catch (error) {
     throw error;
@@ -25,13 +29,30 @@ Trip.cancelTripRequests = async (trip, user) => {
         await tripRequest;
       });
     }
-  } catch (error) {}
+  } catch (error) {
+    throw error;
+  }
 };
 
-async function broadcastNotifications(trip, tripRequests, user) {
+Trip.updateTrip = async (trip, user) => {
+  try {
+    const tripRequests = await trip.tripRequests().fetch();
+    if (tripRequests.toJSON().length > 0) {
+      await broadcastNotifications(
+        trip,
+        tripRequests.toJSON(),
+        `The trip from ${trip.from} to ${trip.to} was updated by ${user.name}.`
+      );
+    }
+  } catch (error) {
+    throw error;
+  }
+};
+
+async function broadcastNotifications(trip, tripRequests, message) {
   tripRequests.forEach(async tripRequest => {
     const notification = new Notification();
-    notification.message = `The trip from ${trip.from} to ${trip.to} was cancelled by ${user.name}.`;
+    notification.message = message;
     notification.user_id = tripRequest.user_id;
     notification.trip_id = trip.id;
     notification.trip_request_id = tripRequest.id;
