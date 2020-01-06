@@ -64,7 +64,7 @@ class AuthController {
         user.email_verified = true;
         await user.save();
 
-        await user.revokeTokens();
+        await auth.authenticator('jwt').revokeTokens();
         await generateJWTToken(auth, user);
         return response.json({
           message: 'success',
@@ -72,6 +72,8 @@ class AuthController {
         });
       }
     } catch (error) {
+      console.log(error);
+
       return response.status(404).json({
         status: 'error',
         message: 'You do not exist in the system. Please register.'
