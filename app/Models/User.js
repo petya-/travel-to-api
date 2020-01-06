@@ -19,11 +19,8 @@ class User extends Model {
      * it to the database.
      */
     this.addHook('beforeSave', 'UserHook.hashPassword');
-    this.addHook('afterSave', [
-      'UserHook.attachPassengerRole',
-      'UserHook.isEnabled',
-      'UserHook.isVerified'
-    ]);
+    this.addHook('afterSave', 'UserHook.attachPassengerRole');
+    // this.addHook('afterFind', ['UserHook.isEnabled', 'UserHook.isVerified']);
   }
 
   /**
