@@ -72,8 +72,6 @@ class AuthController {
         });
       }
     } catch (error) {
-      console.log(error);
-
       return response.status(404).json({
         status: 'error',
         message: 'You do not exist in the system. Please register.'
