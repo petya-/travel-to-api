@@ -1,4 +1,4 @@
-const { group, test } = use('Test/Suite')('Trip Validators');
+const { test } = use('Test/Suite')('Trip Validators');
 const StoreTripValidator = use('App/Validators/StoreTrip');
 const { validate } = use('Validator');
 const { DateTime } = require('luxon');
