@@ -28,7 +28,7 @@ Route.group(() => {
   .prefix('api/auth')
   .middleware('guest');
 Route.group(() => {
-  Route.post('/verify', 'AuthController.verify');
+  Route.put('/verify', 'AuthController.verify');
 })
   .prefix('api/auth')
   .middleware('auth:jwt');

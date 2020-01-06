@@ -3,6 +3,15 @@ const User = use('App/Models/User');
 const Event = use('Event');
 const Role = use('Role');
 class AuthController {
+  /**
+   * Register user
+   * POST auth/register
+   *
+   * @param {object} ctx
+   * @param {Response} ctx.request
+   * @param {Response} ctx.response
+   * @param {Auth} ctx.auth
+   */
   async register({ request, auth, response }) {
     // get user data from signup form
     const userData = request.only([
@@ -38,22 +47,47 @@ class AuthController {
     }
   }
 
+  /**
+   * Verify user
+   * PUT auth/verify
+   *
+   * @param {object} ctx
+   * @param {Response} ctx.request
+   * @param {Response} ctx.response
+   * @param {Auth} ctx.auth
+   */
   async verify({ auth, response }) {
-    let user = await auth.getUser();
+    try {
+      let user = await auth.getUser();
 
-    if (user) {
-      user.email_verified = true;
-      await user.save();
-      user.revokeTokens();
-      await generateJWTToken(auth, user);
-      return response.json(user);
+      if (user) {
+        user.email_verified = true;
+        await user.save();
+
+        await user.revokeTokens();
+        await generateJWTToken(auth, user);
+        return response.json({
+          message: 'success',
+          data: user
+        });
+      }
+    } catch (error) {
+      return response.status(404).json({
+        status: 'error',
+        message: 'You do not exist in the system. Please register.'
+      });
     }
-
-    return response.json({
-      message: 'You do not exist in the system. Please register.'
-    });
   }
 
+  /**
+   * Login user
+   * POST auth/login
+   *
+   * @param {object} ctx
+   * @param {Response} ctx.request
+   * @param {Response} ctx.response
+   * @param {Auth} ctx.auth
+   */
   async login({ request, auth, response }) {
     try {
       const { email, password } = request.all();
