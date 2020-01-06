@@ -223,23 +223,42 @@ class TripController {
 
   /**
    * Update trip details.
-   * PUT or PATCH trips/:id
+   * PUT trips/:id
    *
    * @param {object} ctx
    * @param {Request} ctx.request
    * @param {Response} ctx.response
+   * @param {Auth} ctx.auth
    */
-  async update({ params, request, response }) {}
+  async update({ params, request, response, auth }) {
+    try {
+      const { id } = params;
+      const { user } = auth;
 
-  /**
-   * Delete a trip with id.
-   * DELETE trips/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async destroy({ params, request, response }) {}
+      const updatedTrip = request.only([
+        'departure_time',
+        'number_of_passengers',
+        'price'
+      ]);
+      let trip = await Trip.find(id);
+
+      // The merge method only modifies the specified attributes from the request
+      await trip.merge(updatedTrip);
+      await trip.save();
+
+      Event.fire('update::trip', trip, user);
+
+      return response.status(200).json({
+        status: 'success',
+        data: trip
+      });
+    } catch (error) {
+      return response.status(500).json({
+        status: 'error',
+        message: 'There was an error while updating the trip.'
+      });
+    }
+  }
 }
 
 module.exports = TripController;

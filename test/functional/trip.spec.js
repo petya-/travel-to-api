@@ -189,3 +189,30 @@ test('driver can cancel a trip', async ({ client, assert }) => {
 
   Event.restore();
 });
+
+test('driver can update a trip', async ({ client, assert }) => {
+  Event.fake();
+
+  const trip = await Trip.findBy('from', 'Plovdiv');
+  const now = DateTime.utc().toISO();
+  trip.departure_time = now;
+  trip.number_of_passengers = 3;
+
+  const response = await client
+    .put(`api/trips/${trip.id}`)
+    .send(trip.toJSON())
+    .loginVia(driverUser, 'jwt')
+    .end();
+
+  const { status, data } = response.body;
+  response.assertStatus(200);
+  assert.equal(status, 'success');
+
+  assert.equal(data.number_of_passengers, 3);
+  assert.equal(data.departure_time, now);
+
+  const recentEvent = Event.pullRecent();
+  assert.equal(recentEvent.event, 'update::trip');
+
+  Event.restore();
+});
