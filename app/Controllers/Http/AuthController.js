@@ -20,7 +20,7 @@ class AuthController {
       const token = await auth.generate(user);
 
       // fire user created event
-      Event.fire('new::user', user);
+      Event.fire('new::user', user, token.token);
 
       // attach driver role if set
       if (role && role === 'driver') {

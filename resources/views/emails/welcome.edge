@@ -1,9 +1,19 @@
-<h2> Hello {{ name }} </h2>
+<h1>Welcome to TravelTo!</h1>
 <p>
-  Welcome to TravelTo!
-
-  To get you started, click here to confirm your email.
-
-  Cheers,
-  TravelTo team
+  Hello {{ user.name }}, you have signed up to the trip sharing platform TravelTo with {{ user.email }}.
 </p>
+
+<p>
+  If it was you, just click this
+<a href="https://travel-to.herokuapp.com/activate_user/{{token}}">link</a> to confirm your account.
+</p>
+
+<p>
+  If it wasn't you then we recommend you to change your password. Someone may
+  have stolen it. 🕵️‍🕵️‍🕵️‍🕵️‍🕵️‍🕵️‍🕵️
+</p>
+
+We wish you happy travelling! <br><br>
+
+Cheers,<br>
+TravelTo team
