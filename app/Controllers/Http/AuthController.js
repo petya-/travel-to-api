@@ -66,6 +66,9 @@ class AuthController {
 
         await auth.authenticator('jwt').revokeTokens();
         await generateJWTToken(auth, user);
+
+        const roles = await user.getRoles();
+        user.role = roles.includes('driver') ? 'driver' : 'passenger';
         return response.json({
           status: 'success',
           data: user
