@@ -67,7 +67,7 @@ class AuthController {
         await auth.authenticator('jwt').revokeTokens();
         await generateJWTToken(auth, user);
         return response.json({
-          message: 'success',
+          status: 'success',
           data: user
         });
       }
