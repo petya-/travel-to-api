@@ -43,7 +43,7 @@ class AuthController {
 
     if (user) {
       user.email_verified = true;
-      user.save();
+      await user.save();
       user.revokeTokens();
       await generateJWTToken(auth, user);
       return response.json(user);
