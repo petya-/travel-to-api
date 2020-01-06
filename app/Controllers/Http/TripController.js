@@ -179,31 +179,11 @@ class TripController {
    * @param {Auth} ctx.auth
    */
   async cancel({ response, params, auth }) {
-    const { id } = params;
-    const { user } = auth;
-
     try {
+      const { id } = params;
+      const { user } = auth;
+
       const trip = await Trip.find(id);
-
-      const tomorrow = DateTime.utc().plus({
-        days: 1,
-        hours: 0,
-        minutes: 0,
-        seconds: 0
-      });
-
-      const { hours } = tomorrow
-        .diff(DateTime.fromJSDate(trip.departure_time), 'hours')
-        .toObject();
-
-      if (hours > 24) {
-        return response.status(400).json({
-          status: 'error',
-          message:
-            'You cannot cancel a trip less that 24h before the departure time.'
-        });
-      }
-
       trip.status = 'Cancelled';
       await trip.save();
 
