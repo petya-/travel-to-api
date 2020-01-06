@@ -29,7 +29,7 @@ paths:
           schema:
             $ref: '#/definitions/Trip'
     post:
-      description: Create trip
+      description: Create a trip
       tags:
         - Trip
       security:

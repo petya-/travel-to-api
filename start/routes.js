@@ -80,12 +80,14 @@ Route.group(() => {
   Route.put('/:id', 'TripController.update').middleware([
     'auth:jwt',
     'can:update_trip',
-    'isTripDriver'
+    'isTripDriver',
+    'tripCanBeChanged'
   ]);
   Route.put('/:id/cancel', 'TripController.cancel').middleware([
     'auth:jwt',
     'can:update_trip',
-    'isTripDriver'
+    'isTripDriver',
+    'tripCanBeChanged'
   ]);
 }).prefix('api/trips');
 

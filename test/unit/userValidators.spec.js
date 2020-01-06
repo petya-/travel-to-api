@@ -1,4 +1,4 @@
-const { group, test } = use('Test/Suite')('User Validators');
+const { test } = use('Test/Suite')('User Validators');
 const StoreUserValidator = use('App/Validators/StoreUser');
 const ReportUserValidator = use('App/Validators/ReportUser');
 const { validate } = use('Validator');

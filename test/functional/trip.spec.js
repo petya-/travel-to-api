@@ -169,32 +169,13 @@ test('driver cannot cancel a trip if the departure date is less that 24h from no
   });
 });
 
-test('driver can cancel a trip', async ({ client, assert }) => {
-  Event.fake();
-
-  const trip = await Trip.findBy('from', 'Sofia');
-  assert.equal(trip.status, 'Pending');
-
-  const response = await client
-    .put(`api/trips/${trip.id}/cancel`)
-    .send(trip)
-    .loginVia(driverUser, 'jwt')
-    .end();
-
-  response.assertStatus(200);
-  assert.equal(response.body.data.status, 'Cancelled');
-
-  const recentEvent = Event.pullRecent();
-  assert.equal(recentEvent.event, 'cancel::trip');
-
-  Event.restore();
-});
-
 test('driver can update a trip', async ({ client, assert }) => {
   Event.fake();
 
-  const trip = await Trip.findBy('from', 'Plovdiv');
-  const now = DateTime.utc().toISO();
+  const trip = await Trip.findBy('from', 'Sofia');
+  const now = DateTime.utc()
+    .plus({ days: 3 })
+    .toISO();
   trip.departure_time = now;
   trip.number_of_passengers = 3;
 
@@ -213,6 +194,27 @@ test('driver can update a trip', async ({ client, assert }) => {
 
   const recentEvent = Event.pullRecent();
   assert.equal(recentEvent.event, 'update::trip');
+
+  Event.restore();
+});
+
+test('driver can cancel a trip', async ({ client, assert }) => {
+  Event.fake();
+
+  const trip = await Trip.findBy('from', 'Sofia');
+  assert.equal(trip.status, 'Pending');
+
+  const response = await client
+    .put(`api/trips/${trip.id}/cancel`)
+    .send(trip)
+    .loginVia(driverUser, 'jwt')
+    .end();
+
+  response.assertStatus(200);
+  assert.equal(response.body.data.status, 'Cancelled');
+
+  const recentEvent = Event.pullRecent();
+  assert.equal(recentEvent.event, 'cancel::trip');
 
   Event.restore();
 });
