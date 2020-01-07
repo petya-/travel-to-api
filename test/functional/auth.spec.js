@@ -58,22 +58,18 @@ test('user can signup via email as driver and get welcome mail', async ({
   Event.restore();
 });
 
-// test('user cannot login if the email is not verified', async ({ client }) => {
-//   const userData = {
-//     name: 'Joeh Doeh',
-//     email: 'joeh@example.com'
-//   };
+test('user can login ', async ({ client, assert }) => {
+  const userData = {
+    email: 'joeh@example.com',
+    password: 'mySecurePassword2'
+  };
 
-//   const response = await client
-//     .post('api/auth/login')
-//     .send(userData)
-//     .end();
+  const response = await client
+    .post('api/auth/login')
+    .send(userData)
+    .end();
 
-//   response.assertStatus(403);
-//   console.log(response);
+  response.assertStatus(200);
 
-//   response.assertError({
-//     status: 'error',
-//     message: 'Your email address is not confirmed!'
-//   });
-// });
+  assert.isNotNull(response.body.data.token);
+});
