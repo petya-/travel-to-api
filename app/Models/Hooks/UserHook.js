@@ -21,15 +21,3 @@ UserHook.attachPassengerRole = async userInstance => {
     }
   }
 };
-
-// UserHook.isEnabled = async userInstance => {
-//   if (!userInstance.enabled) {
-//     throw new Error("You've been banned from the system!");
-//   }
-// };
-
-// UserHook.isVerified = async userInstance => {
-//   if (!userInstance.email_verified) {
-//     throw new Error('Your email address is not confirmed!');
-//   }
-// };

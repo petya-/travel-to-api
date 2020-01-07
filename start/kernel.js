@@ -49,7 +49,8 @@ const namedMiddleware = {
   isInTrip: 'App/Middleware/TripParticipant',
   isTripDriver: 'App/Middleware/TripCreator',
   isNotFullyBooked: 'App/Middleware/TripAvailability',
-  tripCanBeChanged: 'App/Middleware/TripCanBeChanged'
+  tripCanBeChanged: 'App/Middleware/TripCanBeChanged',
+  userIsEnabled: 'App/Middleware/UserIsEnabled'
 };
 
 /*

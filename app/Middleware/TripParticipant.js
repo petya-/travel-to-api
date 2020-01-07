@@ -8,7 +8,7 @@ const TripRequest = use('App/Models/TripRequest');
 class TripParticipant {
   /**
    * @param {object} ctx
-   * @param {Request} ctx.response
+   * @param {Response} ctx.response
    * @param {Request} ctx.request
    * @param {Function} next
    */

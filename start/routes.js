@@ -48,7 +48,7 @@ Route.group(() => {
   Route.post('/report', 'UserController.report').validator('ReportUser');
 })
   .prefix('api/users')
-  .middleware('auth:jwt');
+  .middleware(['auth:jwt', 'userIsEnabled']);
 
 Route.group(() => {
   Route.get('/', 'UserController.show');
@@ -56,7 +56,12 @@ Route.group(() => {
   Route.put('/changePassword', 'UserController.changePassword');
 })
   .prefix('api/user')
-  .middleware(['auth:jwt', 'can:read_user_profile', 'can:update_user_profile']);
+  .middleware([
+    'auth:jwt',
+    'userIsEnabled',
+    'can:read_user_profile',
+    'can:update_user_profile'
+  ]);
 
 /*
 |--------------------------------------------------------------------------
@@ -67,10 +72,12 @@ Route.group(() => {
   Route.get('/', 'TripController.index');
   Route.get('/user', 'TripController.indexUserTrips').middleware([
     'auth:jwt',
+    'userIsEnabled',
     'can:read_user_trips'
   ]);
   Route.get('/:id', 'TripController.show').middleware([
     'auth:jwt',
+    'userIsEnabled',
     'can:read_user_trips'
   ]);
   Route.get('/:id/requests', 'TripController.showTripRequests').middleware([
@@ -79,12 +86,14 @@ Route.group(() => {
   Route.post('/', 'TripController.store').middleware(['can:create_trip']);
   Route.put('/:id', 'TripController.update').middleware([
     'auth:jwt',
+    'userIsEnabled',
     'can:update_trip',
     'isTripDriver',
     'tripCanBeChanged'
   ]);
   Route.put('/:id/cancel', 'TripController.cancel').middleware([
     'auth:jwt',
+    'userIsEnabled',
     'can:update_trip',
     'isTripDriver',
     'tripCanBeChanged'
@@ -127,7 +136,7 @@ Route.group(() => {
   ]);
 })
   .prefix('api/tripRequests')
-  .middleware(['auth:jwt']);
+  .middleware(['auth:jwt', 'userIsEnabled']);
 
 /*
 |--------------------------------------------------------------------------
@@ -152,7 +161,7 @@ Route.group(() => {
   ).middleware(['can:create_message', 'isInConversation']);
 })
   .prefix('api/conversations')
-  .middleware(['auth:jwt']);
+  .middleware(['auth:jwt', 'userIsEnabled']);
 
 /*
 |--------------------------------------------------------------------------
@@ -165,7 +174,7 @@ Route.group(() => {
   ]);
 })
   .prefix('api/messages')
-  .middleware(['auth:jwt']);
+  .middleware(['auth:jwt', 'userIsEnabled']);
 
 /*
 |--------------------------------------------------------------------------
@@ -181,4 +190,4 @@ Route.group(() => {
   ]);
 })
   .prefix('api/notifications')
-  .middleware(['auth:jwt']);
+  .middleware(['auth:jwt', 'userIsEnabled']);
