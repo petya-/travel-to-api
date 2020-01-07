@@ -29,6 +29,14 @@ Create a `.env` file from `.env.example` and add populate it with the database a
 copy .env.example .env
 ```
 
+### Generate App Key
+
+Run the following command to generate an application key:
+
+```js
+adonis key:generate
+```
+
 ### Migrations and Seeders
 
 Run the following command to run startup migrations and seeders.
