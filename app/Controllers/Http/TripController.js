@@ -129,7 +129,7 @@ class TripController {
       const { user } = auth;
       const driverTrips = await user.trips().fetch();
       const passengerTrips = await Trip.query()
-        .with('tripRequests', builder => {
+        .with('trip_requests', builder => {
           builder.where('user_id', user.id);
         })
         .fetch();
