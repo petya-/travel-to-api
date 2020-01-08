@@ -105,17 +105,18 @@ class TripRequestController {
    *
    * @param {object} ctx
    * @param {Request} ctx.params
+   * @param {Request} ctx.request
    * @param {Response} ctx.response
    * @param {Auth} ctx.auth
    */
-  async accept({ params, response, auth }) {
+  async accept({ params, request, response, auth }) {
     try {
       const { id } = params;
       const tripRequest = await TripRequest.findOrFail(id);
       if (tripRequest.status === 'Pending') {
         tripRequest.status = 'Accepted';
         await tripRequest.save();
-        Event.fire('accept::tripRequest', tripRequest, auth.user);
+        Event.fire('accept::tripRequest', tripRequest, request, auth.user);
 
         return response.status(200).json({
           status: 'success',
@@ -140,17 +141,18 @@ class TripRequestController {
    *
    * @param {object} ctx
    * @param {Request} ctx.params
+   * @param {Request} ctx.request
    * @param {Response} ctx.response
    * @param {Auth} ctx.auth
    */
-  async reject({ params, response, auth }) {
+  async reject({ params, request, response, auth }) {
     try {
       const { id } = params;
       const tripRequest = await TripRequest.findOrFail(id);
       if (tripRequest.status === 'Pending') {
         tripRequest.status = 'Rejected';
         await tripRequest.save();
-        Event.fire('reject::tripRequest', tripRequest, auth.user);
+        Event.fire('reject::tripRequest', tripRequest, request, auth.user);
 
         return response.status(200).json({
           status: 'success',
@@ -174,11 +176,12 @@ class TripRequestController {
    * GET trips/:id/cancel
    *
    * @param {object} ctx
+   * @param {Request} ctx.request
    * @param {Response} ctx.response
    * @param {Params} ctx.params
    * @param {Auth} ctx.auth
    */
-  async cancel({ response, params, auth }) {
+  async cancel({ request, response, params, auth }) {
     try {
       const { id } = params;
       const { user } = auth;
@@ -206,7 +209,7 @@ class TripRequestController {
       tripRequest.status = 'Cancelled';
       await tripRequest.save();
 
-      Event.fire('cancel::tripRequest', tripRequest, user);
+      Event.fire('cancel::tripRequest', tripRequest, request, user);
 
       return response.status(200).json({
         status: 'success',
@@ -219,16 +222,6 @@ class TripRequestController {
       });
     }
   }
-
-  /**
-   * Delete a triprequest with id.
-   * DELETE triprequests/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async destroy({ params, request, response }) {}
 }
 
 module.exports = TripRequestController;
