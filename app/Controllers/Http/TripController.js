@@ -126,11 +126,16 @@ class TripController {
    */
   async indexUserTrips({ response, auth }) {
     try {
-      const driverTrips = await auth.user.trips().fetch();
-      const tripRequests = await auth.user.tripRequests().fetch();
+      const { user } = auth;
+      const driverTrips = await user.trips().fetch();
+      const passengerTrips = await Trip.query()
+        .with('tripRequests', builder => {
+          builder.where('user_id', user.id);
+        })
+        .fetch();
       const trips = {
         driver: driverTrips,
-        passenger: tripRequests
+        passenger: passengerTrips
       };
       response.status(200).json({
         status: 'success',
