@@ -21,9 +21,10 @@ class ConversationController {
       const { user } = auth;
       const conversations = await Conversation.query()
         .whereHas('messages', builder => {
-          builder.where('sender_id', user.id)
-        }).orWhereHas('messages', builder => {
-          builder.where('receiver_id', user.id).
+          builder.where('sender_id', user.id);
+        })
+        .orWhereHas('messages', builder => {
+          builder.where('receiver_id', user.id);
         })
         .where('active', true)
         .with('messages')
