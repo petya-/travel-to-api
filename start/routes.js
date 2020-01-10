@@ -25,6 +25,8 @@ Route.on('/').render('welcome');
 Route.group(() => {
   Route.post('/register', 'AuthController.register').validator('StoreUser');
   Route.post('/login', 'AuthController.login');
+  Route.get('login/facebook', 'AuthController.redirect');
+  Route.get('facebook/callback', 'AuthController.callback');
 })
   .prefix('api/auth')
   .middleware('guest');

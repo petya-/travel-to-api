@@ -17,6 +17,11 @@ class UserSchema extends Schema {
       table.string('profile_img').nullable();
       table.string('description').nullable();
       table
+        .string('login_source')
+        .notNullable()
+        .default('local');
+      table.string('token').nullable();
+      table
         .boolean('email_verified')
         .notNullable()
         .defaultTo(false);
