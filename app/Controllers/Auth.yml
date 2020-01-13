@@ -57,6 +57,22 @@ paths:
           description: login
           schema:
             $ref: '#/definitions/User'
+  /auth/login/facebook:
+    get:
+      description: Redirect user to Facebook login
+      summary: Facebook Signup
+      tags:
+        - Auth
+      produces:
+        - application/json
+  /auth/facebook/callback:
+    get:
+      description: Callback to API from Facebook login
+      summary: Facebook Callback
+      tags:
+        - Auth
+      produces:
+        - application/json
   /auth/verify:
     post:
       description: Verify user email
