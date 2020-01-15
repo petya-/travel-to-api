@@ -110,8 +110,8 @@ class AuthController {
    * @param {object} ctx
    * @param {Ally} ctx.ally
    */
-  async redirect({ ally }) {
-    await ally.driver('facebook').redirect();
+  async redirectToProvider({ ally, params }) {
+    await ally.driver(params.provider).redirect();
   }
 
   /**
@@ -122,17 +122,19 @@ class AuthController {
    * @param {Auth} ctx.auth
    */
 
-  async callback({ ally, auth }) {
+  async handleProviderCallback({ params, ally, auth, response }) {
+    const provider = params.provider;
     try {
-      const fbUser = await ally.driver('facebook').getUser();
+      const userData = await ally.driver(params.provider).getUser();
 
       // user details to be saved
       const userDetails = {
-        name: fbUser.getName(),
-        email: fbUser.getEmail(),
-        profile_image: fbUser.getAvatar(),
-        token: fbUser.getAccessToken(),
-        login_source: 'facebook'
+        name: userData.getName(),
+        email: userData.getEmail(),
+        profile_image: userData.getAvatar(),
+        token: userData.getAccessToken(),
+        provider_id = userData.getId(),
+        provider
       };
 
       // search for existing user
@@ -149,9 +151,19 @@ class AuthController {
         status: 'success',
         data: user
       });
-    } catch (error) {
-      return 'Unable to authenticate. Try again later';
+
+    } catch (e) {
+      console.log(e);
+      response.redirect('/auth/' + provider);
     }
+  }
+
+  async logout({ auth, response }) {
+    await auth.logout();
+    return response.json({
+      status: 'success',
+      message: "You were logged out!"
+    });
   }
 }
 

@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 /*
 |--------------------------------------------------------------------------
@@ -13,7 +13,7 @@
 |
 */
 
-const Env = use('Env')
+const Env = use('Env');
 
 module.exports = {
   ally: {
@@ -44,7 +44,8 @@ module.exports = {
     google: {
       clientId: Env.get('GOOGLE_CLIENT_ID'),
       clientSecret: Env.get('GOOGLE_CLIENT_SECRET'),
-      redirectUri: `${Env.get('APP_URL')}/authenticated/google`
+      redirectUri: `${Env.get('APP_URL')}/authenticated/google`,
+      sameSite: false
     },
 
     /*
@@ -92,4 +93,4 @@ module.exports = {
       redirectUri: `${Env.get('APP_URL')}/authenticated/foursquare`
     }
   }
-}
+};

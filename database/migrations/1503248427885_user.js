@@ -16,10 +16,8 @@ class UserSchema extends Schema {
       table.string('phone_number', 20).notNullable();
       table.string('profile_img').nullable();
       table.string('description').nullable();
-      table
-        .string('login_source')
-        .notNullable()
-        .default('local');
+      table.string('provider_id').nullable();
+      table.string('provider').nullable();
       table.string('token').nullable();
       table
         .boolean('email_verified')

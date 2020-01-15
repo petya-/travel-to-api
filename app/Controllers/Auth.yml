@@ -57,18 +57,18 @@ paths:
           description: login
           schema:
             $ref: '#/definitions/User'
-  /auth/login/facebook:
+  /auth/{provider}:
     get:
-      description: Redirect user to Facebook login
-      summary: Facebook Signup
+      description: Redirect user to Provider login
+      summary: Provider Signup
       tags:
         - Auth
       produces:
         - application/json
-  /auth/facebook/callback:
+  /authenticated/{provider}:
     get:
-      description: Callback to API from Facebook login
-      summary: Facebook Callback
+      description: Callback to API from Provider login
+      summary: Provider Callback
       tags:
         - Auth
       produces:
