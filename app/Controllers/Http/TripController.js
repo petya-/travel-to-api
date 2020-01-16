@@ -72,6 +72,8 @@ class TripController {
         departure_time: request.input('departure_time'),
         number_of_passengers: request.input('number_of_passengers'),
         price: request.input('price'),
+        lng: request.input('lng'),
+        lat: request.input('lat'),
         status: 'Pending'
       });
       return response.json({

@@ -22,8 +22,8 @@ class TripSchema extends Schema {
         .string('status')
         .notNullable()
         .default('Pending');
-      table.string('latitude').nullable();
-      table.string('longitude').nullable();
+      table.string('lat').nullable();
+      table.string('lng').nullable();
       table
         .integer('driver_id')
         .unsigned()
