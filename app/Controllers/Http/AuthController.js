@@ -133,7 +133,7 @@ class AuthController {
         email: userData.getEmail(),
         profile_image: userData.getAvatar(),
         token: userData.getAccessToken(),
-        provider_id = userData.getId(),
+        provider_id: userData.getId(),
         provider
       };
 
@@ -151,7 +151,6 @@ class AuthController {
         status: 'success',
         data: user
       });
-
     } catch (e) {
       console.log(e);
       response.redirect('/auth/' + provider);
@@ -162,7 +161,7 @@ class AuthController {
     await auth.logout();
     return response.json({
       status: 'success',
-      message: "You were logged out!"
+      message: 'You were logged out!'
     });
   }
 }
