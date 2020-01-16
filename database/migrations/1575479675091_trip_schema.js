@@ -17,13 +17,14 @@ class TripSchema extends Schema {
       table
         .decimal('price')
         .notNullable()
-        .default(0);
       table
         .string('status')
         .notNullable()
         .default('Pending');
-      table.string('lat').nullable();
-      table.string('lng').nullable();
+      table.string('lat_start').nullable();
+      table.string('lng_start').nullable();
+      table.string('lat_end').nullable();
+      table.string('lng_end').nullable();
       table
         .integer('driver_id')
         .unsigned()

@@ -49,7 +49,7 @@ paths:
         - name: departure_time
           description: Date and time of departure in UTC0
           in: formData
-          type: date-time
+          type: datetime
         - name: number_of_passengers
           description: Number of available places for the trip
           in: formData
@@ -58,6 +58,22 @@ paths:
           description: Price for the trip in euros
           in: formData
           type: number
+        - name: lat_start
+          description: Latitude of start destination
+          in: formData
+          type: string
+        - name: lng_start
+          description: Longitude of start destination
+          in: formData
+          type: string
+        - name: lat_end
+          description: Latitude of end destination
+          in: formData
+          type: string
+        - name: lng_end
+          description: Longitude of end destination
+          in: formData
+          type: string
       required:
         - from
         - to
