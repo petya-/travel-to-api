@@ -23,10 +23,17 @@ Route.on('/').render('welcome');
 |--------------------------------------------------------------------------
 */
 Route.group(() => {
-  Route.post('/register', 'AuthController.register').validator('StoreUser');
-  Route.post('/login', 'AuthController.login');
+  Route.post('auth/register', 'AuthController.register').validator('StoreUser');
+  Route.post('auth/login', 'AuthController.login');
+  Route.get('auth/:provider', 'AuthController.redirectToProvider').as(
+    'social.login'
+  );
+  Route.get(
+    'authenticated/:provider',
+    'AuthController.handleProviderCallback'
+  ).as('social.login.callback');
 })
-  .prefix('api/auth')
+  .prefix('api/')
   .middleware('guest');
 
 Route.group(() => {

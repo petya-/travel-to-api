@@ -103,6 +103,67 @@ class AuthController {
       response.status(403).json({ status: 'error', message: err.message });
     }
   }
+
+  /**
+   * Redirect to Facebook
+   *
+   * @param {object} ctx
+   * @param {Ally} ctx.ally
+   */
+  async redirectToProvider({ ally, params }) {
+    await ally.driver(params.provider).redirect();
+  }
+
+  /**
+   * Get user from Facebook
+   *
+   * @param {object} ctx
+   * @param {Ally} ctx.ally
+   * @param {Auth} ctx.auth
+   */
+
+  async handleProviderCallback({ params, ally, auth, response }) {
+    const provider = params.provider;
+    try {
+      const userData = await ally.driver(params.provider).getUser();
+
+      // user details to be saved
+      const userDetails = {
+        name: userData.getName(),
+        email: userData.getEmail(),
+        profile_image: userData.getAvatar(),
+        token: userData.getAccessToken(),
+        provider_id: userData.getId(),
+        provider
+      };
+
+      // search for existing user
+      const whereClause = {
+        email: fbUser.getEmail()
+      };
+
+      const user = await User.findOrCreate(whereClause, userDetails);
+      await auth.login(user);
+
+      user.token = generateJWTToken(auth, user);
+
+      return response.json({
+        status: 'success',
+        data: user
+      });
+    } catch (e) {
+      console.log(e);
+      response.redirect('/auth/' + provider);
+    }
+  }
+
+  async logout({ auth, response }) {
+    await auth.logout();
+    return response.json({
+      status: 'success',
+      message: 'You were logged out!'
+    });
+  }
 }
 
 async function generateJWTToken(auth, user) {

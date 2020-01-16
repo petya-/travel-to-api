@@ -57,6 +57,22 @@ paths:
           description: login
           schema:
             $ref: '#/definitions/User'
+  /auth/{provider}:
+    get:
+      description: Redirect user to Provider login
+      summary: Provider Signup
+      tags:
+        - Auth
+      produces:
+        - application/json
+  /authenticated/{provider}:
+    get:
+      description: Callback to API from Provider login
+      summary: Provider Callback
+      tags:
+        - Auth
+      produces:
+        - application/json
   /auth/verify:
     post:
       description: Verify user email
