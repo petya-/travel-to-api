@@ -25,7 +25,7 @@ class TripSeeder {
     await Factory.model('App/Models/Trip').create({
       from: 'Copenhagen',
       to: 'Oslo',
-      departure_time: DateTime.fromISO('2019-12-24', {
+      departure_time: DateTime.fromISO('2020-01-24', {
         zone: 'utc'
       }).toISO(),
       driver_id: driverUser.id,
