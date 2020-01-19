@@ -128,20 +128,27 @@ class AuthController {
     const provider = params.provider;
     try {
       const userData = await ally.driver(params.provider).getUser();
+      const userData = request.only([
+        'name',
+        'email',
+        'user_id',
+        'accessToken'
+      ]);
 
       // user details to be saved
       const userDetails = {
-        name: userData.getName(),
-        email: userData.getEmail(),
-        profile_image: userData.getAvatar(),
-        token: userData.getAccessToken(),
-        provider_id: userData.getId(),
-        provider
+        name: userData.name,
+        email: userData.email,
+        token: userData.accessToken,
+        provider_id: userData.user_id,
+        provider: provider,
+        email_verified: true,
+        enabled: true
       };
 
       // search for existing user
       const whereClause = {
-        email: fbUser.getEmail()
+        email: userData.email
       };
 
       const user = await User.findOrCreate(whereClause, userDetails);
@@ -153,9 +160,9 @@ class AuthController {
         status: 'success',
         data: user
       });
-    } catch (e) {
-      console.log(e);
-      response.redirect('/auth/' + provider);
+    } catch (error) {
+      console.log(error);
+      return response.status(500).json({ status: 'error', message: error });
     }
   }
 
