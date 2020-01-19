@@ -111,7 +111,8 @@ class AuthController {
    * @param {Ally} ctx.ally
    */
   async redirectToProvider({ ally, params }) {
-    await ally.driver(params.provider).redirect();
+    const url = await ally.driver(params.provider).getRedirectUrl();
+    return response.json({ status: 'success', data: url });
   }
 
   /**
