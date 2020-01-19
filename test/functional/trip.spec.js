@@ -33,6 +33,7 @@ test('can get all trips with drivers without a token', async ({
     .where('status', 'Pending')
     .with('driver')
     .fetch();
+  console.log(response);
 
   response.assertStatus(200);
   assert.equal(response.body.data.length, trips.toJSON().length);

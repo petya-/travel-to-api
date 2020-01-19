@@ -24,10 +24,16 @@ class TripController {
   async index({ request, response }) {
     try {
       let startDate,
-        endDate = null;
+        endDate,
+        from,
+        to = null;
 
-      const from = formatSearchString(request.input('from'));
-      const to = formatSearchString(request.input('to'));
+      if (request.input('from')) {
+        from = formatSearchString(request.input('from'));
+      }
+      if (request.input('to')) {
+        to = formatSearchString(request.input('to'));
+      }
 
       if (request.input('date')) {
         const inputDate = DateTime.fromISO(request.input('date'), {
@@ -54,6 +60,8 @@ class TripController {
         data: trips
       });
     } catch (error) {
+      console.log(error);
+
       return response.status(500).json({
         status: 'error',
         message:
@@ -75,8 +83,8 @@ class TripController {
   async store({ request, response, auth }) {
     try {
       const trip = await auth.user.trips().create({
-        from: request.input('from'),
-        to: request.input('to'),
+        from: formatSearchString(request.input('from')),
+        to: formatSearchString(request.input('to')),
         departure_time: request.input('departure_time'),
         number_of_passengers: request.input('number_of_passengers'),
         price: request.input('price'),
