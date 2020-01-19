@@ -153,9 +153,7 @@ class AuthController {
       };
 
       const user = await User.findOrCreate(whereClause, userDetails);
-      await auth.generate(user);
-
-      user.token = await generateJWTToken(auth, user);
+      await generateJWTToken(auth, user);
 
       return response.json({
         status: 'success',
