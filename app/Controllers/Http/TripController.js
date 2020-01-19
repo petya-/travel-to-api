@@ -24,7 +24,17 @@ class TripController {
   async index({ request, response }) {
     try {
       let startDate,
-        endDate = null;
+        endDate,
+        from,
+        to = null;
+
+      if (request.input('from')) {
+        from = formatSearchString(request.input('from'));
+      }
+      if (request.input('to')) {
+        to = formatSearchString(request.input('to'));
+      }
+
       if (request.input('date')) {
         const inputDate = DateTime.fromISO(request.input('date'), {
           zone: 'utc'
@@ -34,9 +44,9 @@ class TripController {
       }
       const trips = await Trip.query()
         .where('status', 'Pending')
-        .optional(query => query.where('from', request.input('from')))
+        .optional(query => query.where('from', from))
         .optional(query => {
-          query.where('to', request.input('to'));
+          query.where('to', to);
         })
         .optional(query => {
           if (startDate && endDate) {
@@ -50,7 +60,11 @@ class TripController {
         data: trips
       });
     } catch (error) {
-      throw error;
+      return response.status(500).json({
+        status: 'error',
+        message:
+          'There was a problem getting all the trips, please try again later.'
+      });
     }
   }
 
@@ -67,8 +81,8 @@ class TripController {
   async store({ request, response, auth }) {
     try {
       const trip = await auth.user.trips().create({
-        from: request.input('from'),
-        to: request.input('to'),
+        from: formatSearchString(request.input('from')),
+        to: formatSearchString(request.input('to')),
         departure_time: request.input('departure_time'),
         number_of_passengers: request.input('number_of_passengers'),
         price: request.input('price'),
@@ -248,6 +262,11 @@ class TripController {
       });
     }
   }
+}
+
+function formatSearchString(string) {
+  string = string.toLowerCase();
+  return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
 module.exports = TripController;
