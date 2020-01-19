@@ -29,7 +29,8 @@ module.exports = {
     facebook: {
       clientId: Env.get('FB_CLIENT_ID'),
       clientSecret: Env.get('FB_CLIENT_SECRET'),
-      redirectUri: `${Env.get('APP_URL')}api/authenticated/facebook`
+      redirectUri: 'https://travel-to.herokuapp.com'
+      // redirectUri: `${Env.get('APP_URL')}api/authenticated/facebook`
     },
 
     /*
@@ -44,7 +45,8 @@ module.exports = {
     google: {
       clientId: Env.get('GOOGLE_CLIENT_ID'),
       clientSecret: Env.get('GOOGLE_CLIENT_SECRET'),
-      redirectUri: `${Env.get('APP_URL')}api/authenticated/google`,
+      // redirectUri: `${Env.get('APP_URL')}api/authenticated/google`,
+      redirectUri: 'https://travel-to.herokuapp.com',
       sameSite: false
     },
 
