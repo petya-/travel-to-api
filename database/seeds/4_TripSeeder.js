@@ -43,6 +43,7 @@ class TripSeeder {
           seconds: 0
         })
         .toISO(),
+      number_of_passengers: 3,
       driver_id: driverUser.id
     });
 
