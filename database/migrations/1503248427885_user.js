@@ -11,9 +11,9 @@ class UserSchema extends Schema {
         .string('email', 254)
         .notNullable()
         .unique();
-      table.string('password', 60).notNullable();
+      table.string('password', 60).nullable();
       table.string('name').notNullable();
-      table.string('phone_number', 20).notNullable();
+      table.string('phone_number', 20).nullable();
       table.string('profile_img').nullable();
       table.string('description').nullable();
       table.string('provider_id').nullable();

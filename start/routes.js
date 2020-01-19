@@ -28,7 +28,7 @@ Route.group(() => {
   Route.get('auth/:provider', 'AuthController.redirectToProvider').as(
     'social.login'
   );
-  Route.get(
+  Route.post(
     'authenticated/:provider',
     'AuthController.handleProviderCallback'
   ).as('social.login.callback');

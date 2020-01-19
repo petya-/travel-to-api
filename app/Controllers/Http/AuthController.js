@@ -120,42 +120,50 @@ class AuthController {
    * Get user from Facebook
    *
    * @param {object} ctx
-   * @param {Ally} ctx.ally
+   * @param {Request} ctx.request
+   * @param {Request} ctx.response
    * @param {Auth} ctx.auth
    */
 
-  async handleProviderCallback({ params, ally, auth, response }) {
+  async handleProviderCallback({ params, request, auth, response }) {
     const provider = params.provider;
     try {
-      const userData = await ally.driver(params.provider).getUser();
+      // const userData = await ally.driver(params.provider).getUser();
+      const userData = request.only([
+        'name',
+        'email',
+        'user_id',
+        'accessToken'
+      ]);
 
       // user details to be saved
       const userDetails = {
-        name: userData.getName(),
-        email: userData.getEmail(),
-        profile_image: userData.getAvatar(),
-        token: userData.getAccessToken(),
-        provider_id: userData.getId(),
-        provider
+        name: userData.name,
+        email: userData.email,
+        token: userData.accessToken,
+        provider_id: userData.user_id,
+        provider: provider,
+        email_verified: true,
+        enabled: true
       };
 
       // search for existing user
       const whereClause = {
-        email: fbUser.getEmail()
+        email: userData.email
       };
 
       const user = await User.findOrCreate(whereClause, userDetails);
-      await auth.login(user);
+      await auth.generate(user);
 
-      user.token = generateJWTToken(auth, user);
+      user.token = await generateJWTToken(auth, user);
 
       return response.json({
         status: 'success',
         data: user
       });
-    } catch (e) {
-      console.log(e);
-      response.redirect('/auth/' + provider);
+    } catch (error) {
+      console.log(error);
+      return response.status(500).json({ status: 'error', message: error });
     }
   }
 

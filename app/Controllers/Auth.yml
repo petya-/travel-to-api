@@ -61,14 +61,44 @@ paths:
     get:
       description: Redirect user to Provider login
       summary: Provider Signup
+      parameters:
+        - in: path
+          name: provider
+          schema:
+            type: string
       tags:
         - Auth
       produces:
         - application/json
   /authenticated/{provider}:
-    get:
+    post:
       description: Callback to API from Provider login
       summary: Provider Callback
+      parameters:
+        - in: path
+          name: provider
+          schema:
+            type: string
+        - name: email
+          description: Username to use for login.
+          in: formData
+          required: true
+          type: string
+        - name: name
+          description: User's name.
+          in: formData
+          required: true
+          type: string
+        - name: user_id
+          description: User's userID fron the provider
+          in: formData
+          required: true
+          type: integer
+        - name: access_token
+          description: User's accessToken fron the provider
+          in: formData
+          required: true
+          type: string
       tags:
         - Auth
       produces:
