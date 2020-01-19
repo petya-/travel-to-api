@@ -25,6 +25,10 @@ class TripController {
     try {
       let startDate,
         endDate = null;
+
+      const from = formatSearchString(request.input('from'));
+      const to = formatSearchString(request.input('to'));
+
       if (request.input('date')) {
         const inputDate = DateTime.fromISO(request.input('date'), {
           zone: 'utc'
@@ -34,9 +38,9 @@ class TripController {
       }
       const trips = await Trip.query()
         .where('status', 'Pending')
-        .optional(query => query.where('from', request.input('from')))
+        .optional(query => query.where('from', from))
         .optional(query => {
-          query.where('to', request.input('to'));
+          query.where('to', to);
         })
         .optional(query => {
           if (startDate && endDate) {
@@ -50,7 +54,11 @@ class TripController {
         data: trips
       });
     } catch (error) {
-      throw error;
+      return response.status(500).json({
+        status: 'error',
+        message:
+          'There was a problem getting all the trips, please try again later.'
+      });
     }
   }
 
@@ -248,6 +256,11 @@ class TripController {
       });
     }
   }
+}
+
+function formatSearchString(string) {
+  string = string.toLowerCase();
+  return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
 module.exports = TripController;
