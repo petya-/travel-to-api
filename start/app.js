@@ -27,7 +27,8 @@ const providers = [
   'adonis-lucid-optional-queries/providers/OptionalQueriesProvider',
   '@adonisjs/websocket/providers/WsProvider',
   '@adonisjs/validator/providers/ValidatorProvider',
-  '@adonisjs/ally/providers/AllyProvider'
+  '@adonisjs/ally/providers/AllyProvider',
+  'adonis-scheduler/providers/SchedulerProvider'
 ];
 
 /*
@@ -41,7 +42,8 @@ const providers = [
 */
 const aceProviders = [
   '@adonisjs/lucid/providers/MigrationsProvider',
-  'adonis-acl/providers/CommandsProvider'
+  'adonis-acl/providers/CommandsProvider',
+  'adonis-scheduler/providers/CommandsProvider'
 ];
 
 /*
@@ -58,7 +60,8 @@ const aceProviders = [
 */
 const aliases = {
   Role: 'Adonis/Acl/Role',
-  Permission: 'Adonis/Acl/Permission'
+  Permission: 'Adonis/Acl/Permission',
+  Scheduler: 'Adonis/Addons/Scheduler'
 };
 
 /*

@@ -40,6 +40,7 @@
     "@adonisjs/websocket": "^1.0.12",
     "adonis-acl": "^1.1.1",
     "adonis-lucid-optional-queries": "^1.0.1",
+    "adonis-scheduler": "^3.0.2",
     "adonis-swagger": "^1.2.9",
     "luxon": "^1.21.3",
     "pg": "^7.12.1"
