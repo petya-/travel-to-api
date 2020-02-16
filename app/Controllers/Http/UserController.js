@@ -75,10 +75,13 @@ class UserController {
       user.name = request.input('name');
       user.email = request.input('email');
       user.phone_number = request.input('phone_number');
-      user.profile_img = request.input('profile_img');
       user.description = request.input('description');
-
       await user.save();
+
+      if (request.file('profile_img')) {
+        await uploadImage(user, request.file('profile_img'));
+      }
+
       return response.json({
         status: 'success',
         message: 'Profile updated!',
@@ -196,15 +199,21 @@ class UserController {
     }
   }
 
-  /**
-   * Delete a user with id.
-   * DELETE users/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async destroy({ params, request, response }) {}
+  async uploadImage(user, profileImg) {
+    const imgName = user.name
+      .split(' ')
+      .join('-')
+      .toLowerCase();
+
+    await profileImg.move(Helpers.tmpPath('uploads'), {
+      name: `${imgName}.jpg`,
+      overwrite: true
+    });
+
+    if (!profileImg.moved()) {
+      return profileImg.error();
+    }
+  }
 }
 
 module.exports = UserController;
