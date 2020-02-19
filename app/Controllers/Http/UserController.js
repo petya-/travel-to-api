@@ -70,6 +70,7 @@ class UserController {
     try {
       // get currently authenticated user
       const user = auth.current.user;
+      console.log(user.name);
 
       // update with new data entered
       user.name = request.input('name');
@@ -79,7 +80,7 @@ class UserController {
       await user.save();
 
       if (request.file('profile_img')) {
-        await uploadImage(user, request.file('profile_img'));
+        await this.uploadImage(auth.current.user, request.file('profile_img'));
       }
 
       return response.json({
@@ -88,6 +89,8 @@ class UserController {
         data: user
       });
     } catch (error) {
+      console.log(error);
+
       return response.status(500).json({
         status: 'error',
         message: 'There was a problem updating profile, please try again later.'
@@ -200,6 +203,8 @@ class UserController {
   }
 
   async uploadImage(user, profileImg) {
+    console.log(user.name);
+
     const imgName = user.name
       .split(' ')
       .join('-')
