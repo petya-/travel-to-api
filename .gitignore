@@ -4,6 +4,9 @@ node_modules
 # Adonis directory for storing tmp files
 tmp
 
+# Directory for storing user files
+public/uploafs/users
+
 # Environment variables, never commit this file
 .env
 .env.testing

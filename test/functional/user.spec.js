@@ -2,6 +2,9 @@
 const { test, trait, before, after } = use('Test/Suite')('User');
 const User = use('App/Models/User');
 const Role = use('Role');
+const Helpers = use('Helpers');
+const Env = use('Env');
+const Drive = use('Drive');
 
 trait('Test/ApiClient');
 trait('Auth/Client');
@@ -54,6 +57,26 @@ test('user can get his profile', async ({ client, assert }) => {
     status: 'success',
     data: driverUser.toJSON()
   });
+});
+
+test('user can upload a profile image', async ({ client, assert }) => {
+  const response = await client
+    .put('api/user')
+    .attach('profile_img', Helpers.publicPath('uploads/tests/test-image.jpeg'))
+    .loginVia(driverUser, 'jwt')
+    .end();
+
+  response.assertStatus(200);
+
+  const imgName = driverUser.name
+    .split(' ')
+    .join('-')
+    .toLowerCase();
+  const imgPath = `${Env.get('APP_URL')}/uploads/users/${imgName}.jpg`;
+
+  assert.equal('success', response.body.status);
+  assert.equal(imgPath, response.body.data.profile_img);
+  await Drive.delete(`uploads/tests/${imgName}.jpg`);
 });
 
 test('user can update his profile', async ({ client, assert }) => {});
