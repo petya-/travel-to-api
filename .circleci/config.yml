@@ -30,6 +30,9 @@ jobs:
       - run:
           name: Run migrations and seeders
           command: npm run migrate:ci
+          environment:
+            POSTGRES_USER: postgres
+            POSTGRES_DB: travel_to_db_testing
 
       - run:
           name: Run tests
