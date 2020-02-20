@@ -76,7 +76,7 @@ test('user can upload a profile image', async ({ client, assert }) => {
 
   assert.equal('success', response.body.status);
   assert.equal(imgPath, response.body.data.profile_img);
-  await Drive.delete(`uploads/tests/${imgName}.jpg`);
+  await Drive.delete(`uploads/users/${imgName}.jpg`);
 });
 
 test('user can update his profile', async ({ client, assert }) => {});
