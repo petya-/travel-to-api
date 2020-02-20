@@ -5,7 +5,7 @@ node_modules
 tmp
 
 # Directory for storing user files
-public/uploafs/users
+public/uploads/users
 
 # Environment variables, never commit this file
 .env
