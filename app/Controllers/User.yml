@@ -104,7 +104,7 @@ paths:
         - name: profile_img
           description: User's profile_img
           in: formData
-          type: string
+          type: file
         - name: description
           description: User's description
           in: formData

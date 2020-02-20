@@ -12,7 +12,7 @@
     "seed": "adonis migration",
     "migrate:seed": "adonis migration:run --seed",
     "migrate:refresh": "adonis migration:refresh --seed",
-    "migrate:ci": "ENV_SILENT=true node ace migration:refresh --seed --force",
+    "migrate:ci": "ENV_SILENT=true node ace migration:run --seed",
     "test:ci": "ENV_SILENT=true node ace test"
   },
   "keywords": [
@@ -28,6 +28,7 @@
     "@adonisjs/auth": "^3.1.0",
     "@adonisjs/bodyparser": "^2.0.5",
     "@adonisjs/cors": "^1.0.7",
+    "@adonisjs/drive": "^1.0.4",
     "@adonisjs/fold": "^4.0.9",
     "@adonisjs/framework": "^5.0.9",
     "@adonisjs/ignitor": "^2.0.8",

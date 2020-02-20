@@ -9,6 +9,8 @@ const User = use('App/Models/User');
 const ReportedUser = use('App/Models/ReportedUser');
 const Role = use('Role');
 const Hash = use('Hash');
+const Helpers = use('Helpers');
+const Env = use('Env');
 
 /**
  * Resourceful controller for interacting with users
@@ -72,13 +74,21 @@ class UserController {
       const user = auth.current.user;
 
       // update with new data entered
-      user.name = request.input('name');
-      user.email = request.input('email');
-      user.phone_number = request.input('phone_number');
-      user.profile_img = request.input('profile_img');
-      user.description = request.input('description');
+      user.name = request.input('name') || user.name;
+      user.email = request.input('email') || user.email;
+      user.phone_number = request.input('phone_number') || user.phone_number;
+      user.description = request.input('description') || user.description;
 
+      if (request.file('profile_img')) {
+        const profileImage = request.file('profile_img', {
+          types: ['image'],
+          size: '10mb'
+        });
+
+        await this.uploadImage(user, profileImage);
+      }
       await user.save();
+
       return response.json({
         status: 'success',
         message: 'Profile updated!',
@@ -196,15 +206,25 @@ class UserController {
     }
   }
 
-  /**
-   * Delete a user with id.
-   * DELETE users/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async destroy({ params, request, response }) {}
+  async uploadImage(user, profileImg) {
+    const imgName = user.name
+      .split(' ')
+      .join('-')
+      .toLowerCase();
+
+    await profileImg.move(Helpers.publicPath('uploads/users'), {
+      name: `${imgName}.jpg`,
+      overwrite: true
+    });
+
+    if (!profileImg.moved()) {
+      return profileImg.error();
+    }
+
+    user.profile_img = `${Env.get('APP_URL')}/uploads/users/${
+      profileImg.fileName
+    }`;
+  }
 }
 
 module.exports = UserController;
