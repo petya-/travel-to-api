@@ -12,7 +12,7 @@
     "seed": "adonis migration",
     "migrate:seed": "adonis migration:run --seed",
     "migrate:refresh": "adonis migration:refresh --seed",
-    "migrate:ci": "ENV_SILENT=true node ace migration:refresh --seed --force",
+    "migrate:ci": "ENV_SILENT=true node ace migration:run --seed --force",
     "test:ci": "ENV_SILENT=true node ace test"
   },
   "keywords": [
