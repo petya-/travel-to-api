@@ -1,4 +1,5 @@
 'use strict';
+const Env = use('Env');
 
 /*
 |--------------------------------------------------------------------------
@@ -16,7 +17,7 @@
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use('Route');
 
-Route.on('/').render('welcome');
+Route.on('/').render('welcome', { url: `${Env.get('APP_URL')}/docs` });
 /*
 |--------------------------------------------------------------------------
 | Auth Routes
@@ -206,6 +207,7 @@ Route.group(() => {
 |--------------------------------------------------------------------------
 */
 Route.group(() => {
+  Route.get('/', 'CarController.index');
   Route.post('/', 'CarController.store').middleware(['can:add_car']);
 })
   .prefix('api/cars')

@@ -1,0 +1,20 @@
+definitions:
+  Car:
+    type: object
+    properties:
+      id:
+        type: uint
+      license_number:
+        type: string
+      model:
+        type: string
+      brand:
+        type: string
+      color:
+        type: string
+      driver_id:
+        type: integer
+    required:
+      - model
+      - color
+      - driver_id
