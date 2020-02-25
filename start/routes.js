@@ -199,3 +199,14 @@ Route.group(() => {
 })
   .prefix('api/notifications')
   .middleware(['auth:jwt', 'userIsEnabled']);
+
+/*
+|--------------------------------------------------------------------------
+| Car Routes
+|--------------------------------------------------------------------------
+*/
+Route.group(() => {
+  Route.post('/', 'CarController.store').middleware(['can:add_car']);
+})
+  .prefix('api/cars')
+  .middleware(['auth:jwt']);

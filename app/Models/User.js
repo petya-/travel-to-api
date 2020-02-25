@@ -27,9 +27,7 @@ class User extends Model {
    * work. Since features like `refreshTokens` or
    * `rememberToken` will be saved inside the
    * tokens table.
-   *
    * @method tokens
-   *
    * @return {Object}
    */
   tokens() {
@@ -60,9 +58,7 @@ class User extends Model {
 
   /**
    * A relationship on conversations
-   *
    * @method tripRequests
-   *
    * @return {Object}
    */
   conversations() {
@@ -71,13 +67,20 @@ class User extends Model {
 
   /**
    * A relationship on notifications
-   *
    * @method tripRequests
-   *
    * @return {Object}
    */
   notifications() {
     return this.hasMany('App/Models/Notification');
+  }
+
+  /**
+   * A relationship on cars
+   * @method cars
+   * @return {Object}
+   */
+  cars() {
+    return this.hasMany('App/Models/Car', 'id', 'driver_id');
   }
 
   /**

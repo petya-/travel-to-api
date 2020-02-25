@@ -95,3 +95,14 @@ Factory.blueprint('App/Models/Message', (faker, i, data) => {
     conversation_id: data.conversation_id
   };
 });
+
+// Car blueprint
+Factory.blueprint('App/Models/Car', (faker, i, data) => {
+  return {
+    license_plate: faker.string(),
+    brand: 'BMW',
+    model: 'i8',
+    color: '#FF0000',
+    driver_id: data.driver_id
+  };
+});
