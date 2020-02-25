@@ -1,0 +1,36 @@
+paths:
+  /cars:
+    post:
+      description: Driver can add a car
+      tags:
+        - Car
+      security:
+        - bearerAuth: []
+      summary: Add a car
+      produces:
+        - application/json
+      parameters:
+        - name: license_plate
+          description: Car's license plate
+          in: formData
+          type: text
+        - name: brand
+          description: Car's brand
+          in: formData
+          type: text
+        - name: model
+          description: Car's model
+          in: formData
+          type: text
+        - name: color
+          description: Car's color
+          in: formData
+          type: text
+      required:
+        - brand
+        - color
+      responses:
+        200:
+          description: car object
+          schema:
+            $ref: '#/definitions/Car'
