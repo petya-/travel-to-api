@@ -1,5 +1,19 @@
 paths:
   /cars:
+    get:
+      description: Get all driver cars
+      tags:
+        - Car
+      security:
+        - bearerAuth: []
+      summary: Get driver cars
+      produces:
+        - application/json
+      responses:
+        200:
+          description: cars array
+          schema:
+            $ref: '#/definitions/Car'
     post:
       description: Driver can add a car
       tags:
