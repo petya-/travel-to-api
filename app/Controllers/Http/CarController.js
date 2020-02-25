@@ -9,15 +9,22 @@
  */
 class CarController {
   /**
-   * Show a list of all cars.
+   * Show a list of all cars for a driver
    * GET cars
    *
    * @param {object} ctx
    * @param {Request} ctx.request
    * @param {Response} ctx.response
-   * @param {View} ctx.view
+   * @param {Auth} ctx.auth
    */
-  async index({ request, response, view }) {}
+  async index({ response, auth }) {
+    const cars = await auth.user.cars().fetch();
+
+    response.status(200).json({
+      status: 'success',
+      data: cars
+    });
+  }
 
   /**
    * Create/save a new car.

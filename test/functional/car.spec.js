@@ -45,7 +45,7 @@ test('non-driver user cannot add a new car', async ({ client, assert }) => {
   );
 });
 
-test('driver user can add a new car', async ({ client, assert }) => {
+test('driver user can add a new car', async ({ client }) => {
   const response = await client
     .post('api/cars')
     .loginVia(driverUser, 'jwt')
@@ -60,5 +60,19 @@ test('driver user can add a new car', async ({ client, assert }) => {
   response.assertJSON({
     status: 'success',
     data: createdCar.toJSON()
+  });
+});
+
+test('driver can get his cars', async ({ client }) => {
+  const driverCars = await driverUser.cars().fetch();
+  const response = await client
+    .get('api/cars')
+    .loginVia(driverUser)
+    .end();
+
+  response.assertStatus(200);
+  response.assertJSON({
+    status: 'success',
+    data: driverCars.toJSON()
   });
 });

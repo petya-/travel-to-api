@@ -206,6 +206,7 @@ Route.group(() => {
 |--------------------------------------------------------------------------
 */
 Route.group(() => {
+  Route.get('/', 'CarController.index');
   Route.post('/', 'CarController.store').middleware(['can:add_car']);
 })
   .prefix('api/cars')
