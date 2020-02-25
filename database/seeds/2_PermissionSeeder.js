@@ -219,6 +219,20 @@ class PermissionSeeder {
       description: 'update notification'
     });
 
+    /*
+    |--------------------------------------------------------------------------
+    | Car Permissions
+    |--------------------------------------------------------------------------
+    */
+
+    const addCarPermission = await Factory.model(
+      'Adonis/Acl/Permission'
+    ).create({
+      slug: 'add_car',
+      name: 'Add car',
+      description: 'add a new car'
+    });
+
     // Assign permissions to roles
 
     const adminRole = await Role.findBy('slug', 'admin');
@@ -248,7 +262,8 @@ class PermissionSeeder {
         readUserTripsPermission.id,
         readTripRequestPermission.id,
         acceptTripRequestPermission.id,
-        rejectTripRequestPermission.id
+        rejectTripRequestPermission.id,
+        addCarPermission.id
       ]);
 
     const passengerRole = await Role.findBy('slug', 'passenger');
