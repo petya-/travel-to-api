@@ -74,6 +74,11 @@ paths:
           description: Longitude of end destination
           in: formData
           type: string
+        - name: rules
+          description: Rules for the trip, for ex. if smoking is allowed
+          in: formData
+          type: objest
+
       required:
         - from
         - to

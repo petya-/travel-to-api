@@ -3,7 +3,7 @@ definitions:
     type: object
     properties:
       id:
-        type: uint
+        type: integer
       message:
         type: text
       read:
