@@ -1,0 +1,15 @@
+definitions:
+  Review:
+    type: object
+    properties:
+      id:
+        type: integer
+      text:
+        type: text
+      user_id:
+        type: integer
+      trip_id:
+        type: integer
+    required:
+      - text
+      - trip_id

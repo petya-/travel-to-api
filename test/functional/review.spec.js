@@ -14,8 +14,7 @@ before(async () => {
   driverUser = await User.findBy('email', 'driver@travel-to.com');
   trip = await Trip.findBy('from', 'Copenhagen');
   review = {
-    text: 'It was a great trip! The driver was on time.',
-    trip_id: trip.id
+    text: 'It was a great trip! The driver was on time.'
   };
 });
 
@@ -59,7 +58,6 @@ test('passenger cannot review a driver for an invalid trip', async ({
     .send(review)
     .loginVia(passengerUser, 'jwt')
     .end();
-  console.log(response);
 
   response.assertStatus(403);
   response.assertError({

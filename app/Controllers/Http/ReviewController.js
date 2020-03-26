@@ -51,9 +51,10 @@ class ReviewController {
    */
   async store({ request, response, auth }) {
     try {
+      const { id } = request.params;
       const review = await auth.user.reviews().create({
         text: request.input('text'),
-        trip_id: request.input('trip_id')
+        trip_id: id
       });
 
       return response.json({
@@ -63,8 +64,8 @@ class ReviewController {
     } catch (error) {
       return response.status(500).json({
         status: 'error',
-        message:
-          'There was a problem while creating the review, please try again later.'
+        message: error
+        // 'There was a problem while creating the review, please try again later.'
       });
     }
   }

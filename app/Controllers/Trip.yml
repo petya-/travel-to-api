@@ -199,3 +199,34 @@ paths:
           description: trip object
           schema:
             $ref: '#/definitions/Trip'
+  /trips/{id}/review:
+    post:
+      summary: Write a trip review
+      description: Passenger can write a review to the trip
+      tags:
+        - Review
+      security:
+        - bearerAuth: []
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: Numeric id of the trip
+        - in: formData
+          name: text
+          schema:
+            type: text
+          required: true
+          description: Content of the review
+
+      responses:
+        200:
+          description: review object
+          schema:
+            $ref: '#/definitions/Review'
+        500:
+          description: There was a problem while creating the review, please try again later.
