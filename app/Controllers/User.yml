@@ -38,6 +38,30 @@ paths:
             $ref: '#/definitions/User'
         500:
           description: User role could not be updated! Please try again.
+  /users/{id}/reviews:
+    get:
+      summary: Get user reviews
+      description: Get all user reviews
+      tags:
+        - Review
+      security:
+        - bearerAuth: []
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: Numeric id of the user
+      responses:
+        200:
+          description: success
+          schema:
+            $ref: '#/definitions/Review'
+        500:
+          description: There was a problem while creating the review, please try again later.
   /users/report:
     post:
       summary: Report a user
