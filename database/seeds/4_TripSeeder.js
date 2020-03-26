@@ -44,7 +44,10 @@ class TripSeeder {
         })
         .toISO(),
       number_of_passengers: 3,
-      driver_id: driverUser.id
+      driver_id: driverUser.id,
+      rules: {
+        smoking: false
+      }
     });
 
     await Factory.model('App/Models/Trip').create({

@@ -19,7 +19,10 @@ before(async () => {
     to: 'Copenhagen',
     departure_time: DateTime.utc(),
     number_of_passengers: 2,
-    price: 7
+    price: 7,
+    rules: {
+      smoking: false
+    }
   };
 });
 
@@ -131,6 +134,7 @@ test('driver user can create a trip', async ({ client, assert }) => {
   );
   assert.equal(response.body.data.driver_id, driverUser.id);
   assert.equal(response.body.data.status, 'Pending');
+  assert.isFalse(response.body.data.rules.smoking);
   newTrip = response.body.data;
 });
 

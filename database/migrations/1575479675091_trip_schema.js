@@ -14,9 +14,7 @@ class TripSchema extends Schema {
         .integer('number_of_passengers')
         .notNullable()
         .default(1);
-      table
-        .decimal('price')
-        .notNullable()
+      table.decimal('price').notNullable();
       table
         .string('status')
         .notNullable()
@@ -25,6 +23,7 @@ class TripSchema extends Schema {
       table.string('lng_start').nullable();
       table.string('lat_end').nullable();
       table.string('lng_end').nullable();
+      table.json('rules').nullable();
       table
         .integer('driver_id')
         .unsigned()

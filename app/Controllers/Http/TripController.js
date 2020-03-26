@@ -90,7 +90,8 @@ class TripController {
         lat_start: request.input('lat_start'),
         lng_end: request.input('lng_end'),
         lat_end: request.input('lat_end'),
-        status: 'Pending'
+        status: 'Pending',
+        rules: request.input('rules')
       });
       return response.json({
         status: 'success',

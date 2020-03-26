@@ -3,7 +3,7 @@ definitions:
     type: object
     properties:
       id:
-        type: uint
+        type: integer
       license_number:
         type: string
       model:

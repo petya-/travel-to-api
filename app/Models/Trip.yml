@@ -3,17 +3,20 @@ definitions:
     type: object
     properties:
       id:
-        type: uint
+        type: integer
       from:
         type: string
       to:
         type: string
       departure_time:
-        type: date-time
+        type: string
+        format: date-time
       number_of_passengers:
         type: integer
       price:
         type: number
+      rules:
+        type: object
     required:
       - from
       - to
