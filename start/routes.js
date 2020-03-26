@@ -51,6 +51,9 @@ Route.group(() => {
 
 Route.group(() => {
   Route.get('/', 'UserController.index').middleware(['can:read_users']);
+  Route.get('/:id/reviews', 'ReviewController.index').middleware([
+    'can:read_user_profile'
+  ]);
   Route.put('/:id/becomeDriver', 'UserController.becomeDriver').middleware([
     'can:update_user_profile'
   ]);
@@ -106,6 +109,12 @@ Route.group(() => {
     'can:update_trip',
     'isTripDriver',
     'tripCanBeChanged'
+  ]);
+  Route.post('/:id/review', 'ReviewController.store').middleware([
+    'auth:jwt',
+    'userIsEnabled',
+    'isInTrip',
+    'isNotTripDriver'
   ]);
 }).prefix('api/trips');
 

@@ -48,6 +48,7 @@ const namedMiddleware = {
   isInConversation: 'App/Middleware/ConversationParticipant',
   isInTrip: 'App/Middleware/TripParticipant',
   isTripDriver: 'App/Middleware/TripCreator',
+  isNotTripDriver: 'App/Middleware/IsNotTripDriver',
   isNotFullyBooked: 'App/Middleware/TripAvailability',
   tripCanBeChanged: 'App/Middleware/TripCanBeChanged',
   userIsEnabled: 'App/Middleware/UserIsEnabled'

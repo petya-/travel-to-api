@@ -84,6 +84,15 @@ class User extends Model {
   }
 
   /**
+   * A relationship on reviews
+   * @method cars
+   * @return {Object}
+   */
+  reviews() {
+    return this.hasMany('App/Models/Review');
+  }
+
+  /**
    * ACL traits
    */
   static get traits() {
