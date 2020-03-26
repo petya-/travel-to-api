@@ -64,6 +64,7 @@ Factory.blueprint('App/Models/Trip', (faker, i, data) => {
       min: 4,
       max: 10
     }),
+    rules: data.rules || null,
     driver_id: data.driver_id
   };
 });
