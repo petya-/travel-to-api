@@ -31,7 +31,7 @@ class User extends Model {
    * @return {Object}
    */
   tokens() {
-    return this.hasMany('App/Models/Token');
+    return this.hasMany('App/Models/Token', 'id', 'user_id');
   }
 
   /**
@@ -98,7 +98,7 @@ class User extends Model {
   static get traits() {
     return [
       '@provider:Adonis/Acl/HasRole',
-      '@provider:Adonis/Acl/HasPermission'
+      '@provider:Adonis/Acl/HasPermission',
     ];
   }
 }

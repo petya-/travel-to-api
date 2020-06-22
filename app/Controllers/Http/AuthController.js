@@ -18,7 +18,7 @@ class AuthController {
       'name',
       'email',
       'password',
-      'phone_number'
+      'phone_number',
     ]);
     const role = request.input('role');
 
@@ -42,7 +42,7 @@ class AuthController {
       return response.status(400).json({
         status: 'error',
         message:
-          'There was a problem creating the user, please try again later.'
+          'There was a problem creating the user, please try again later.',
       });
     }
   }
@@ -71,13 +71,13 @@ class AuthController {
         user.role = roles.includes('driver') ? 'driver' : 'passenger';
         return response.json({
           status: 'success',
-          data: user
+          data: user,
         });
       }
     } catch (error) {
       return response.status(404).json({
         status: 'error',
-        message: 'You do not exist in the system. Please register.'
+        message: 'You do not exist in the system. Please register.',
       });
     }
   }
@@ -92,15 +92,23 @@ class AuthController {
    * @param {Auth} ctx.auth
    */
   async login({ request, auth, response }) {
+    const { email, password } = request.all();
+
     try {
-      const { email, password } = request.all();
+      if (await auth.attempt(email, password)) {
+        let user = await User.findBy('email', email);
+        let token = await auth.generate(user);
 
-      // validate the user credentials and generate a JWT token
-      const token = await auth.attempt(email, password);
-
-      return response.json({ status: 'success', data: token });
+        user.tokens().create(token);
+        Object.assign(user, token);
+        return response.json({ status: 'success', data: user });
+      }
     } catch (err) {
-      response.status(403).json({ status: 'error', message: err.message });
+      console.log(err);
+
+      response
+        .status(403)
+        .json({ status: 'error', message: 'You are not registered!' });
     }
   }
 
@@ -133,7 +141,7 @@ class AuthController {
         'name',
         'email',
         'user_id',
-        'accessToken'
+        'accessToken',
       ]);
 
       // user details to be saved
@@ -144,12 +152,12 @@ class AuthController {
         provider_id: userData.user_id,
         provider: provider,
         email_verified: true,
-        enabled: true
+        enabled: true,
       };
 
       // search for existing user
       const whereClause = {
-        email: userData.email
+        email: userData.email,
       };
 
       const user = await User.findOrCreate(whereClause, userDetails);
@@ -157,7 +165,7 @@ class AuthController {
 
       return response.json({
         status: 'success',
-        data: user
+        data: user,
       });
     } catch (error) {
       console.log(error);
@@ -169,7 +177,7 @@ class AuthController {
     await auth.logout();
     return response.json({
       status: 'success',
-      message: 'You were logged out!'
+      message: 'You were logged out!',
     });
   }
 }
