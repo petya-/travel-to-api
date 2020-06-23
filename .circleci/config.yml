@@ -7,7 +7,7 @@ jobs:
         environment:
           POSTGRES_USER: postgres
           POSTGRES_DB: travel_to_db_testing
-          POSTGRES_PASSWORD: 'root'
+          POSTGRES_PASSWORD: root
     working_directory: ~/repo
 
     steps:
