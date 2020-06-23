@@ -34,9 +34,9 @@ module.exports = {
     connection: {
       filename: Helpers.databasePath(
         `${Env.get('DB_DATABASE', 'development')}.sqlite`
-      )
+      ),
     },
-    useNullAsDefault: true
+    useNullAsDefault: true,
   },
 
   /*
@@ -56,8 +56,8 @@ module.exports = {
       port: Env.get('DB_PORT', ''),
       user: Env.get('DB_USER', 'root'),
       password: Env.get('DB_PASSWORD', ''),
-      database: Env.get('DB_DATABASE', 'adonis')
-    }
+      database: Env.get('DB_DATABASE', 'adonis'),
+    },
   },
 
   /*
@@ -77,7 +77,17 @@ module.exports = {
       port: Env.get('DB_PORT', ''),
       user: Env.get('DB_USER', 'root'),
       password: Env.get('DB_PASSWORD', ''),
-      database: Env.get('DB_DATABASE', 'adonis')
-    }
-  }
+      database: Env.get('DB_DATABASE', 'adonis'),
+    },
+    options: {
+      debug: true,
+      pool: {
+        min: 0,
+        max: 10,
+        idleTimeoutMillis: 30000,
+        createTimeoutMillis: 30000,
+        acquireTimeoutMillis: 30000,
+      },
+    },
+  },
 };
