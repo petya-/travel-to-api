@@ -28,6 +28,13 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
 
+      - run: echo $DB_CONNECTION
+      - run: echo $DB_HOST
+      - run: echo $DB_PORT
+      - run: echo $DB_USER
+      - run: echo $DB_PASSWORD
+      - run: echo $DB_DATABASE
+
       - run:
           name: Run migrations and seeders
           command: npm run migrate:ci

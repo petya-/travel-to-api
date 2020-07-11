@@ -18,14 +18,6 @@
 */
 
 const { Ignitor } = require('@adonisjs/ignitor');
-console.log('Here');
-console.log(rocess.env.DB_DATABASE);
-console.log(rocess.env.DB_PORT);
-console.log(rocess.env.DB_USER);
-console.log(rocess.env.DB_PORT);
-console.log(rocess.env.DB_CONNECTION);
-
-console.log(rocess.env.DB_PASSWORD);
 
 new Ignitor(require('@adonisjs/fold'))
   .appRoot(__dirname)
