@@ -3,7 +3,7 @@ jobs:
   build_and_test:
     docker:
       - image: circleci/node:latest
-      - image: circleci/postgres:12.2
+      - image: circleci/postgres:10.3
         environment:
           POSTGRES_USER: postgres
           POSTGRES_DB: travel_to_db_testing
