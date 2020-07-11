@@ -4,10 +4,7 @@ jobs:
     docker:
       - image: circleci/node:latest
       - image: circleci/postgres:12.2
-        environment:
-          POSTGRES_USER: postgres
-          POSTGRES_DB: travel_to_db_testing
-          POSTGRES_PASSWORD: 'root'
+
     working_directory: ~/repo
 
     steps:
