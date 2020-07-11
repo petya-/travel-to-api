@@ -4,7 +4,10 @@ jobs:
     docker:
       - image: circleci/node:latest
       - image: circleci/postgres:12.2
-
+        environment:
+          POSTGRES_USER: postgres
+          POSTGRES_DB: travel_to_db_testing
+          POSTGRES_PASSWORD: 'root'
     working_directory: ~/repo
 
     steps:
@@ -25,12 +28,9 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
 
-      - run: echo $DB_CONNECTION
-      - run: echo $DB_HOST
-      - run: echo $DB_PORT
-      - run: echo $DB_USER
-      - run: echo $DB_PASSWORD
-      - run: echo $DB_DATABASE
+      - run:
+          name: Wait for Postgres to start
+          command: dockerize -wait tcp://localhost:5432 -timeout 1m
 
       - run:
           name: Run migrations and seeders
