@@ -47,9 +47,7 @@ module.exports = (cli, runner) => {
     | Shutdown the HTTP server when all tests have been executed.
     |
     */
-    use('Adonis/Src/Server')
-      .getInstance()
-      .close();
+    use('Adonis/Src/Server').getInstance().close();
 
     /*
     |--------------------------------------------------------------------------
@@ -58,7 +56,7 @@ module.exports = (cli, runner) => {
     |
     | Once all tests have been completed, we should reset the database to it's
     | original state
-    |
+    |/
     */
     // await ace.call('migration:refresh', {}, { silent: true });
     // await ace.call('seed', {}, { silent: true });
